@@ -8,5 +8,6 @@
 </head>
 <body>
 	<a href="test/test.do">테스트페이지로 가기</a>
+	<p>푸쉬테스트</p>
 </body>
 </html>
