@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="test/test.do">테스트페이지로 가기</a>
-	<p>푸쉬테스트</p>
+	<h2>인덱스페이지입니다</h2>
+	<p>모든 페이지는 여기서부터 시작합니다</p>
 </body>
 </html>
