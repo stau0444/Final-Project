@@ -9,5 +9,6 @@
 <body>
 	<h2>인덱스페이지입니다</h2>
 	<p>모든 페이지는 여기서부터 시작합니다</p>
+	<li><a href="review/list.do">리뷰 페이지 가기</a></li>
 </body>
 </html>
