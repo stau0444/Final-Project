@@ -10,8 +10,12 @@
 	<!-- 각자 맡으실 페이지의 링크를  아래의 div에 적어두면 
 	메인페이지 하시는분이 편하게할  수 있을거 같으니 본인의 링크는
 	아래 div안에 작성해주세요 -->
-	<div id="link">
-		
+	<div id="황경욱">
+		<a href="member/identification_form.do">회원가입</a>
+		<a href="member/login_form.do">로그인</a>
+	</div>
+	<div id="이상훈">
+		<li><a href="review/list.do">리뷰 페이지 가기</a></li>
 	</div>
 	<!-- 이 밑으로는 태희씨가 작업하시면 될 것 같아요 -->
 	
