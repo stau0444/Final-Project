@@ -21,4 +21,16 @@ public class MemberDaoImpl implements MemberDao {
 			return false;			
 		}
 	}
+
+	@Override
+	public boolean checkId(String user_id) {
+		String isExist=session.selectOne("member.checkid",user_id);
+		
+		System.out.println(isExist);
+		if(isExist==null) {
+			return false;
+		}else {
+			return true;
+		}
+	}
 }
