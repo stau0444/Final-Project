@@ -7,4 +7,7 @@
 		VALUES
 			(#{user_id},#{user_pwd},#{user_name},#{user_phone},#{user_addr},#{user_p_code},#{user_sort})
 	</insert>
+	<select id="checkid" parameterType="string" resultType="string">
+		SELECT user_id FROM user_all WHERE user_id=#{user_id}
+	</select>
 </mapper>

@@ -1,5 +1,8 @@
 package com.car.myapp.member.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,14 @@ public class MemberServiceImpl implements MemberService {
 		boolean isSuccess = memberDao.insert(dto);
 		mView.addObject("isSuccess", isSuccess);
 		
+	}
+
+	@Override
+	public Map<String, Object> checkId(String user_id) {
+		boolean isExist=memberDao.checkId(user_id);
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("isExist", isExist);
+		return map;
 	}
 	
 
