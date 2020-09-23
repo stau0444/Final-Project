@@ -3,55 +3,98 @@ package com.car.myapp.review.dto;
 import java.util.Date;
 
 public class ReplyDto {
-    private Integer rno;        // 댓글 번호
-    private Integer num;        // 게시글 번호
-    private String replytext;    // 댓글 내용
-    private String replyer;        // 댓글 작성자
-    private String userName;    // 댓글 작성자의 이름(회원의 이름)
-    private Date regdate;        // 댓글 작성일자
-    
-    
-    public Integer getRno() {
-		return rno;
+	private int num;
+    private int bno; //게시물 번호
+	private String writer;
+	private String content;
+	private String target_id; //댓글 대상자의 아이디를 저장할 필드
+	private int ref_group; //원글의 글번호를 저장할 필드
+	private int comment_group; //댓글내에서의 그룹번호 
+	private String deleted; //삭제된 댓글인지 여부를 저장할 필드   "yes" or "no"
+	private String regdate;
+	private String profile; //프로필 이미지 경로를 저장할 필드 
+	private int startRowNum;
+	private int endRowNum;
+	private String secret_reply; //비밀댓글 여부
+	
+	public String getSecret_reply() {
+		return secret_reply;
 	}
-	public void setRno(Integer rno) {
-		this.rno = rno;
+	public void setSecret_reply(String secret_reply) {
+		this.secret_reply = secret_reply;
 	}
-	public Integer getNum() {
+	public int getBno() {
+		return bno;
+	}
+	public void setBno(int bno) {
+		this.bno = bno;
+	}
+	public int getNum() {
 		return num;
 	}
-	public void setNum(Integer num) {
+	public void setNum(int num) {
 		this.num = num;
 	}
-	public String getReplytext() {
-		return replytext;
+	public String getWriter() {
+		return writer;
 	}
-	public void setReplytext(String replytext) {
-		this.replytext = replytext;
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
-	public String getReplyer() {
-		return replyer;
+	public String getContent() {
+		return content;
 	}
-	public void setReplyer(String replyer) {
-		this.replyer = replyer;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	public String getUserName() {
-		return userName;
+	public String getTarget_id() {
+		return target_id;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setTarget_id(String target_id) {
+		this.target_id = target_id;
 	}
-	public Date getRegdate() {
+	public int getRef_group() {
+		return ref_group;
+	}
+	public void setRef_group(int ref_group) {
+		this.ref_group = ref_group;
+	}
+	public int getComment_group() {
+		return comment_group;
+	}
+	public void setComment_group(int comment_group) {
+		this.comment_group = comment_group;
+	}
+	public String getDeleted() {
+		return deleted;
+	}
+	public void setDeleted(String deleted) {
+		this.deleted = deleted;
+	}
+	public String getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(Date regdate) {
+	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
-	public Date getUpdatedate() {
-		return updatedate;
+	public String getProfile() {
+		return profile;
 	}
-	public void setUpdatedate(Date updatedate) {
-		this.updatedate = updatedate;
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
-	private Date updatedate;    // 댓글 수정일자
+	public int getStartRowNum() {
+		return startRowNum;
+	}
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+	public int getEndRowNum() {
+		return endRowNum;
+	}
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+    
+    
 }

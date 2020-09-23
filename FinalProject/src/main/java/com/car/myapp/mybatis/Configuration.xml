@@ -4,12 +4,14 @@
 	<!-- type  별칭 등록 -->
 	<typeAliases>
 		<typeAlias type="com.car.myapp.review.dto.ReviewDto" alias="reviewDto"/>
+		<typeAlias type="com.car.myapp.review.dto.ReplyDto" alias="replyDto"/>
 		<typeAlias type="com.car.myapp.member.dto.MemberDto" alias="memberDto"/>	
 	</typeAliases>
 	
 	<!-- Mapper 등록 -->
 	<mappers>
 		<mapper resource="com/car/myapp/mybatis/ReviewMapper.xml"/>
+		<mapper resource="com/car/myapp/mybatis/ReplyMapper.xml"/>
 		<mapper resource="com/car/myapp/mybatis/MemberMapper.xml"/>
 	</mappers>
 </configuration>

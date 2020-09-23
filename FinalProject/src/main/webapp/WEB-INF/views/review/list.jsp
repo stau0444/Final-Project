@@ -64,7 +64,11 @@
 		</select>
 		<input value="${keyword }" type="text" name="keyword" placeholder="검색어..."/>
 		<button type="submit">검색</button>
-	</form>	
+	</form>
+<c:if test="${row.cnt > 0}"> //댓글의 개수가 0보다 크면 실행되는 구문
+    <span style="color:red;">( ${row.cnt} )</span> //댓글의 개수를 출력하고 색깔을 빨간색으로 한다.
+</c:if>   
+
 </div>
 </body>
 </html>
