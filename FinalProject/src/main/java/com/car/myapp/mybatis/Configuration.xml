@@ -9,6 +9,8 @@
 		<typeAlias type="com.car.myapp.manager.dto.IndividualDto" alias="individualDto"/>
 
 		<typeAlias type="com.car.myapp.review.dto.ReviewDto" alias="reviewDto"/>
+		<typeAlias type="com.car.myapp.review.dto.ReplyDto" alias="replyDto"/>
+		
 		<!-- member 관련 Dto 별칭 등록 -->
 		<typeAlias type="com.car.myapp.member.dto.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.car.myapp.member.dto.verificationDto" alias="verificationDto"/>
@@ -23,6 +25,7 @@
 
 
 		<mapper resource="com/car/myapp/mybatis/ReviewMapper.xml"/>
+		<mapper resource="com/car/myapp/mybatis/ReplyMapper.xml"/>
 		<mapper resource="com/car/myapp/mybatis/MemberMapper.xml"/>
 	</mappers>
 </configuration>

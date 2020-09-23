@@ -5,9 +5,9 @@
 		SELECT *
 		FROM
 			(SELECT result1.*, ROWNUM AS rnum
-			FROM
-				(SELECT num,writer,title,content,viewCount,regdate
-				FROM board_cafe
+			FROM 
+				(SELECT num,writer,title,content,viewCount,regdate 
+				FROM board_cafe 
 				<choose>
 					<when test="title != null and content != null">
 						WHERE title LIKE '%'||#{title}||'%' 

@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.car.myapp.review.dao.ReplyDao;
 import com.car.myapp.review.dao.ReviewDao;
+import com.car.myapp.review.dto.ReplyDto;
 import com.car.myapp.review.dto.ReviewDto;
 
 @Service
@@ -16,46 +18,48 @@ public class ReviewServiceImpl implements ReviewService{
 	
 	@Autowired
 	private ReviewDao reviewDao;
+	@Autowired
+	private ReplyDao replyDao;
 	
-	//ÇÑ ÆäÀÌÁö¿¡ ³ªÅ¸³¾ row ÀÇ °¹¼ö
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ row ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	final int PAGE_ROW_COUNT=10;
-	//ÇÏ´Ü µğ½ºÇÃ·¹ÀÌ ÆäÀÌÁö °¹¼ö
+	//ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	final int PAGE_DISPLAY_COUNT=5;
 	
 	@Override
 	public void getList(HttpServletRequest request) {
-		//º¸¿©ÁÙ ÆäÀÌÁöÀÇ ¹øÈ£
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
 		int pageNum=1;
-		//º¸¿©ÁÙ ÆäÀÌÁöÀÇ ¹øÈ£°¡ ÆÄ¶ó¹ÌÅÍ·Î Àü´ŞµÇ´ÂÁö ÀĞ¾î¿Í º»´Ù.	
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½Í·ï¿½ ï¿½ï¿½ï¿½ŞµÇ´ï¿½ï¿½ï¿½ ï¿½Ğ¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.	
 		String strPageNum=request.getParameter("pageNum");
-		if(strPageNum != null){//ÆäÀÌÁö ¹øÈ£°¡ ÆÄ¶ó¹ÌÅÍ·Î ³Ñ¾î¿Â´Ù¸é
-			//ÆäÀÌÁö ¹øÈ£¸¦ ¼³Á¤ÇÑ´Ù.
+		if(strPageNum != null){//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½Í·ï¿½ ï¿½Ñ¾ï¿½Â´Ù¸ï¿½
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 			pageNum=Integer.parseInt(strPageNum);
 		}
-		//º¸¿©ÁÙ ÆäÀÌÁö µ¥ÀÌÅÍÀÇ ½ÃÀÛ ResultSet row ¹øÈ£
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ResultSet row ï¿½ï¿½È£
 		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
-		//º¸¿©ÁÙ ÆäÀÌÁö µ¥ÀÌÅÍÀÇ ³¡ ResultSet row ¹øÈ£
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ResultSet row ï¿½ï¿½È£
 		int endRowNum=pageNum*PAGE_ROW_COUNT;
 		/*
-			°Ë»ö Å°¿öµå¿¡ °ü·ÃµÈ Ã³¸® 
+			ï¿½Ë»ï¿½ Å°ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½Ãµï¿½ Ã³ï¿½ï¿½ 
 		*/
-		String keyword=request.getParameter("keyword"); //°Ë»ö Å°¿öµå
-		String condition=request.getParameter("condition"); //°Ë»ö Á¶°Ç
-		if(keyword==null){//Àü´ŞµÈ Å°¿öµå°¡ ¾ø´Ù¸é 
-			keyword=""; //ºó ¹®ÀÚ¿­À» ³Ö¾îÁØ´Ù. 
+		String keyword=request.getParameter("keyword"); //ï¿½Ë»ï¿½ Å°ï¿½ï¿½ï¿½ï¿½
+		String condition=request.getParameter("condition"); //ï¿½Ë»ï¿½ ï¿½ï¿½ï¿½ï¿½
+		if(keyword==null){//ï¿½ï¿½ï¿½Şµï¿½ Å°ï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½Ù¸ï¿½ 
+			keyword=""; //ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ø´ï¿½. 
 			condition="";
 		}
-		//ÀÎÄÚµùµÈ Å°¿öµå¸¦ ¹Ì¸® ¸¸µé¾î µĞ´Ù. 
+		//ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½å¸¦ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ğ´ï¿½. 
 		String encodedK=URLEncoder.encode(keyword);
 		
-		//°Ë»ö Å°¿öµå¿Í startRowNum, endRowNum À» ´ãÀ» FileDto °´Ã¼ »ı¼º
+		//ï¿½Ë»ï¿½ Å°ï¿½ï¿½ï¿½ï¿½ï¿½ startRowNum, endRowNum ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ FileDto ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 		ReviewDto dto=new ReviewDto();
 		dto.setStartRowNum(startRowNum);
 		dto.setEndRowNum(endRowNum);
 		
-		if(!keyword.equals("")){ //¸¸ÀÏ Å°¿öµå°¡ ³Ñ¾î¿Â´Ù¸é 
+		if(!keyword.equals("")){ //ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½å°¡ ï¿½Ñ¾ï¿½Â´Ù¸ï¿½ 
 			if(condition.equals("title_content")){
-				//°Ë»ö Å°¿öµå¸¦ FileDto °´Ã¼ÀÇ ÇÊµå¿¡ ´ã´Â´Ù. 
+				//ï¿½Ë»ï¿½ Å°ï¿½ï¿½ï¿½å¸¦ FileDto ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Êµå¿¡ ï¿½ï¿½Â´ï¿½. 
 				dto.setTitle(keyword);
 				dto.setContent(keyword);	
 			}else if(condition.equals("title")){
@@ -64,25 +68,25 @@ public class ReviewServiceImpl implements ReviewService{
 				dto.setWriter(keyword);
 			}
 		}
-		//ÆÄÀÏ ¸ñ·Ï ¾ò¾î¿À±â
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		List<ReviewDto> list=reviewDao.getList(dto);
-		//ÀüÃ¼ row ÀÇ °¹¼ö 
+		//ï¿½ï¿½Ã¼ row ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 		int totalRow=reviewDao.getCount(dto);
 		
-		//ÀüÃ¼ ÆäÀÌÁöÀÇ °¹¼ö ±¸ÇÏ±â
+		//ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½
 		int totalPageCount=
 				(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
-		//½ÃÀÛ ÆäÀÌÁö ¹øÈ£
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
 		int startPageNum=
 			1+((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
-		//³¡ ÆäÀÌÁö ¹øÈ£
+		//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£
 		int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
-		//³¡ ÆäÀÌÁö ¹øÈ£°¡ Àß¸øµÈ °ªÀÌ¶ó¸é 
+		//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ 
 		if(totalPageCount < endPageNum){
-			endPageNum=totalPageCount; //º¸Á¤ÇØÁØ´Ù. 
+			endPageNum=totalPageCount; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½. 
 		}
 		
-		//EL ¿¡¼­ »ç¿ëÇÒ °ªÀ» ¹Ì¸® request ¿¡ ´ã¾ÆµÎ±â
+		//EL ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ request ï¿½ï¿½ ï¿½ï¿½ÆµÎ±ï¿½
 		request.setAttribute("list", list);
 		request.setAttribute("startPageNum", startPageNum);
 		request.setAttribute("endPageNum", endPageNum);
@@ -96,27 +100,27 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public void getDetail(HttpServletRequest request) {
-		//ÆÄ¶ó¹ÌÅÍ·Î Àü´ŞµÇ´Â ±Û¹øÈ£ 
+		//ï¿½Ä¶ï¿½ï¿½ï¿½Í·ï¿½ ï¿½ï¿½ï¿½ŞµÇ´ï¿½ ï¿½Û¹ï¿½È£ 
 		int num=Integer.parseInt(request.getParameter("num"));
 		/*
-		°Ë»ö Å°¿öµå¿¡ °ü·ÃµÈ Ã³¸® 
+		ï¿½Ë»ï¿½ Å°ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½Ãµï¿½ Ã³ï¿½ï¿½ 
 		*/
-		String keyword=request.getParameter("keyword"); //°Ë»ö Å°¿öµå
-		String condition=request.getParameter("condition"); //°Ë»ö Á¶°Ç
-		if(keyword==null){//Àü´ŞµÈ Å°¿öµå°¡ ¾ø´Ù¸é 
-			keyword=""; //ºó ¹®ÀÚ¿­À» ³Ö¾îÁØ´Ù. 
+		String keyword=request.getParameter("keyword"); //ï¿½Ë»ï¿½ Å°ï¿½ï¿½ï¿½ï¿½
+		String condition=request.getParameter("condition"); //ï¿½Ë»ï¿½ ï¿½ï¿½ï¿½ï¿½
+		if(keyword==null){//ï¿½ï¿½ï¿½Şµï¿½ Å°ï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½Ù¸ï¿½ 
+			keyword=""; //ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ø´ï¿½. 
 			condition="";
 		}
-		//ÀÎÄÚµùµÈ Å°¿öµå¸¦ ¹Ì¸® ¸¸µé¾î µĞ´Ù. 
+		//ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½å¸¦ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ğ´ï¿½. 
 		String encodedK=URLEncoder.encode(keyword);
 		
-		//±Û¹øÈ£¿Í °Ë»ö Å°¿öµå¸¦ ´ãÀ» ReviewDto °´Ã¼ »ı¼º
+		//ï¿½Û¹ï¿½È£ï¿½ï¿½ ï¿½Ë»ï¿½ Å°ï¿½ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ ReviewDto ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
 		ReviewDto dto=new ReviewDto();
-		dto.setNum(num);//±Û¹øÈ£ ´ã±â 
+		dto.setNum(num);//ï¿½Û¹ï¿½È£ ï¿½ï¿½ï¿½ 
 		
-		if(!keyword.equals("")){ //¸¸ÀÏ Å°¿öµå°¡ ³Ñ¾î¿Â´Ù¸é 
+		if(!keyword.equals("")){ //ï¿½ï¿½ï¿½ï¿½ Å°ï¿½ï¿½ï¿½å°¡ ï¿½Ñ¾ï¿½Â´Ù¸ï¿½ 
 			if(condition.equals("title_content")){
-				//°Ë»ö Å°¿öµå¸¦ FileDto °´Ã¼ÀÇ ÇÊµå¿¡ ´ã´Â´Ù. 
+				//ï¿½Ë»ï¿½ Å°ï¿½ï¿½ï¿½å¸¦ FileDto ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Êµå¿¡ ï¿½ï¿½Â´ï¿½. 
 				dto.setTitle(keyword);
 				dto.setContent(keyword);	
 			}else if(condition.equals("title")){
@@ -125,59 +129,73 @@ public class ReviewServiceImpl implements ReviewService{
 				dto.setWriter(keyword);
 			}
 		}
-		//ÀÚ¼¼È÷ º¸¿©ÁÙ ±Û Á¤º¸ 
+		//ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 		ReviewDto resultDto=reviewDao.getData(dto);
 		
-		//view ÆäÀÌÁö¿¡¼­ ÇÊ¿äÇÑ ³»¿ë HttpServletRequest ¿¡ ´ã±â
+		//view ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ HttpServletRequest ï¿½ï¿½ ï¿½ï¿½ï¿½
 		request.setAttribute("dto", resultDto);
 		request.setAttribute("condition", condition);
 		request.setAttribute("keyword", keyword);
 		request.setAttribute("encodedK", encodedK);
 		
-		//±Û Á¶È¸¼ö ¿Ã¸®±â
+		//ï¿½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Ã¸ï¿½ï¿½ï¿½
 		reviewDao.addViewCount(num);
 		
-		/* ¾Æ·¡´Â ´ñ±Û ÆäÀÌÂ¡ Ã³¸® °ü·Ã ºñÁî´Ï½º ·ÎÁ÷ ÀÔ´Ï´Ù.*/
+		/* ì•„ë˜ëŠ” ëŒ“ê¸€ í˜ì´ì§• ì²˜ë¦¬ ê´€ë ¨ ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§ ì…ë‹ˆë‹¤.*/
 		final int PAGE_ROW_COUNT=5;
 		final int PAGE_DISPLAY_COUNT=5;
-		/*
-		//ÀüÃ¼ row ÀÇ °¹¼ö¸¦ ÀĞ¾î¿Â´Ù.
-		//ÀÚ¼¼È÷ º¸¿©ÁÙ ±ÛÀÇ ¹øÈ£°¡ ref_group  ¹øÈ£ ÀÌ´Ù. 
-		int totalRow=cafeCommentDao.getCount(num);
+		
+		//ì „ì²´ row ì˜ ê°¯ìˆ˜ë¥¼ ì½ì–´ì˜¨ë‹¤.
+		//ìì„¸íˆ ë³´ì—¬ì¤„ ê¸€ì˜ ë²ˆí˜¸ê°€ ref_group  ë²ˆí˜¸ ì´ë‹¤. 
+		int totalRow=replyDao.getCount(num);
 
-		//º¸¿©ÁÙ ÆäÀÌÁöÀÇ ¹øÈ£(¸¸ÀÏ pageNum ÀÌ ³Ñ¾î¿ÀÁö ¾ÊÀ¸¸é °¡Àå ¸¶Áö¸· ÆäÀÌÁö)
+		//ë³´ì—¬ì¤„ í˜ì´ì§€ì˜ ë²ˆí˜¸(ë§Œì¼ pageNum ì´ ë„˜ì–´ì˜¤ì§€ ì•Šìœ¼ë©´ ê°€ì¥ ë§ˆì§€ë§‰ í˜ì´ì§€)
 		String strPageNum=request.getParameter("pageNum");
-		//ÀüÃ¼ ÆäÀÌÁöÀÇ °¹¼ö ±¸ÇÏ±â
+		//ì „ì²´ í˜ì´ì§€ì˜ ê°¯ìˆ˜ êµ¬í•˜ê¸°
 		int totalPageCount=
 						(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
-		//ÀÏ´Ü ¸¶Áö¸· ÆäÀÌÁöÀÇ ´ñ±Û ¸ñ·ÏÀ» º¸¿©ÁÖ±â·Î ÇÏ°í 
+		//ì¼ë‹¨ ë§ˆì§€ë§‰ í˜ì´ì§€ì˜ ëŒ“ê¸€ ëª©ë¡ì„ ë³´ì—¬ì£¼ê¸°ë¡œ í•˜ê³  
 		int pageNum=totalPageCount;
-		//¸¸ÀÏ ÆäÀÌÁö ¹øÈ£°¡ ³Ñ¾î¿Â´Ù¸é
+		//ë§Œì¼ í˜ì´ì§€ ë²ˆí˜¸ê°€ ë„˜ì–´ì˜¨ë‹¤ë©´
 		if(strPageNum!=null) {
-			//³Ñ¾î¿Â ÆäÀÌÁö¿¡ ÇØ´çÇÏ´Â ´ñ±Û ¸ñ·ÏÀ» º¸¿©ÁÖµµ·Ï ÇÑ´Ù. 
+			//ë„˜ì–´ì˜¨ í˜ì´ì§€ì— í•´ë‹¹í•˜ëŠ” ëŒ“ê¸€ ëª©ë¡ì„ ë³´ì—¬ì£¼ë„ë¡ í•œë‹¤. 
 			pageNum=Integer.parseInt(strPageNum);
 		}
-		//º¸¿©ÁÙ ÆäÀÌÁö µ¥ÀÌÅÍÀÇ ½ÃÀÛ ResultSet row ¹øÈ£
+		//ë³´ì—¬ì¤„ í˜ì´ì§€ ë°ì´í„°ì˜ ì‹œì‘ ResultSet row ë²ˆí˜¸
 		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
-		//º¸¿©ÁÙ ÆäÀÌÁö µ¥ÀÌÅÍÀÇ ³¡ ResultSet row ¹øÈ£
+		//ë³´ì—¬ì¤„ í˜ì´ì§€ ë°ì´í„°ì˜ ë ResultSet row ë²ˆí˜¸
 		int endRowNum=pageNum*PAGE_ROW_COUNT;
 		
 		
-		//½ÃÀÛ ÆäÀÌÁö ¹øÈ£
+		//ì‹œì‘ í˜ì´ì§€ ë²ˆí˜¸
 		int startPageNum=
 			1+((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
-		//³¡ ÆäÀÌÁö ¹øÈ£
+		//ë í˜ì´ì§€ ë²ˆí˜¸
 		int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
-		//³¡ ÆäÀÌÁö ¹øÈ£°¡ Àß¸øµÈ °ªÀÌ¶ó¸é 
+		//ë í˜ì´ì§€ ë²ˆí˜¸ê°€ ì˜ëª»ëœ ê°’ì´ë¼ë©´ 
 		if(totalPageCount < endPageNum){
-			endPageNum=totalPageCount; //º¸Á¤ÇØÁØ´Ù. 
+			endPageNum=totalPageCount; //ë³´ì •í•´ì¤€ë‹¤. 
 		}
-		*/
+		
+		// CafeCommentDto ê°ì²´ì— ìœ„ì—ì„œ ê³„ì‚°ëœ startRowNum ê³¼ endRowNum ì„ ë‹´ëŠ”ë‹¤.
+		ReplyDto commentDto=new ReplyDto();
+		commentDto.setStartRowNum(startRowNum);
+		commentDto.setEndRowNum(endRowNum);
+		//ref_group ë²ˆí˜¸ë„ ë‹´ëŠ”ë‹¤.
+		commentDto.setRef_group(num);
+		
+		//DB ì—ì„œ ëŒ“ê¸€ ëª©ë¡ì„ ì–»ì–´ì˜¨ë‹¤.
+		List<ReplyDto> commentList=replyDao.getList(commentDto);
+		//request ì— ë‹´ì•„ì¤€ë‹¤.
+		request.setAttribute("commentList", commentList);
+		request.setAttribute("totalPageCount", totalPageCount);
+		request.setAttribute("startPageNum", startPageNum);
+		request.setAttribute("endPageNum", endPageNum);
+		request.setAttribute("pageNum", pageNum);
+		
 		
 	}
 		
-
-
 	@Override
 	public void saveContent(ReviewDto dto) {
 		reviewDao.insert(dto);
@@ -195,5 +213,102 @@ public class ReviewServiceImpl implements ReviewService{
 		reviewDao.delete(num);
 		
 	}
+	@Override
+	public void saveComment(HttpServletRequest request) {
+		//ëŒ“ê¸€ ì‘ì„±ì
+		String writer=(String)request.getSession().getAttribute("id");
+		//í¼ ì „ì†¡ë˜ëŠ” ëŒ“ê¸€ì˜ ì •ë³´ ì–»ì–´ë‚´ê¸°
+		int ref_group=Integer.parseInt(request.getParameter("ref_group"));
+		String target_id=request.getParameter("target_id");
+		String content=request.getParameter("content");
+		/*
+		 *  ì›ê¸€ì˜ ëŒ“ê¸€ì€ comment_group ë²ˆí˜¸ê°€ ì „ì†¡ì´ ì•ˆë˜ê³ 
+		 *  ëŒ“ê¸€ì˜ ëŒ“ê¸€ì€ comment_group ë²ˆí˜¸ê°€ ì „ì†¡ì´ ëœë‹¤.
+		 *  ë”°ë¼ì„œ null ì—¬ë¶€ë¥¼ ì¡°ì‚¬í•˜ë©´ ì›ê¸€ì˜ ëŒ“ê¸€ì¸ì§€ ëŒ“ê¸€ì˜ ëŒ“ê¸€ì¸ì§€ íŒë‹¨í• ìˆ˜ ìˆë‹¤. 
+		 */
+		String comment_group=request.getParameter("comment_group");
+		//ìƒˆ ëŒ“ê¸€ì˜ ê¸€ë²ˆí˜¸ëŠ” dao ë¥¼ ì´ìš©í•´ì„œ ë¯¸ë¦¬ ì–»ì–´ë‚¸ë‹¤. 
+		int seq=replyDao.getSequence();
+		
+		//ì €ì¥í•  ëŒ“ê¸€ ì •ë³´ë¥¼ dto ì— ë‹´ê¸°
+		ReplyDto dto=new ReplyDto();
+		dto.setNum(seq);
+		dto.setWriter(writer);
+		dto.setTarget_id(target_id);
+		dto.setContent(content);
+		dto.setRef_group(ref_group);
+		if(comment_group==null) {//ì›ê¸€ì˜ ëŒ“ê¸€ì¸ ê²½ìš° 
+			//ëŒ“ê¸€ì˜ ê¸€ë²ˆí˜¸ê°€ comment_group ë²ˆí˜¸ê°€ ëœë‹¤. 
+			dto.setComment_group(seq);
+		}else {//ëŒ“ê¸€ì˜ ëŒ“ê¸€ì¸ ê²½ìš° 
+			//í¼ ì „ì†¡ëœ comment_group ë²ˆí˜¸ë¥¼ ìˆ«ìë¡œ ë°”ê¿”ì„œ dto ì— ë„£ì–´ì¤€ë‹¤.
+			dto.setComment_group(Integer.parseInt(comment_group));
+		}
+		//ëŒ“ê¸€ ì •ë³´ë¥¼ DB ì— ì €ì¥í•œë‹¤.
+		replyDao.insert(dto);
+	}
+
+	@Override
+	public void deleteComment(HttpServletRequest request) {
+		//GET ë°©ì‹ íŒŒë¼ë¯¸í„°ë¡œ ì „ë‹¬ë˜ëŠ” ì‚­ì œí•  ëŒ“ê¸€ ë²ˆí˜¸ 
+		int num=Integer.parseInt(request.getParameter("num"));
+		//ì„¸ì…˜ì— ì €ì¥ëœ ë¡œê·¸ì¸ëœ ì•„ì´ë””
+		String id=(String)request.getSession().getAttribute("id");
+		//ëŒ“ê¸€ì˜ ì •ë³´ë¥¼ ì–»ì–´ì™€ì„œ ëŒ“ê¸€ì˜ ì‘ì„±ìì™€ ê°™ì€ì§€ ë¹„êµ í•œë‹¤.
+		String writer=replyDao.getData(num).getWriter();
+		/*
+		 * if(!writer.equals(id)) { throw new NotDeleteException("ë‚¨ì˜ ëŒ“ê¸€ì„ ì‚­ì œí• ìˆ˜ ì—†ìŠµë‹ˆë‹¤."); }
+		 */
+		replyDao.delete(num);
+	}
+
+	@Override
+	public void updateComment(ReplyDto dto) {
+		replyDao.update(dto);
+	}
+
+	@Override
+	public void moreCommentList(HttpServletRequest request) {
+		//íŒŒë¼ë¯¸í„°ë¡œ ì „ë‹¬ëœ pageNum ê³¼ ref_group ë²ˆí˜¸ë¥¼ ì½ì–´ì˜¨ë‹¤. 
+		int pageNum=Integer.parseInt(request.getParameter("pageNum"));
+		int ref_group=Integer.parseInt(request.getParameter("ref_group"));
+		
+		ReviewDto dto=reviewDao.getData(ref_group);
+		request.setAttribute("dto", dto);
+		
+		/* ì•„ë˜ëŠ” ëŒ“ê¸€ í˜ì´ì§• ì²˜ë¦¬ ê´€ë ¨ ë¹„ì¦ˆë‹ˆìŠ¤ ë¡œì§ ì…ë‹ˆë‹¤.*/
+		final int PAGE_ROW_COUNT=5;
+		
+		//ë³´ì—¬ì¤„ í˜ì´ì§€ ë°ì´í„°ì˜ ì‹œì‘ ResultSet row ë²ˆí˜¸
+		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
+		//ë³´ì—¬ì¤„ í˜ì´ì§€ ë°ì´í„°ì˜ ë ResultSet row ë²ˆí˜¸
+		int endRowNum=pageNum*PAGE_ROW_COUNT;
+		
+		//ì „ì²´ row ì˜ ê°¯ìˆ˜ë¥¼ ì½ì–´ì˜¨ë‹¤.
+		//ìì„¸íˆ ë³´ì—¬ì¤„ ê¸€ì˜ ë²ˆí˜¸ê°€ ref_group  ë²ˆí˜¸ ì´ë‹¤. 
+		int totalRow=replyDao.getCount(ref_group);
+		//ì „ì²´ í˜ì´ì§€ì˜ ê°¯ìˆ˜ êµ¬í•˜ê¸°
+		int totalPageCount=
+				(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+		
+		// CafeCommentDto ê°ì²´ì— ìœ„ì—ì„œ ê³„ì‚°ëœ startRowNum ê³¼ endRowNum ì„ ë‹´ëŠ”ë‹¤.
+		ReplyDto commentDto=new ReplyDto();
+		commentDto.setStartRowNum(startRowNum);
+		commentDto.setEndRowNum(endRowNum);
+		//ref_group ë²ˆí˜¸ë„ ë‹´ëŠ”ë‹¤.
+		commentDto.setRef_group(ref_group);
+		
+		//DB ì—ì„œ ëŒ“ê¸€ ëª©ë¡ì„ ì–»ì–´ì˜¨ë‹¤.
+		List<ReplyDto> commentList=replyDao.getList(commentDto);
+		//request ì— ë‹´ì•„ì¤€ë‹¤.
+		request.setAttribute("commentList", commentList);
+		request.setAttribute("totalPageCount", totalPageCount);	
+		
+	}
+    @Override
+    public int count(int bno) {
+        return 0;
+    }
+    
 
 }

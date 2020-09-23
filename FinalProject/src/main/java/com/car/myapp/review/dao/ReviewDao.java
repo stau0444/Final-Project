@@ -5,20 +5,20 @@ import java.util.List;
 import com.car.myapp.review.dto.ReviewDto;
 
 public interface ReviewDao {
-	//±Û¸ñ·Ï
+	//ê¸€ëª©ë¡
 	public List<ReviewDto> getList(ReviewDto dto);
-	//±ÛÀÇ °¹¼ö
+	//ê¸€ì˜ ê°¯ìˆ˜
 	public int getCount(ReviewDto dto);
-	//±Û Ãß°¡
+	//ê¸€ ì¶”ê°€
 	public void insert(ReviewDto dto);
-	//±ÛÁ¤º¸ ¾ò¾î¿À±â
+	//ê¸€ì •ë³´ ì–»ì–´ì˜¤ê¸°
 	public ReviewDto getData(int num);
-	//Å°¿öµå¸¦ È°¿ëÇÑ ±ÛÁ¤º¸ ¾ò¾î¿À±â
+	//í‚¤ì›Œë“œë¥¼ í™œìš©í•œ ê¸€ì •ë³´ ì–»ì–´ì˜¤ê¸°
 	public ReviewDto getData(ReviewDto dto);
-	//Á¶È¸¼ö Áõ°¡ ½ÃÅ°±â
+	//ì¡°íšŒìˆ˜ ì¦ê°€ ì‹œí‚¤ê¸°
 	public void addViewCount(int num);
-	//±Û »èÁ¦
+	//ê¸€ ì‚­ì œ
 	public void delete(int num);
-	//±Û ¼öÁ¤
+	//ê¸€ ìˆ˜ì •
 	public void update(ReviewDto dto);
 }
