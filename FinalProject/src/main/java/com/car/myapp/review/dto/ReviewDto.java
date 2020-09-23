@@ -9,8 +9,15 @@ public class ReviewDto {
 	private String regdate;
 	private int startRowNum;
 	private int endRowNum;
-	private int prevNum; //ÀÌÀü±ÛÀÇ ±Û¹øÈ£
-	private int nextNum; //´ÙÀ½±ÛÀÇ ±Û¹øÈ£
+	private int prevNum; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¹ï¿½È£
+	private int nextNum; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¹ï¿½È£
+    private int recnt;            // **ê²Œì‹œê¸€ ëŒ“ê¸€ì˜ ìˆ˜ ì¶”ê°€
+
+
+	
+	public void setRecnt(int recnt) {
+		this.recnt = recnt;
+	}
 	public int getNum() {
 		return num;
 	}
@@ -71,6 +78,8 @@ public class ReviewDto {
 	public void setNextNum(int nextNum) {
 		this.nextNum = nextNum;
 	}
-	
+	public int getRecnt() {
+		return recnt;
+	}
 	
 }
