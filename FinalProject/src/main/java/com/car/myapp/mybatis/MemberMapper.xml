@@ -10,4 +10,14 @@
 	<select id="checkid" parameterType="string" resultType="string">
 		SELECT user_id FROM user_all WHERE user_id=#{user_id}
 	</select>
+	<insert id="verification" parameterType="memberDto">
+		INSERT INTO verification(userPhone,verificationCode) 
+		VALUES(#{userPhone},#{verificationCode})
+	</insert>
+	<select id="checkVCode" parameterType="verificationDto" resultType="string">
+		SELECT * FROM verification WHERE userPhone=#{userPhone} AND  verificationCode=#{verificationCode}
+	</select>
+	<delete id="deleteVCode" parameterType="string">
+		DELETE FROM verification WHERE userPhone=#{userPhone}
+	</delete>
 </mapper>
