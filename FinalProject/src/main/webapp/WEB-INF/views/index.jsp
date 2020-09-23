@@ -17,6 +17,11 @@
 	<div id="이상훈">
 		<li><a href="review/list.do">리뷰 페이지 가기</a></li>
 	</div>
+	<div id="홍덕환">
+		<a href="">ip등록</a>
+		<a href="">관리자 로그인</a>
+		<a href="manager/private/mypage.do">관리자 페이지</a>
+	</div>
 	<!-- 이 밑으로는 태희씨가 작업하시면 될 것 같아요 -->
 	
 	<h2>인덱스페이지입니다</h2>
