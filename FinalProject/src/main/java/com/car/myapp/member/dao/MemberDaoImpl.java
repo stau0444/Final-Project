@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.car.myapp.member.dto.MemberDto;
+import com.car.myapp.member.dto.verificationDto;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -25,12 +26,41 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public boolean checkId(String user_id) {
 		String isExist=session.selectOne("member.checkid",user_id);
-		
-		System.out.println(isExist);
 		if(isExist==null) {
 			return false;
 		}else {
 			return true;
+		}
+	}
+
+	@Override
+	public boolean verfication(verificationDto dto) {
+		int isValid=session.insert("member.verification", dto);
+		if(isValid>0) {
+			System.out.println("인증번호들어옴");
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean checkVCode(verificationDto dto) {
+		String isExist=session.selectOne("member.checkVCode", dto);
+		if(isExist==null) {
+			return false;
+		}else {
+			return true;			
+		}
+	}
+
+	@Override
+	public boolean deleteVCode(String userPhone) {
+		int isDelete=session.delete("member.deleteVCode",userPhone);
+		if(isDelete>0) {
+			return true;
+		}else {
+			return false;			
 		}
 	}
 }
