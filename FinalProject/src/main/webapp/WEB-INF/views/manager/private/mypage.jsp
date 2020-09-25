@@ -12,7 +12,6 @@
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.5.1.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/angular-route.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/angular-animate.min.js"></script>
-<script src="${pageContext.request.contextPath }/SmartEditor/js/HuskyEZCreator.js"></script>
 <style>
 	/* .page-change-animation 클래스를 가지고 있는 요소가 만들어 질때 적용할 애니매이션 */
 	.page-change-animation.ng-enter{
@@ -24,8 +23,27 @@
 
 	var managerApp = angular.module("managerApp", ["ngRoute", "ngAnimate"]);
 
-	managerApp.controller("managerCtrl", function($scope, $http, $rootScope){
+	managerApp.controller("managerCtrl", function($scope, $http){
 		
+	});
+	
+	managerApp.controller("ipCtrl", function($scope, $http){
+		$scope.addIp = function(){
+			$http({
+				url : "/practice/manager/private/join.do",
+				method : "post",
+				params : {ip_num : $scope.inputIp},
+				headers : {"Content-Type":"application/x-www-form-urlencoded;"}
+			}).success(function(data){
+				if(data.isSuccess){
+					alert("ip 등록에 성공했습니다.");
+					console.log(data.isSuccess);
+				}else{
+					alert("ip 등록에 실패했습니다.")
+					console.log(data.isSuccess);
+				}
+			});
+		}
 	});
 	
 	managerApp.config(function($routeProvider){

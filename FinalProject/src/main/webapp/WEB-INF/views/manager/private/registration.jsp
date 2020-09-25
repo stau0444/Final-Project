@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<div class="container">
+<div class="container" data-ng-controller="ipCtrl">
 	<table class="table">
   <thead>
     <tr>
@@ -36,8 +36,8 @@
 	
 	<form>
 		<div class="form-group float-right">
-			<input type="text" name="ip" placeholder="ip입력"/>
-			<button class="btn btn-primary">등록</button>
+			<input type="text" name="ip" placeholder="ip입력" data-ng-model="inputIp"/>
+			<button data-ng-click="addIp()" class="btn btn-primary">등록</button>
 		</div>
 		
 	</form>

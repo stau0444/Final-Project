@@ -1,10 +1,22 @@
 package com.car.myapp.manager.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.car.myapp.manager.service.AdminService;
 
 @Controller
 public class AdminController {
+	
+	@Autowired
+	private AdminService adminService;
 	
 	@RequestMapping(value = "/manager/private/mypage")
 	public String ManagerPage(){
@@ -40,5 +52,14 @@ public class AdminController {
 	@RequestMapping(value = "/manager/private/qna/answer_form")
 	public String answerForm() {
 		return "manager/private/qna/answer_form";
+	}
+	
+	@RequestMapping(value = "/manager/private/join", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> JoinIp(@RequestParam String ip_num){
+		
+		Map<String, Object> map = adminService.addIp(ip_num);
+
+		return map;
 	}
 }
