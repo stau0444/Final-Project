@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <script type="text/javascript">
-       alert(${naverLogin}.response.nickname+"님 네이버로 로그인되었습니다.");
+       alert("${id}님이 네이버로 로그인 되었습니다");
        location.href="/mycar/index.do";
 </script>
 

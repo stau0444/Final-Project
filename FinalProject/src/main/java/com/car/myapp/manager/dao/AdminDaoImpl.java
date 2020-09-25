@@ -19,6 +19,7 @@ public class AdminDaoImpl implements AdminDao{
 	@Override
 	public void addIp(String ip_num) {
 		// TODO Auto-generated method stub
+		System.out.println(ip_num);
 		session.insert("admin.addIp", ip_num);
 	}
 	
