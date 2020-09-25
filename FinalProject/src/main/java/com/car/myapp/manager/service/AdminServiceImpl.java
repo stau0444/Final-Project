@@ -27,6 +27,7 @@ public class AdminServiceImpl implements AdminService{
 		
 		if(checkIp == null) {
 			isSuccess = true;
+			adminDao.addIp(ip_num);
 			map.put("isSuccess", isSuccess);
 		}
 		return map;
