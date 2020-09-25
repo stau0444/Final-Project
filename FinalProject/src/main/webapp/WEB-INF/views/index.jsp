@@ -11,7 +11,6 @@
 		border-radius:20px;
 		border:3px solid YellowGreen;
 		padding:3px;
-		margin-bottm:30px;
 	}
 	.LoginInfo a{
 		text-decoration: none;
@@ -45,6 +44,8 @@
 			</span>
 		</c:otherwise>
 	</c:choose>
+	<div style="margin-top:30px;"></div>
+	<!-- 로그인표시끝 -->
 	<!-- 각자 맡으실 페이지의 링크를  아래의 div에 적어두면 
 	메인페이지 하시는분이 편하게할  수 있을거 같으니 본인의 링크는
 	아래 div안에 작성해주세요 -->
