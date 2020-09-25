@@ -22,10 +22,9 @@ var searchPostCode=function(){
 	var carApp=angular.module("carApp",[]);
 	carApp.controller("loginCtrl",function($scope,$http){
 		$scope.isExist=true;
-		$scope.clickedCount=0;
 		$scope.addUser=function(){
-			console.log($scope.inputAddr)
-			console.log($scope.inputAddr+$scope.addrDetail);
+			$scope.inputAddr=document.getElementById("addr").value;
+			$scope.inputPCode=document.getElementById("p_code").value;
 			$http({
 				url:'sign_up.do',
 				method:'post',
@@ -33,7 +32,7 @@ var searchPostCode=function(){
 					user_pwd:$scope.inputPwd,
 					user_name:$scope.inputName , 
 					user_phone:$scope.inputPhone , 
-					user_addr:$scope.inputAddr , 
+					user_addr:$scope.inputAddr+$scope.addrDetail , 
 					user_p_code:$scope.inputPCode , 
 					user_sort:$scope.inputSort},
 				headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
@@ -51,7 +50,6 @@ var searchPostCode=function(){
 				if(data.isExist){
 					console.log(data);
 					alert("이미 존재하는 아이디입니다");
-					$scope.clickedCount++
 				}else{
 					alert("사용가능한 아이디입니다");
 					$scope.isExist=false;
