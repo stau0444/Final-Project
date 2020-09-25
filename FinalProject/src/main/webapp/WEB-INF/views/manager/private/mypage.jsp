@@ -30,7 +30,7 @@
 	managerApp.controller("ipCtrl", function($scope, $http){
 		$scope.addIp = function(){
 			$http({
-				url : "/practice/manager/private/join.do",
+				url : "/mycar/manager/private/join.do",
 				method : "post",
 				params : {ip_num : $scope.inputIp},
 				headers : {"Content-Type":"application/x-www-form-urlencoded;"}
