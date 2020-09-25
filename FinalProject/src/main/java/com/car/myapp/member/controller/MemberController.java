@@ -109,5 +109,10 @@ public class MemberController {
 	public String verifyError() {
 		return "/error/verifyError";
 	}
+	@RequestMapping("member/logout")
+	public String logOut(HttpSession session) {
+		session.invalidate();
+		return "/member/logout";
+	}
 	
 }

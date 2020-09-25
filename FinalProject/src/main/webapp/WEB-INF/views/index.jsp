@@ -6,27 +6,48 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	.LoginInfo{
+		border-radius:20px;
+		border:3px solid YellowGreen;
+		padding:3px;
+		margin-bottm:30px;
+	}
+	.LoginInfo a{
+		text-decoration: none;
+		margin:20px;
+	}
+</style>
 </head>
 <body>
 	<!--로그인 표시 -->
-	<c:if test="${id ne null}">
+	<c:choose>
+		<c:when test="${id ne null}">
 		<c:choose>
 			<c:when test="${isNLogin ne null}">
-				<h2>${id}님이 네이버로 로그인 되었습니다</h2>
+				<span class="LoginInfo">
+					<span><strong>${id}</strong>님이 네이버로 로그인 되었습니다</span>
+					<a href="member/logout.do">로그아웃</a>
+				</span>
 			</c:when>
 			<c:otherwise>
-				<h2>${id}님 로그인 되었습니다</h2>
+				<span class="LoginInfo">
+					<span><strong>${id}</strong>님 로그인 되었습니다</span>
+					<a href="member/logout.do">로그아웃</a>
+				</span>
 			</c:otherwise>
 		</c:choose>
-	</c:if>
-	<h2></h2>
+		</c:when>
+		<c:otherwise>
+			<span class="LoginInfo">
+				<a href="member/identification_form.do">회원가입</a>
+				<a href="member/login_form.do">로그인</a>
+			</span>
+		</c:otherwise>
+	</c:choose>
 	<!-- 각자 맡으실 페이지의 링크를  아래의 div에 적어두면 
 	메인페이지 하시는분이 편하게할  수 있을거 같으니 본인의 링크는
 	아래 div안에 작성해주세요 -->
-	<div id="황경욱">
-		<a href="member/identification_form.do">회원가입</a>
-		<a href="member/login_form.do">로그인</a>
-	</div>
 	<div id="이상훈">
 		<li><a href="review/list.do">리뷰 페이지 가기</a></li>
 	</div>
