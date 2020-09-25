@@ -1,5 +1,7 @@
 package com.car.myapp.member.dao;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,9 +16,10 @@ public class MemberDaoImpl implements MemberDao {
 	private SqlSession session;
 
 	@Override
-	public boolean insert(MemberDto dto) {
+	public boolean insert(MemberDto dto,HttpSession sessionV) {
 		int isSuccess=session.insert("member.insert",dto);
 		if(isSuccess>0) {
+			//sessionV.invalidate();
 			return true;
 		}else {
 			return false;			
@@ -45,11 +48,12 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public boolean checkVCode(verificationDto dto) {
+	public boolean checkVCode(verificationDto dto,HttpSession sessionV) {
 		String isExist=session.selectOne("member.checkVCode", dto);
 		if(isExist==null) {
 			return false;
 		}else {
+			sessionV.setAttribute("isVerified", "verified");
 			return true;			
 		}
 	}
@@ -62,5 +66,11 @@ public class MemberDaoImpl implements MemberDao {
 		}else {
 			return false;			
 		}
+	}
+
+	@Override
+	public MemberDto isExistId(String user_id) {
+		MemberDto savedDto=session.selectOne("member.isExistId",user_id);
+		return savedDto;
 	}
 }
