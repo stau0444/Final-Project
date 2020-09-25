@@ -28,7 +28,7 @@
 			}).success(function(data){
 				if(data.isValid){
 					alert("인증 되었습니다!")	
-					location.href="identification.do"
+					location.replace("/mycar/member/verified/identification.do")
 				}else{
 					alert("인증에 실패했습니다. 다시시도 해주세요!")
 				}
@@ -38,7 +38,7 @@
 	})
 </script>
 </head>
-<body data-ng-controller="verificationCtrl">
+<body  data-ng-controller="verificationCtrl">
 	<form>
 		<table border="1"  width="300" height="200">
 			<tr>

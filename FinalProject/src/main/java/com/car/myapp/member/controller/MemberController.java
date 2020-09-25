@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +35,14 @@ public class MemberController {
 	//-----------------------------여기서 부터
 	
 	//본인인증폼 
-	@RequestMapping("member/identification_form.do")
-	public ModelAndView identification_form(ModelAndView mView) {
-		
+	@RequestMapping("member/identification_form")
+	public ModelAndView identification_form(ModelAndView mView,HttpSession session) {
+		session.invalidate();
 		mView.setViewName("/member/identification_form");
 		return mView;
 	}
 	//본인인증 기능
-	@RequestMapping(value = "/member/sendSms.do")
+	@RequestMapping(value = "/member/sendSms")
     @ResponseBody
 	public Map<String,Object> sendSms(HttpServletRequest request) throws Exception {
 		/*
@@ -60,51 +62,52 @@ public class MemberController {
       return memberService.sendSMS(request); //문자 메시지 발송 성공했을때 number페이지로 이동함
     }
 	//인증번호 확인코드
-	@RequestMapping("member/checkVCode.do")
+	@RequestMapping("member/checkVCode")
 	@ResponseBody
-	public Map<String,Object> checkVCode(verificationDto dto){
-		return memberService.checkVCode(dto);
+	public Map<String,Object> checkVCode(verificationDto dto,HttpSession sessionV){
+		return memberService.checkVCode(dto,sessionV);
 	}
 	//인증후 회원가입 페이지로 넘겨주는 코드
-	@RequestMapping("member/identification.do")
+	@RequestMapping("member/verified/identification")
 	public ModelAndView identification(ModelAndView mView,String userPhone) throws Exception {
-		
 		boolean isCertified=memberService.identification();
 		if(isCertified) {
-			mView.setViewName("/member/signup_form");			
+			mView.setViewName("/member/signup_form");	
+			
 		}else {
 			mView.setViewName("/member/identification_form");
 		}
 		return mView;
 	}
 	//회원가입 아이디 중복확인 기능
-	@RequestMapping("member/checkid.do")
+	@RequestMapping("member/verified/checkid")
 	@ResponseBody
 	public Map<String,Object> checkId(String user_id){
 		Map<String,Object> map=memberService.checkId(user_id);
 		return map;
 	}
 	//회원가입 기능
-	@RequestMapping("member/sign_up.do")
-	public ModelAndView sign_up(ModelAndView mView , MemberDto dto) {
-		memberService.addUser(mView,dto);
+	@RequestMapping("member/verified/sign_up")
+	public ModelAndView sign_up(ModelAndView mView , MemberDto dto,HttpSession sessionV) {
+		memberService.addUser(mView,dto,sessionV);
 		mView.setViewName("/member/sign_up");
 		return mView;
 	}
 	
 	//---------------------------------------여기까지 트렌젝션으로 묶는다
 	
-	//로그인폼
-	@RequestMapping("member/login_form.do")
-	public ModelAndView login_form(ModelAndView mView) {
-		mView.setViewName("/member/login_form");
-		return mView;
-	}
+	
 	//로그인 기능
-	@RequestMapping("member/private/login.do")
-	public ModelAndView login(ModelAndView mView, MemberDto dto) {
-		mView.addObject("isSuccess", true);
-		mView.setViewName("/member/private/login");
-		return mView;
+	@RequestMapping("member/private/login")
+	@ResponseBody
+	public Map<String,Object> login(ModelAndView mView, MemberDto dto,HttpSession session) {
+
+		return memberService.loginProcess(dto, mView, session);
 	}
+	//인증에러 페이지로 이동시키는 코드
+	@RequestMapping("member/error/verifyError")
+	public String verifyError() {
+		return "/error/verifyError";
+	}
+	
 }

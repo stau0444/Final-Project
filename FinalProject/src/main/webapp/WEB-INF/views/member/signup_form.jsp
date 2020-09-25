@@ -5,16 +5,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="../resources/js/angular.min.js"></script>
+<script src="../../resources/js/angular.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+var searchPostCode=function(){
+	new daum.Postcode({
+        oncomplete: function(data) {
+        	document.getElementById("addr").value = data.address;
+        	document.getElementById("p_code").value =data.zonecode;
+        }
+    }).open();
+
+};
+</script>
 <script>
 	var carApp=angular.module("carApp",[]);
 	carApp.controller("loginCtrl",function($scope,$http){
 		$scope.isExist=true;
 		$scope.clickedCount=0;
 		$scope.addUser=function(){
+			console.log($scope.inputAddr)
+			console.log($scope.inputAddr+$scope.addrDetail);
 			$http({
-				url:'/mycar/member/sign_up.do',
+				url:'sign_up.do',
 				method:'post',
 				params:{user_id:$scope.inputId ,
 					user_pwd:$scope.inputPwd,
@@ -26,12 +39,12 @@
 				headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
 			}).success(function(data){
 				alert("회원 가입에 성공했습니다 로그인을 해주세요.");
-				location.href="/mycar/member/login_form.do"
+				location.replace("/mycar/member/login_form.do")
 			});
 		};
 		$scope.checkId=function(){
 			$http({
-				url:'/mycar/member/checkid.do',
+				url:'/mycar/member/verified/checkid.do',
 				method:'post',
 				params:{user_id:$scope.inputId}
 			}).success(function(data){
@@ -47,22 +60,12 @@
 		};
 	});
 </script>
-<script>
-var searchPostCode=function(){
-	new daum.Postcode({
-        oncomplete: function(data) {
-        	document.getElementById("addr").value = data.address;
-        	document.getElementById("p_code").value =data.zonecode;
-        }
-    }).open();
 
-};
-</script>
 
 </head>
 <body data-ng-controller="loginCtrl">
 	<h2>회원가입폼</h2>
-	<form >
+	<form method="post" >
 		<div>
 			<label for="name">이름</label>
 			<input type="text" id="name"  name="user_name" data-ng-model="inputName"/>
@@ -86,7 +89,11 @@ var searchPostCode=function(){
 		</div>
 		<div>
 			<label for="addr">주소</label>
-			<input type="text" id="addr"  name="user_addr" data-ng-model="inputAddr"/>
+			<input type="text" id="addr"  name="user_addr" data-ng-model="inputAddr" />
+		</div>
+		<div>
+			<label for="addrDetail">상세주소</label>
+			<input type="text" id="addrDetail" data-ng-model="addrDetail"/>
 		</div>
 		<div>
 			<label for="p_code">우편번호</label>
@@ -97,7 +104,7 @@ var searchPostCode=function(){
 			<label for="sort">판매자로 등록</label>
 			<input type="checkbox" id="sort" name="user_sort" data-ng-model="inputSort"/>
 		</div>
-		<button data-ng-click="addUser()" data-ng-disabled=isExist>등록</button>
+		<button data-ng-click="addUser()" data-ng-disabled="isExist">등록</button>
 	</form>
 </body>
 </html>

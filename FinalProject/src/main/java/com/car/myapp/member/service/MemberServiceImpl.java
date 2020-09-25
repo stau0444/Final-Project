@@ -5,9 +5,11 @@ import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,13 +39,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void addUser(ModelAndView mView, MemberDto dto) {
+	public void addUser(ModelAndView mView, MemberDto dto,HttpSession sessionV) {
 
 		String inputPwd = dto.getUser_pwd();
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String encodedPwd = encoder.encode(inputPwd); 
 		dto.setUser_pwd(encodedPwd);
-		boolean isSuccess = memberDao.insert(dto);
+		boolean isSuccess = memberDao.insert(dto,sessionV);
 		mView.addObject("isSuccess", isSuccess);
 		
 	}
@@ -108,13 +110,36 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Map<String, Object> checkVCode(verificationDto dto) {
-		boolean isValid=memberDao.checkVCode(dto);
+	public Map<String, Object> checkVCode(verificationDto dto,HttpSession sessionV) {
+		boolean isValid=memberDao.checkVCode(dto,sessionV);
 		Map<String,Object> map =new HashMap<String, Object>();
 		map.put("isValid",isValid);
 		memberDao.deleteVCode(dto.getUserPhone());
 		return map;
 	}
+
+	@Override
+	public Map<String, Object> loginProcess(MemberDto dto, ModelAndView mView, HttpSession session) {
+		boolean isValid=false;
+		String inputId=dto.getUser_id();
+		MemberDto savedDto=memberDao.isExistId(inputId);
+		if(savedDto!=null) {
+			String savedPwd=savedDto.getUser_pwd();
+			String inputPwd=dto.getUser_pwd();
+			isValid=BCrypt.checkpw(inputPwd, savedPwd);
+		}
+		System.out.println(isValid);
+		Map<String,Object> map = new HashMap<String, Object>();
+		if(isValid) {
+			map.put("isValid",true);
+			map.put("id",inputId);
+			session.setAttribute("id", inputId);
+		}else {
+			map.put("isValid",false);
+		}
+		return map;
+	}
+	
 	
 
 }

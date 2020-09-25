@@ -61,6 +61,10 @@
 		<beans:property name="order" value="0"/>
 	</beans:bean>
 	
+	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+	<beans:bean id="naverLoginBO" class="com.car.myapp.member.controller.NaverLoginBO" />
+	<context:component-scan base-package="com.naverlogin.myapp" />
+	
 	<context:component-scan base-package="com.car.myapp" />
 	
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>	

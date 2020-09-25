@@ -20,4 +20,7 @@
 	<delete id="deleteVCode" parameterType="string">
 		DELETE FROM verification WHERE userPhone=#{userPhone}
 	</delete>
+	<select id="isExistId" parameterType="string" resultType="memberDto">
+		SELECT user_id , user_pwd FROM user_all WHERE user_id=#{user_id}
+	</select>
 </mapper>
