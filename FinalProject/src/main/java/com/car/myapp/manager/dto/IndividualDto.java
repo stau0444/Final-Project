@@ -5,17 +5,22 @@ public class IndividualDto {
 	private String user_id;
 	private String iq_content;
 	private String iq_regdate;
+	private String iq_email;
+	private int iq_category;
+	private String iq_title;
 	
-	public IndividualDto() {
-		// TODO Auto-generated constructor stub
-	}
+	public IndividualDto() {}
 
-	public IndividualDto(int iq_num, String user_id, String iq_content, String iq_regdate) {
+	public IndividualDto(int iq_num, String user_id, String iq_content, String iq_regdate, String iq_email,
+			int iq_category, String iq_title) {
 		super();
 		this.iq_num = iq_num;
 		this.user_id = user_id;
 		this.iq_content = iq_content;
 		this.iq_regdate = iq_regdate;
+		this.iq_email = iq_email;
+		this.iq_category = iq_category;
+		this.iq_title = iq_title;
 	}
 
 	public int getIq_num() {
@@ -49,5 +54,31 @@ public class IndividualDto {
 	public void setIq_regdate(String iq_regdate) {
 		this.iq_regdate = iq_regdate;
 	}
+
+	public String getIq_email() {
+		return iq_email;
+	}
+
+	public void setIq_email(String iq_email) {
+		this.iq_email = iq_email;
+	}
+
+	public int getIq_category() {
+		return iq_category;
+	}
+
+	public void setIq_category(int iq_category) {
+		this.iq_category = iq_category;
+	}
+
+	public String getIq_title() {
+		return iq_title;
+	}
+
+	public void setIq_title(String iq_title) {
+		this.iq_title = iq_title;
+	}
+	
+	
 	
 }

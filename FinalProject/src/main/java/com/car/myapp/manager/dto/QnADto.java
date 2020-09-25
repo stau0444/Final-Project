@@ -4,16 +4,18 @@ public class QnADto {
 	private int num;
 	private String question;
 	private String answer;
+	private int category;
 	
 	public QnADto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public QnADto(int num, String question, String answer) {
+	public QnADto(int num, String question, String answer, int category) {
 		super();
 		this.num = num;
 		this.question = question;
 		this.answer = answer;
+		this.category = category;
 	}
 
 	public int getNum() {
@@ -39,6 +41,14 @@ public class QnADto {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	
-	
+
+	public int getCategory() {
+		return category;
+	}
+
+	public void setCategory(int category) {
+		this.category = category;
+	}
+
+		
 }

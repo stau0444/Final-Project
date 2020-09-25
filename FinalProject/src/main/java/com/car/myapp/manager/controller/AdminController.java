@@ -17,6 +17,11 @@ public class AdminController {
 		return "manager/private/news/news_list";
 	}
 	
+	@RequestMapping(value = "/manager/private/news/news_form")
+	public String newsForm() {
+		return "manager/private/news/news_form";
+	}
+	
 	@RequestMapping(value = "/manager/private/qna/individual")
 	public String individualList() {
 		return "manager/private/qna/individual";
@@ -25,5 +30,15 @@ public class AdminController {
 	@RequestMapping(value = "/manager/private/qna/frequently_ask")
 	public String frequentlyAskList() {
 		return "manager/private/qna/frequently_ask";
+	}
+	
+	@RequestMapping(value = "/manager/private/registration")
+	public String registrationList() {
+		return "manager/private/registration";
+	}
+	
+	@RequestMapping(value = "/manager/private/qna/answer_form")
+	public String answerForm() {
+		return "manager/private/qna/answer_form";
 	}
 }

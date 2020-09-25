@@ -2,10 +2,21 @@
     pageEncoding="UTF-8"%>
 
 	<div class="container">
-		
-		<h1>1:1상담 리스트</h1>
-		
-		<ul>
-			<li>회원탈퇴는 어디서 하는건가요?</li>
-		</ul>
+		<table class="table table-light">
+			<thead >
+				<tr>
+					<th>카테고리</th>
+					<th>제목</th>
+					<th>문의자ID</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>회원관련</td>
+					<td>회원탈퇴는 어떻게하나요?</td>
+					<td>hong</td>
+					<td><a href="#answer-form">답변하기</a></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
