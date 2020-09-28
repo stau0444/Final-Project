@@ -1,6 +1,7 @@
 package com.car.myapp.manager.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,30 @@ public class AdminServiceImpl implements AdminService{
 			adminDao.addIp(ip_num);
 			map.put("isSuccess", isSuccess);
 		}
+		return map;
+	}
+
+	@Override
+	public List<String> ipList() {
+		// TODO Auto-generated method stub
+		return adminDao.ipList();
+	}
+
+	@Override
+	public Map<String, Object> deleteIp(String ip_num) {
+		System.out.println(ip_num);
+		boolean isSuccess = false;
+		int result = adminDao.removeIp(ip_num);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("ip", ip_num);
+		if(result > 0) {
+			isSuccess = true;
+			map.put("isSuccess", isSuccess);
+		}else {
+			map.put("isSuccess", isSuccess);
+		}
+		
+		
 		return map;
 	}
 	

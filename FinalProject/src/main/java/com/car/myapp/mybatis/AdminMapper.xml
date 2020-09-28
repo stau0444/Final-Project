@@ -10,10 +10,24 @@
 			ip_num=#{ip_num}
 	</select>
 	
+	<select id="ipList" resultType="String">
+		select
+			ip_num
+		from
+			user_admin
+	</select>
+	
 	<insert id="addIp" parameterType="String">
 		insert into
 			user_admin(ip_num)
 		values
 			(#{ip_num})
-	</insert>	
+	</insert>
+	
+	<delete id="removeIp" parameterType="String">
+		delete from
+			user_admin
+		where
+			ip_num=#{ip_num}
+	</delete>	
 </mapper>

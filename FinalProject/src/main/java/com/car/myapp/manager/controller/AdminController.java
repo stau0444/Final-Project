@@ -1,6 +1,7 @@
 package com.car.myapp.manager.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,18 @@ public class AdminController {
 		Map<String, Object> map = adminService.addIp(ip_num);
 
 		return map;
+	}
+	
+	@RequestMapping(value = "manager/private/ip_list", method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> ipList(){
+		return adminService.ipList();
+	}
+	
+	@RequestMapping(value = "/manager/private/deleteip", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> deleteIp(@RequestParam String ip_num){
+		
+		return adminService.deleteIp(ip_num);
 	}
 }

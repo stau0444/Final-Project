@@ -20,14 +20,13 @@
 </style>
 
 <script>
-
 	var managerApp = angular.module("managerApp", ["ngRoute", "ngAnimate"]);
 
 	managerApp.controller("managerCtrl", function($scope, $http){
 		
 	});
 	
-	managerApp.controller("ipCtrl", function($scope, $http){
+	managerApp.controller("ipCtrl", function($scope, $http, $location){
 		$scope.addIp = function(){
 			$http({
 				url : "/mycar/manager/private/join.do",
@@ -44,6 +43,27 @@
 				}
 			});
 		}
+		$http({
+			url : "/mycar/manager/private/ip_list.do",
+			method : "get",
+			headers : {"Content-Type":"application/x-www-form-urlencoded;"}
+		}).success(function(data){
+			console.log(data);
+			$scope.list = data;
+			$location.url("/registration");
+		});
+		
+		$scope.deleteIp = function(tmp){
+			$http({
+				url : "/mycar/manager/private/deleteip.do",
+				method : "get",
+				params : {ip_num : tmp},
+				headers : {"Content-Type":"application/x-www-form-urlencoded;"}
+			}).success(function(data){
+				console.log(data.isSuccess);
+			});
+		}
+		
 	});
 	
 	managerApp.config(function($routeProvider){
