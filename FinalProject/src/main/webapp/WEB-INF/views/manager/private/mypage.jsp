@@ -42,6 +42,7 @@
 					console.log(data.isSuccess);
 				}
 			});
+			location.reload();
 		}
 		$http({
 			url : "/mycar/manager/private/ip_list.do",
@@ -62,6 +63,7 @@
 			}).success(function(data){
 				console.log(data.isSuccess);
 			});
+			location.reload();
 		}
 		
 	});
