@@ -7,6 +7,7 @@
 		<typeAlias type="com.car.myapp.manager.dto.NewsDto" alias="newsDto"/>
 		<typeAlias type="com.car.myapp.manager.dto.QnADto" alias="qnaDto"/>
 		<typeAlias type="com.car.myapp.manager.dto.IndividualDto" alias="individualDto"/>
+		<typeAlias type="com.car.myapp.manager.dto.PageDto" alias="pageDto"/>
 
 		<typeAlias type="com.car.myapp.review.dto.ReviewDto" alias="reviewDto"/>
 		<typeAlias type="com.car.myapp.review.dto.ReplyDto" alias="replyDto"/>

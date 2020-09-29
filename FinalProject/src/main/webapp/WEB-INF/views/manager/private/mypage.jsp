@@ -44,15 +44,31 @@
 			});
 			location.reload();
 		}
+		
 		$http({
-			url : "/mycar/manager/private/ip_list.do",
+			url : "/mycar/manager/private/getlist.do",
 			method : "get",
 			headers : {"Content-Type":"application/x-www-form-urlencoded;"}
 		}).success(function(data){
 			console.log(data);
-			$scope.list = data;
+			$scope.list = data.list;
+			$scope.pagelist = data.pageList;
 			$location.url("/registration");
 		});
+		
+		$scope.getList = function(pageNum){
+			$http({
+				url : "/mycar/manager/private/getlist.do",
+				method : "get",
+				params : {pageNum : pageNum},
+				headers : {"Content-Type":"application/x-www-form-urlencoded;"}
+			}).success(function(data){
+				console.log(data);
+				$scope.list = data.list;
+				$scope.pagelist = data.pageList;
+				$location.url("/registration");
+			});
+		}
 		
 		$scope.deleteIp = function(tmp){
 			$http({
@@ -92,7 +108,8 @@
 		})
 		.otherwise({redirectTo:"/QnA_individual"});
 			
-	});
+	});	
+
 </script>
 </head>
 <body>
@@ -106,5 +123,25 @@
 			</ul>
 	</div>
 	<div data-ng-view class="page-change-animation"></div>
+	<script>
+		var reg_ip =/^[1-255].{1,3}.[1-255].{1,3}.[1-255].{1,3}.[1-255].{1,3}$/
+		var isIpValid = false;
+		$("#ipForm").on("submit",function(){
+			if(!isIpValid){
+				alert("양식에 맞지 않습니다.");
+				return false;
+			}
+		});
+		$("#ip").on("input",function(){
+			var inputIp = $("#ip").val();
+			var result = reg_ip.test(inputIp);
+			if(result){
+				isIpValid = true;
+			}else{
+				isIpValid = false;
+			}
+		});
+		
+	</script>
 </body>
 </html>

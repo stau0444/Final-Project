@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.car.myapp.manager.dto.PageDto;
 import com.car.myapp.manager.service.AdminService;
 
 @Controller
@@ -75,5 +78,11 @@ public class AdminController {
 	public Map<String, Object> deleteIp(@RequestParam String ip_num){
 		
 		return adminService.deleteIp(ip_num);
+	}
+	
+	@RequestMapping(value = "manager/private/getlist", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> getList(HttpServletRequest req){
+		return adminService.getList(req);
 	}
 }
