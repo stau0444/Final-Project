@@ -23,4 +23,16 @@
 	<select id="isExistId" parameterType="string" resultType="memberDto">
 		SELECT user_id , user_pwd FROM user_all WHERE user_id=#{user_id}
 	</select>
+	<select id="getUserId" parameterType="string" resultType="string">
+		SELECT user_id FROM user_all WHERE user_phone=#{user_phone}
+	</select>
+	<select id="getUserInfo" parameterType="string" resultType="memberDto">
+		SELECT * FROM user_all WHERE user_id=#{user_id}
+	</select>
+	<update id="changePwd" parameterType="memberDto">
+		UPDATE user_all SET user_pwd=#{user_pwd} WHERE user_id=#{user_id}
+	</update>
+	<select id="checkPhone" parameterType="string" resultType="string">
+		SELECT user_phone FROM user_all WHERE user_phone=#{user_phone}
+	</select>
 </mapper>

@@ -1,5 +1,8 @@
 package com.car.myapp.member.dao;
 
+
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -19,7 +22,7 @@ public class MemberDaoImpl implements MemberDao {
 	public boolean insert(MemberDto dto,HttpSession sessionV) {
 		int isSuccess=session.insert("member.insert",dto);
 		if(isSuccess>0) {
-			//sessionV.invalidate();
+			sessionV.invalidate();
 			return true;
 		}else {
 			return false;			
@@ -72,5 +75,37 @@ public class MemberDaoImpl implements MemberDao {
 	public MemberDto isExistId(String user_id) {
 		MemberDto savedDto=session.selectOne("member.isExistId",user_id);
 		return savedDto;
+	}
+
+	@Override
+	public String getUserId(String user_phone) {
+		String userInfo=session.selectOne("member.getUserId",user_phone);
+		return userInfo;
+	}
+
+	@Override
+	public MemberDto getUserInfo(String user_id) {
+		MemberDto userInfo=session.selectOne("member.getUserInfo", user_id);
+		return userInfo;
+	}
+
+	@Override
+	public boolean changePwd(MemberDto dto) {
+		int isChanged=session.update("member.changePwd",dto);
+		if(isChanged>0) {
+			return true;
+		}else {
+			return false;			
+		}
+	}
+
+	@Override
+	public boolean checkPhone(String user_phone) {
+		String isExist=session.selectOne("member.checkPhone",user_phone);
+		if(isExist!=null) {
+			return true;
+		}else {
+			return false;			
+		}
 	}
 }

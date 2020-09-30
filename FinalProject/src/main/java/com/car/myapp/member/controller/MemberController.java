@@ -115,4 +115,72 @@ public class MemberController {
 		return "/member/logout";
 	}
 	
+	//아이디 찾기 본인인증폼
+	@RequestMapping("member/findid_verifyform")
+	public String findid_verifyForm() {
+		return "/member/findid_verifyform";
+	}
+	//아이디 찾기 sms보내기
+	@RequestMapping("member/findid_sendSMS")
+	@ResponseBody
+	public Map<String, Object> findid(HttpServletRequest request){
+		return memberService.sendSMS(request);
+	}
+	//아이디찾기 본인인증 
+	@RequestMapping("member/findid_verify")
+	@ResponseBody
+	public Map<String,Object> findid_verify(verificationDto dto,HttpSession sessionV){
+		
+		return memberService.checkVCode(dto,sessionV);	
+	}
+	//인증 후 아이디  리턴
+	@RequestMapping("member/verified/findid_form.do")
+	public String findid_form(HttpServletRequest request,String userPhone) {
+		String userPhone1=request.getParameter("userPhone");
+		String userId=memberService.getUserId(userPhone1);
+		System.out.println("userid:"+userId);
+		request.setAttribute("userid", userId);
+		return "/member/findid_form";
+	}
+	//비밀번호 찾기폼
+	@RequestMapping("member/findpwd_form")
+	public String findpwd_form() {
+		return("/member/findpwd_form");
+	}
+	//비밀번호 찾기 본인인증폼
+	@RequestMapping("member/findpwd_verifyform")
+	@ResponseBody
+	public Map<String, Object> findpwd_verifyform(String user_id) {
+			
+		return memberService.getUserInfo(user_id);
+	}
+	//비밀번호 찾기 sms보내기
+	@RequestMapping("member/findpwd_sendSMS")
+	@ResponseBody
+	public Map<String, Object> findpwd(HttpServletRequest request){
+		return memberService.sendSMS(request);
+	}
+	//비밀번호 찾기 인증번호 확인코드
+	@RequestMapping("member/findpwd_checkVCode")
+	@ResponseBody
+	public Map<String,Object> findpwd_checkVCode(verificationDto dto,HttpSession sessionV){
+		return memberService.checkVCode(dto,sessionV);
+	}	
+	//본인확인 후 비밀번호 변경 폼 
+	@RequestMapping("member/changepwd_form")
+	public String changepwd_form() {
+		return "/member/changepwd_form";
+	}
+	//비밀번호 변경
+	@RequestMapping("member/changePwd")
+	@ResponseBody
+	public Map<String,Object> changepwd(MemberDto dto){
+		return memberService.changePwd(dto);
+	}
+	@RequestMapping("member/checkPhone")
+	@ResponseBody
+	public Map<String,Object> checkPhone(String user_phone){
+		return memberService.checkPhone(user_phone);
+	}
+
 }

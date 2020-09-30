@@ -17,4 +17,8 @@ public interface MemberService {
 	public Map<String,Object> sendSMS(HttpServletRequest request);
 	public Map<String,Object> checkVCode(verificationDto dto,HttpSession sessionV);
 	public Map<String,Object> loginProcess(MemberDto dto, ModelAndView mView, HttpSession session);
+	public String getUserId(String user_phone);
+	public Map<String,Object> getUserInfo(String user_id);
+	public Map<String,Object> changePwd(MemberDto dto);
+	public Map<String,Object> checkPhone(String user_phone);
 }
