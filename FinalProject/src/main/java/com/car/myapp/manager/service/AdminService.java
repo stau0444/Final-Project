@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import com.car.myapp.manager.dto.PageDto;
 
 public interface AdminService {
@@ -12,4 +14,5 @@ public interface AdminService {
 	public List<String> ipList();
 	public Map<String, Object> deleteIp(String ip_num);
 	public Map<String, Object> getList(HttpServletRequest req);
+	public void login(ModelAndView mView, HttpServletRequest req);
 }

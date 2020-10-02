@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.car.myapp.manager.dto.PageDto;
 import com.car.myapp.manager.service.AdminService;
@@ -60,7 +61,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/manager/private/join", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> JoinIp(@RequestParam String ip_num){
+	public Map<String, Object> joinIp(@RequestParam String ip_num){
 		
 		Map<String, Object> map = adminService.addIp(ip_num);
 
@@ -84,5 +85,14 @@ public class AdminController {
 	@ResponseBody
 	public Map<String, Object> getList(HttpServletRequest req){
 		return adminService.getList(req);
+	}
+	
+	@RequestMapping(value = "/manager/login")
+	public ModelAndView ManagerLogin(ModelAndView mView, HttpServletRequest req) {
+		
+		
+		adminService.login(mView, req);
+		mView.setViewName("manager/login");
+		return mView;
 	}
 }

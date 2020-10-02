@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.car.myapp.manager.dao.AdminDao;
 import com.car.myapp.manager.dto.PageDto;
@@ -105,6 +106,36 @@ public class AdminServiceImpl implements AdminService{
 		map.put("pageList", pageList);
 		
 		return map;
+	}
+
+	@Override
+	public void login(ModelAndView mView, HttpServletRequest req) {
+		String ip = req.getHeader("X-FORWARDED-FOR");
+		if(ip == null) {
+			ip = req.getHeader("Proxy-Client-IP");
+		}
+		if(ip == null) {
+			ip = req.getHeader("WL-Proxy-Client-IP");
+		}
+		if(ip == null) {
+			ip = req.getHeader("HTTP_CLIENT_IP");
+		}
+		if(ip == null) {
+			ip = req.getHeader("HTTP_X_FORWARDED_FOR");
+		}
+		if(ip == null) {
+			ip = req.getRemoteAddr();
+		}
+		
+		String check_ip = adminDao.checkIp(ip);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(check_ip == null) {
+			mView.addObject("isSuccess", false);
+		}else {
+			mView.addObject("isSuccess", true);
+			req.getSession().setAttribute("id", "admin");
+		}
 	}
 
 	
