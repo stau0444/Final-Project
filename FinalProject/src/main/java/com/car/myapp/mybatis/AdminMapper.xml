@@ -10,10 +10,46 @@
 			ip_num=#{ip_num}
 	</select>
 	
+	<select id="ipList" resultType="String">
+		select
+			ip_num
+		from
+			user_admin
+	</select>
+	
 	<insert id="addIp" parameterType="String">
 		insert into
 			user_admin(ip_num)
 		values
 			(#{ip_num})
-	</insert>	
+	</insert>
+	
+	<delete id="removeIp" parameterType="String">
+		delete from
+			user_admin
+		where
+			ip_num=#{ip_num}
+	</delete>	
+	
+	<!-- 페이징 관련 쿼리 -->
+	<select id="getList" parameterType="pageDto" resultType="String">
+		select *
+		from
+			(select 
+				result1.*, rownum as rnum
+			from
+				(select
+					ip_num
+				from
+					user_admin)result1)
+		where
+			rnum between #{startRowNum} and #{endRowNum}
+	</select>
+	<select id="getCount" resultType="int">
+		select 
+			nvl(max(rownum), 0)
+		from
+			user_admin
+	</select>
+		
 </mapper>

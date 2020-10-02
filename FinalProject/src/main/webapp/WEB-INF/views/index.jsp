@@ -54,7 +54,7 @@
 	</div>
 	<div id="홍덕환">
 		<a href="">ip등록</a>
-		<a href="">관리자 로그인</a>
+		<a href="manager/login.do">관리자 로그인</a>
 		<a href="manager/private/mypage.do">관리자 페이지</a>
 	</div>
 	<!-- 이 밑으로는 태희씨가 작업하시면 될 것 같아요 -->
