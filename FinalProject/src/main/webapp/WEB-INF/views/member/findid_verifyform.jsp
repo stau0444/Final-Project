@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="../resources/js/angular.min.js"></script>
 <script>
 	var verificationApp=angular.module("verificationApp",[])
@@ -42,27 +43,33 @@
 </head>
 <body  data-ng-controller="verificationCtrl">
 	<!-- 유저 번호 입력 폼 -->
-	<form name="identification">
-		<span style="color: green; font-weight: bold;">SMS전송 (문자보내기)</span>
-		<div>
-			<span>전화번호 :</span> 
-			<input type="text" name="userPhone" placeholder="  '-' 없이  입력해주세요 " 
-					data-ng-pattern="/^[0-9]{11,11}$/" 
-					data-ng-model="userPhone"/>
-			<button data-ng-disabled="identification.userPhone.$invalid" 
-					data-ng-click="sendCode()">
-				전송
-			</button>
-		</div>
-	</form>
-	<!-- 인증 번호 입력,확인 폼 -->
-	<form name="checkVCode" data-ng-show="isSentVCode">
-		<label for="VCode">인증번호 입력</label> 
-		<input type="text" name="VCode" 
-			data-ng-model="VCode"
-			data-ng-pattern="/^[0-9]{6,6}$/" />
-		<button data-ng-disabled="checkVCode.VCode.$invalid"
-				data-ng-click="checkCode()">전송</button>
-	</form>
+	<div class="container">
+		<form name="identification">
+			<span style="color: green; font-weight: bold;">SMS전송 (문자보내기)</span>
+			<div class="form-group">
+				<span>전화번호 :</span> 
+					<input type="text" name="userPhone" placeholder="  '-' 없이  입력해주세요 "  class="form-control"
+						data-ng-pattern="/^[0-9]{11,11}$/" 
+						data-ng-model="userPhone"/>
+						<button class="btn btn-primary" 
+						data-ng-disabled="identification.userPhone.$invalid" 
+						data-ng-click="sendCode()">
+					전송
+				</button>
+			</div>
+		</form>
+		<!-- 인증 번호 입력,확인 폼 -->
+		<form name="checkVCode" data-ng-show="isSentVCode">
+			<label for="VCode">인증번호 입력</label> 
+			<div class="form-group">
+				<input type="text" name="VCode" class="form-control" 
+					data-ng-model="VCode"
+					data-ng-pattern="/^[0-9]{6,6}$/" />
+				<button class="btn btn-primary"
+						data-ng-disabled="checkVCode.VCode.$invalid"
+						data-ng-click="checkCode()">전송</button>
+			</div>
+		</form>
+	</div>
 </body>
 </html>

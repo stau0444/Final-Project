@@ -5,6 +5,21 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+	.progress{
+		height:40px;
+		font-size:25px;
+	}
+	#p2 {
+	width:33%;
+	animation:mymove 2s;
+	}
+	@keyframes mymove {
+	  from {width: 1%;}
+	  to {width:33%;}
+	}
+</style>
 <script src="../../resources/js/angular.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -67,76 +82,82 @@ var searchPostCode=function(){
 
 </head>
 <body data-ng-controller="loginCtrl">
-	<h2>회원가입폼</h2>
-	<form method="post" novalidate name="signUpForm">
-		<div>
-			<label for="name">이름</label>
-			<input type="text" id="name"  name="user_name" 
-				data-ng-required="true"
-				data-ng-model="inputName"
-				data-ng-pattern="/^[가-힇]{2,10}$/"/>
+	<div class="container">
+		<h2>회원가입폼</h2>
+		<div class="progress">
+		  <div class="progress-bar" role="progressbar" id="p1" style="width: 33% " aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">본인인증</div>
+		  <div class="progress-bar bg-success" role="progressbar" id="p2"  aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">회원가입</div>
 		</div>
-		<div>
-			<label for="id">아이디</label>
-			<input type="text" id="id"  name="user_id" 
-				data-ng-model="inputId"
-				data-ng-required="true"
-				data-ng-minlength="8"
-				data-ng-maxlength="15"
-				data-ng-pattern="/^[a-z]+[a-z0-9]{5,19}$/g"
-				placeholder="영문 소문자로 시작 숫자포함   5~19글자를 입력해주세요"/>
-			<button data-ng-click="checkId()">중복확인</button>
-		</div>
-		<div>
-			<label for="pwd">비밀번호</label>
-			<input type="password" id="pwd"  name="user_pwd " 
-				data-ng-model="inputPwd"
-				data-ng-required="true"
-				data-ng-minlength="8"
-				data-ng-maxlength="15"
-				data-ng-pattern="/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z가-힇])(?=.*[!@#$%^&+=]).*$/"
-				placeholder="숫자,특수문자 포함  8~15글자를 입력해주세요"/>
-		</div>
-		<div>
-			<label for="checkpwd">비밀번호 확인</label>
-			<input type="password" id="checkpwd" 
-				data-ng-model="checkpwd"
-				data-ng-required="true"
-				data-ng-minlength="8"
-				data-ng-maxlength="15"
-				data-ng-pattern="/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z가-힇])(?=.*[!@#$%^&+=]).*$/"
-				placeholder="숫자,특수문자 포함  8~15글자를 입력해주세요"/>
-		</div>
-		<div>
-			<label for="p_code">우편번호</label>
-			<input type="text" id="p_code"  name="user_p_code" 
-				data-ng-model="inputPCode"/>
-			<button onClick="searchPostCode()">우편번호 찾기</button>
-		</div>
-		<div>
-			<label for="addr">주소</label>
-			<input type="text" id="addr"  name="user_addr" 
-				data-ng-model="inputAddr"/>
-		</div>
-		<div>
-			<label for="addrDetail">상세주소</label>
-			<input type="text" id="addrDetail" data-ng-model="addrDetail"/>
-		</div>
-		<div>
-			<label for="sort">판매자로 등록</label>
-			<input type="checkbox" id="sort" name="user_sort" 
-				data-ng-model="inputSort"/>
-		</div>
-		<div>
-			<label for="phone">전화번호</label>
-			<input type="text" id="phone"  name="user_phone" 
-				data-ng-required="true"
-				data-ng-model="inputPhone"
-				data-ng-pattern="/^[0-9]{11,11}$/"
-				placeholder="( - ) 없이 입력해 주세요"/>
-		</div>
-		<button data-ng-click="addUser()" 
-				data-ng-disabled="isExist||signUpForm.$invalid">등록</button>
-	</form>
+		<form method="post" novalidate name="signUpForm" class="border-success">
+			<div>
+				<label for="name">이름</label>
+				<input type="text" id="name"  name="user_name" 
+					data-ng-required="true"
+					data-ng-model="inputName"
+					data-ng-pattern="/^[가-힇]{2,10}$/"/>
+			</div>
+			<div>
+				<label for="id">아이디</label>
+				<input type="text" id="id"  name="user_id" 
+					data-ng-model="inputId"
+					data-ng-required="true"
+					data-ng-minlength="8"
+					data-ng-maxlength="15"
+					data-ng-pattern="/^[a-z]+[a-z0-9]{5,19}$/g"
+					placeholder="영문 소문자로 시작 숫자포함   5~19글자를 입력해주세요"/>
+				<button data-ng-click="checkId()">중복확인</button>
+			</div>
+			<div>
+				<label for="pwd">비밀번호</label>
+				<input type="password" id="pwd"  name="user_pwd " 
+					data-ng-model="inputPwd"
+					data-ng-required="true"
+					data-ng-minlength="8"
+					data-ng-maxlength="15"
+					data-ng-pattern="/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z가-힇])(?=.*[!@#$%^&+=]).*$/"
+					placeholder="숫자,특수문자 포함  8~15글자를 입력해주세요"/>
+			</div>
+			<div>
+				<label for="checkpwd">비밀번호 확인</label>
+				<input type="password" id="checkpwd" 
+					data-ng-model="checkpwd"
+					data-ng-required="true"
+					data-ng-minlength="8"
+					data-ng-maxlength="15"
+					data-ng-pattern="/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z가-힇])(?=.*[!@#$%^&+=]).*$/"
+					placeholder="숫자,특수문자 포함  8~15글자를 입력해주세요"/>
+			</div>
+			<div>
+				<label for="p_code">우편번호</label>
+				<input type="text" id="p_code"  name="user_p_code" 
+					data-ng-model="inputPCode"/>
+				<button onClick="searchPostCode()">우편번호 찾기</button>
+			</div>
+			<div>
+				<label for="addr">주소</label>
+				<input type="text" id="addr"  name="user_addr" 
+					data-ng-model="inputAddr"/>
+			</div>
+			<div>
+				<label for="addrDetail">상세주소</label>
+				<input type="text" id="addrDetail" data-ng-model="addrDetail"/>
+			</div>
+			<div>
+				<label for="sort">판매자로 등록</label>
+				<input type="checkbox" id="sort" name="user_sort" 
+					data-ng-model="inputSort"/>
+			</div>
+			<div>
+				<label for="phone">전화번호</label>
+				<input type="text" id="phone"  name="user_phone" 
+					data-ng-required="true"
+					data-ng-model="inputPhone"
+					data-ng-pattern="/^[0-9]{11,11}$/"
+					placeholder="( - ) 없이 입력해 주세요"/>
+			</div>
+			<button data-ng-click="addUser()" 
+					data-ng-disabled="isExist||signUpForm.$invalid">등록</button>
+		</form>
+	</div>
 </body>
 </html>

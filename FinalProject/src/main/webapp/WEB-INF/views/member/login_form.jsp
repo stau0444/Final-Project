@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="../resources/js/angular.min.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 <script>
@@ -53,29 +54,31 @@
 </script>
 </head>
 <body >
-	<h2>로그인 폼</h2>
-	<form data-ng-controller="loginCtrl">
-		<div>
-			<label for="id">아이디</label>
-			<input type="text" name="user_id" data-ng-model="userId"/>
-		</div>
-		<div>
-			<label for="pwd">비밀번호</label>
-			<input type="password" name="user_pwd" data-ng-model="userPwd"/>
-		</div>
-		<button data-ng-click="login()">로그인</button>
+	<div class="container">
+		<h2>로그인 폼</h2>
+		<form data-ng-controller="loginCtrl">
+			<div class="form-group">
+				<label for="id">아이디</label>
+				<input type="text" name="user_id" data-ng-model="userId" class="form-control"/>
+			</div>
+			<div class="form-group">
+				<label for="pwd">비밀번호</label>
+				<input type="password" name="user_pwd" data-ng-model="userPwd" class="form-control"/>
+			</div>
+			<button data-ng-click="login()" class="btn btn-primary">로그인</button>
+		</form>
 		<div id="naver_id_login" style="margin-top:40px;"><a href="${url}"><img width="223" src="../resources/img/Nlogin.PNG"/></a></div>
 		<div data-ng-controller="findIdPwdCtrl">
 			<div>
-				<a ng-click="findIdPopUp()">아이디를 잃어버리셨나요?</a>
+				<a data-ng-click="findIdPopUp()" href="#">아이디를 잃어버리셨나요?</a>
 			</div>
 			<div>
-				<a ng-click="findPwdPopUp()">비밀번호를 잃어버리셨나요?</a>
+				<a data-ng-click="findPwdPopUp()" href="#">비밀번호를 잃어버리셨나요?</a>
 			</div>
 			<div>
 		</div>
 			<a href="identification_form.do">회원가입</a>
 		</div>
-	</form>
+	</div>
 </body>
 </html>

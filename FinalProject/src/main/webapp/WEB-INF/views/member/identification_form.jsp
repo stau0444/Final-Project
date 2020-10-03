@@ -5,6 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+.progress-bar{
+	width:33%;
+	animation:mymove 2s;
+}
+@keyframes mymove {
+  from {width: 1%;}
+  to {width:33%;}
+}
+</style>
 <script src="../resources/js/angular.min.js"></script>
 <script>
 	var verificationApp = angular.module("verificationApp", [])
@@ -58,27 +69,32 @@
 </head>
 <body data-ng-controller="verificationCtrl">
 	<!-- 유저 번호 입력 폼 -->
-	<form name="identification">
-		<span style="color: green; font-weight: bold;">SMS전송 (문자보내기)</span>
-		<div>
-			<span>전화번호 :</span> 
-			<input type="text" name="userPhone" placeholder="  '-' 없이  입력해주세요 " 
-					data-ng-pattern="/^[0-9]{11,11}$/" 
-					data-ng-model="userPhone"/>
-			<button data-ng-disabled="identification.userPhone.$invalid" 
-					data-ng-click="sendCode()">
-				전송
-			</button>
+	<div class="container">
+		<div class="progress">
+		  <div class="progress-bar" role="progressbar"  aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">본인인증</div>
 		</div>
-	</form>
-	<!-- 인증 번호 입력,확인 폼 -->
-	<form name="checkVCode" data-ng-show="isSentVCode">
-		<label for="VCode">인증번호 입력</label> 
-		<input type="text" name="VCode" 
-			data-ng-model="VCode"
-			data-ng-pattern="/^[0-9]{6,6}$/" />
-		<button data-ng-disabled="checkVCode.VCode.$invalid"
-				data-ng-click="checkCode()">전송</button>
-	</form>
+		<form name="identification">
+			<span style="color: green; font-weight: bold;">SMS전송 (문자보내기)</span>
+			<div>
+				<span>전화번호 :</span> 
+				<input type="text" name="userPhone" placeholder="  '-' 없이  입력해주세요 " 
+						data-ng-pattern="/^[0-9]{11,11}$/" 
+						data-ng-model="userPhone"/>
+				<button data-ng-disabled="identification.userPhone.$invalid" 
+						data-ng-click="sendCode()">
+					전송
+				</button>
+			</div>
+		</form>
+		<!-- 인증 번호 입력,확인 폼 -->
+		<form name="checkVCode" data-ng-show="isSentVCode">
+			<label for="VCode">인증번호 입력</label> 
+			<input type="text" name="VCode" 
+				data-ng-model="VCode"
+				data-ng-pattern="/^[0-9]{6,6}$/" />
+			<button data-ng-disabled="checkVCode.VCode.$invalid"
+					data-ng-click="checkCode()">전송</button>
+		</form>
+	</div>
 </body>
 </html>
