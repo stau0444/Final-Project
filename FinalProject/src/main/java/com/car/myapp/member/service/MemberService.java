@@ -12,7 +12,7 @@ import com.car.myapp.member.dto.verificationDto;
 
 public interface MemberService {
 	public boolean identification();
-	public void addUser(ModelAndView mView , MemberDto dto,HttpSession sessionV);
+	public Map<String,Object> addUser(MemberDto dto);
 	public Map<String,Object> checkId(String user_id);
 	public Map<String,Object> sendSMS(HttpServletRequest request);
 	public Map<String,Object> checkVCode(verificationDto dto,HttpSession sessionV);

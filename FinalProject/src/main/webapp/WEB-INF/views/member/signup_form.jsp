@@ -6,110 +6,47 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<style>
-	.progress{
-		height:40px;
-		font-size:25px;
-	}
-	#p2 {
-	width:33%;
-	animation:mymove 2s;
-	}
-	@keyframes mymove {
-	  from {width: 1%;}
-	  to {width:33%;}
-	}
-</style>
+<link rel="stylesheet" href="../../resources/css/member/signup_form.css" />
 <script src="../../resources/js/angular.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-var searchPostCode=function(){
-	new daum.Postcode({
-        oncomplete: function(data) {
-        	document.getElementById("addr").value = data.address;
-        	document.getElementById("p_code").value =data.zonecode;
-        }
-    }).open();
-
-};
-</script>
-<script>
-	var carApp=angular.module("carApp",[]);
-	carApp.controller("loginCtrl",function($scope,$http){
-		$scope.isExist=true;
-		$scope.addUser=function(){
-			if($scope.inputPwd!=$scope.checkpwd){
-				alert("입력한 비밀번호가 다릅니다 확인 후 다시 시도해주세요");
-			}else{
-				$scope.inputAddr=document.getElementById("addr").value;
-				$scope.inputPCode=document.getElementById("p_code").value;
-				
-						$http({
-							url:'sign_up.do',
-							method:'post',
-							params:{user_id:$scope.inputId ,
-									user_pwd:$scope.inputPwd,
-									user_name:$scope.inputName , 
-									user_phone:$scope.inputPhone , 
-									user_addr:$scope.inputAddr+$scope.addrDetail , 
-									user_p_code:$scope.inputPCode , 
-									user_sort:$scope.inputSort},
-							headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
-						}).success(function(data){
-							alert("회원 가입에 성공했습니다 로그인을 해주세요.");
-							location.replace("/mycar/member/login_form.do")
-						});
-					};
-			};
-		$scope.checkId=function(){
-				$http({
-					url:'/mycar/member/verified/checkid.do',
-					method:'post',
-					params:{user_id:$scope.inputId}
-				}).success(function(data){
-					if(data.isExist){
-						console.log(data);
-						alert("이미 존재하는 아이디입니다");
-					}else{
-						alert("사용가능한 아이디입니다");
-						$scope.isExist=false;
-					}
-				});
-		};
-	});
-</script>
-
-
+<script src="../../resources/js/member/signup_form.js"></script>
 </head>
 <body data-ng-controller="loginCtrl">
 	<div class="container">
 		<h2>회원가입폼</h2>
-		<div class="progress">
+		<div class="progress my-5">
 		  <div class="progress-bar" role="progressbar" id="p1" style="width: 33% " aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">본인인증</div>
-		  <div class="progress-bar bg-success" role="progressbar" id="p2"  aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">회원가입</div>
+		  <div class="progress-bar bg-warning" role="progressbar" id="p2"  aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">회원가입</div>
 		</div>
 		<form method="post" novalidate name="signUpForm" class="border-success">
-			<div>
+			<div class="form-group">
 				<label for="name">이름</label>
-				<input type="text" id="name"  name="user_name" 
+				<input type="text" id="name"  name="user_name" class="form-control"
 					data-ng-required="true"
 					data-ng-model="inputName"
 					data-ng-pattern="/^[가-힇]{2,10}$/"/>
 			</div>
-			<div>
+			<div class="form-group d-inline">
 				<label for="id">아이디</label>
-				<input type="text" id="id"  name="user_id" 
-					data-ng-model="inputId"
-					data-ng-required="true"
-					data-ng-minlength="8"
-					data-ng-maxlength="15"
-					data-ng-pattern="/^[a-z]+[a-z0-9]{5,19}$/g"
-					placeholder="영문 소문자로 시작 숫자포함   5~19글자를 입력해주세요"/>
-				<button data-ng-click="checkId()">중복확인</button>
+				<div class="input-group">
+					<input type="text" id="id"  name="user_id"  class="form-control mr-2"
+						data-ng-model="inputId"
+						data-ng-required="true"
+						data-ng-minlength="8"
+						data-ng-maxlength="15"
+						data-ng-pattern="/^[a-z]+[a-z0-9]{5,19}$/g"
+						placeholder="영문 소문자로 시작 숫자포함   5~19글자를 입력해주세요"/>
+				  <div class="input-group-append">
+				    <span class="input-group" id="basic-addon2">
+				    	<button data-ng-click="checkId()" class="btn btn-outline-success ">중복확인</button>
+				    </span>
+				  </div>
+				</div>
+				
 			</div>
-			<div>
+			<div class="form-group">
 				<label for="pwd">비밀번호</label>
-				<input type="password" id="pwd"  name="user_pwd " 
+				<input type="password" id="pwd"  name="user_pwd " class="form-control"
 					data-ng-model="inputPwd"
 					data-ng-required="true"
 					data-ng-minlength="8"
@@ -117,9 +54,9 @@ var searchPostCode=function(){
 					data-ng-pattern="/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z가-힇])(?=.*[!@#$%^&+=]).*$/"
 					placeholder="숫자,특수문자 포함  8~15글자를 입력해주세요"/>
 			</div>
-			<div>
+			<div class="form-group">
 				<label for="checkpwd">비밀번호 확인</label>
-				<input type="password" id="checkpwd" 
+				<input type="password" id="checkpwd" class="form-control"
 					data-ng-model="checkpwd"
 					data-ng-required="true"
 					data-ng-minlength="8"
@@ -127,36 +64,40 @@ var searchPostCode=function(){
 					data-ng-pattern="/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z가-힇])(?=.*[!@#$%^&+=]).*$/"
 					placeholder="숫자,특수문자 포함  8~15글자를 입력해주세요"/>
 			</div>
-			<div>
+			<div class="form-group">
 				<label for="p_code">우편번호</label>
-				<input type="text" id="p_code"  name="user_p_code" 
-					data-ng-model="inputPCode"/>
-				<button onClick="searchPostCode()">우편번호 찾기</button>
+				<div class="input-group mb-3">
+					<input type="text" id="p_code"  name="user_p_code" class="form-control" data-ng-model="inputPCode"/>
+				  <div class="input-group-append">
+					<button onClick="searchPostCode()" class="btn btn-primary">우편번호 찾기</button>
+				  </div>
+				</div>
 			</div>
-			<div>
+			<div class="form-group">
 				<label for="addr">주소</label>
-				<input type="text" id="addr"  name="user_addr" 
+				<input type="text" id="addr"  name="user_addr" class="form-control"
 					data-ng-model="inputAddr"/>
 			</div>
-			<div>
+			<div class="form-group">
 				<label for="addrDetail">상세주소</label>
-				<input type="text" id="addrDetail" data-ng-model="addrDetail"/>
+				<input type="text" id="addrDetail" class="form-control" data-ng-model="addrDetail"/>
 			</div>
-			<div>
-				<label for="sort">판매자로 등록</label>
-				<input type="checkbox" id="sort" name="user_sort" 
-					data-ng-model="inputSort"/>
-			</div>
-			<div>
+			<div class="form-group">
 				<label for="phone">전화번호</label>
-				<input type="text" id="phone"  name="user_phone" 
+				<input type="text" id="phone"  name="user_phone" class="form-control"
 					data-ng-required="true"
 					data-ng-model="inputPhone"
 					data-ng-pattern="/^[0-9]{11,11}$/"
 					placeholder="( - ) 없이 입력해 주세요"/>
 			</div>
-			<button data-ng-click="addUser()" 
-					data-ng-disabled="isExist||signUpForm.$invalid">등록</button>
+			<div class="">
+				<label for="sort">판매자로 등록</label>
+				<input type="checkbox" id="sort" name="user_sort" data-ng-model="inputSort"/>
+			</div>
+			<div>
+				<button class=" btn btn-outline-success float-right" data-ng-click="addUser()" 
+						data-ng-disabled="isExist||signUpForm.$invalid">등록</button>
+			</div>
 		</form>
 	</div>
 </body>

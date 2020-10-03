@@ -6,7 +6,7 @@ import com.car.myapp.member.dto.MemberDto;
 import com.car.myapp.member.dto.verificationDto;
 
 public interface MemberDao {
-	public boolean insert(MemberDto dto,HttpSession sessionV);
+	public boolean insert(MemberDto dto);
 	public boolean checkId(String user_id);
 	public boolean verfication(verificationDto dto);
 	public boolean checkVCode(verificationDto dto,HttpSession sessionV);

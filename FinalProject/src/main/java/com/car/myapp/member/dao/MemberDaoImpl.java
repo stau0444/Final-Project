@@ -19,10 +19,9 @@ public class MemberDaoImpl implements MemberDao {
 	private SqlSession session;
 
 	@Override
-	public boolean insert(MemberDto dto,HttpSession sessionV) {
+	public boolean insert(MemberDto dto) {
 		int isSuccess=session.insert("member.insert",dto);
 		if(isSuccess>0) {
-			sessionV.invalidate();
 			return true;
 		}else {
 			return false;			

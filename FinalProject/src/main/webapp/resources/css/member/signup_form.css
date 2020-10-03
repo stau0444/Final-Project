@@ -1,0 +1,15 @@
+.container{
+		width: 475px;
+	}
+	.progress{
+		height:40px;
+		font-size:25px;
+	}
+	#p2 {
+	width:33%;
+	animation:mymove 2s;
+	}
+	@keyframes mymove {
+	  from {width: 1%;}
+	  to {width:33%;}
+	}

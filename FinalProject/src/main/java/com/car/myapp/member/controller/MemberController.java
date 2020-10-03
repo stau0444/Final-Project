@@ -88,10 +88,20 @@ public class MemberController {
 	}
 	//회원가입 기능
 	@RequestMapping("member/verified/sign_up")
-	public ModelAndView sign_up(ModelAndView mView , MemberDto dto,HttpSession sessionV) {
-		memberService.addUser(mView,dto,sessionV);
-		mView.setViewName("/member/sign_up");
-		return mView;
+	@ResponseBody
+	public Map<String,Object> sign_up(MemberDto dto) {
+		return memberService.addUser(dto);
+	}
+	//회원가입 성공폼
+	@RequestMapping("member/verified/signup_success")
+	public String signup_success() {
+		
+		return "/member/signup_success";
+	}
+	@RequestMapping("member/verified/invalidateSession")
+	public void invalidateSession(HttpSession session){
+		session.invalidate();
+		System.out.println("본인인증세션 삭제");
 	}
 	
 	//---------------------------------------여기까지 트렌젝션으로 묶는다

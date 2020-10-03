@@ -39,15 +39,16 @@ public class MemberServiceImpl implements MemberService {
 	}
 	//회원 추가 서비스
 	@Override
-	public void addUser(ModelAndView mView, MemberDto dto,HttpSession sessionV) {
+	public Map<String, Object> addUser(MemberDto dto) {
 
 		String inputPwd = dto.getUser_pwd();
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String encodedPwd = encoder.encode(inputPwd); 
 		dto.setUser_pwd(encodedPwd);
-		boolean isSuccess = memberDao.insert(dto,sessionV);
-		mView.addObject("isSuccess", isSuccess);
-		
+		boolean isSuccess = memberDao.insert(dto);
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("isSucess", isSuccess);
+		return map;
 	}
 
 	@Override
