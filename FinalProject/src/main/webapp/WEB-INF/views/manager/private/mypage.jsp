@@ -20,14 +20,13 @@
 </style>
 
 <script>
-
 	var managerApp = angular.module("managerApp", ["ngRoute", "ngAnimate"]);
 
 	managerApp.controller("managerCtrl", function($scope, $http){
 		
 	});
 	
-	managerApp.controller("ipCtrl", function($scope, $http){
+	managerApp.controller("ipCtrl", function($scope, $http, $location){
 		$scope.addIp = function(){
 			$http({
 				url : "/mycar/manager/private/join.do",
@@ -43,7 +42,46 @@
 					console.log(data.isSuccess);
 				}
 			});
+			location.reload();
 		}
+		
+		$http({
+			url : "/mycar/manager/private/getlist.do",
+			method : "get",
+			headers : {"Content-Type":"application/x-www-form-urlencoded;"}
+		}).success(function(data){
+			console.log(data);
+			$scope.list = data.list;
+			$scope.pagelist = data.pageList;
+			$location.url("/registration");
+		});
+		
+		$scope.getList = function(pageNum){
+			$http({
+				url : "/mycar/manager/private/getlist.do",
+				method : "get",
+				params : {pageNum : pageNum},
+				headers : {"Content-Type":"application/x-www-form-urlencoded;"}
+			}).success(function(data){
+				console.log(data);
+				$scope.list = data.list;
+				$scope.pagelist = data.pageList;
+				$location.url("/registration");
+			});
+		}
+		
+		$scope.deleteIp = function(tmp){
+			$http({
+				url : "/mycar/manager/private/deleteip.do",
+				method : "get",
+				params : {ip_num : tmp},
+				headers : {"Content-Type":"application/x-www-form-urlencoded;"}
+			}).success(function(data){
+				console.log(data.isSuccess);
+			});
+			location.reload();
+		}
+		
 	});
 	
 	managerApp.config(function($routeProvider){
@@ -70,7 +108,8 @@
 		})
 		.otherwise({redirectTo:"/QnA_individual"});
 			
-	});
+	});	
+
 </script>
 </head>
 <body>
@@ -84,5 +123,25 @@
 			</ul>
 	</div>
 	<div data-ng-view class="page-change-animation"></div>
+	<script>
+		var reg_ip =/^[1-255].{1,3}.[1-255].{1,3}.[1-255].{1,3}.[1-255].{1,3}$/
+		var isIpValid = false;
+		$("#ipForm").on("submit",function(){
+			if(!isIpValid){
+				alert("양식에 맞지 않습니다.");
+				return false;
+			}
+		});
+		$("#ip").on("input",function(){
+			var inputIp = $("#ip").val();
+			var result = reg_ip.test(inputIp);
+			if(result){
+				isIpValid = true;
+			}else{
+				isIpValid = false;
+			}
+		});
+		
+	</script>
 </body>
 </html>
