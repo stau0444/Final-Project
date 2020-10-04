@@ -567,39 +567,27 @@
 			};
 			
 			$scope.$watch('min_year',function() {
-				if(isEmpty($scope.min_year)) {
-					$scope.infoCheck();
-				}
+				$scope.infoCheck();
 			});
 			
 			$scope.$watch('max_year',function() {
-				if(isEmpty($scope.max_year)) {
-					$scope.infoCheck();
-				}
+				$scope.infoCheck();
 			});
 			
 			$scope.$watch('min_vehical_mile',function() {
-				if(isEmpty($scope.min_vehical_mile)) {
-					$scope.infoCheck();
-				}
+				$scope.infoCheck();
 			});
 			
 			$scope.$watch('max_vehical_mile',function() {
-				if(isEmpty($scope.max_vehical_mile)) {
-					$scope.infoCheck();
-				}
+				$scope.infoCheck();
 			});
 			
 			$scope.$watch('min_price',function() {
-				if(isEmpty($scope.min_price)) {
-					$scope.infoCheck();
-				}
+				$scope.infoCheck();
 			});
 			
 			$scope.$watch('max_price',function() {
-				if(isEmpty($scope.max_price)) {
-					$scope.infoCheck();
-				}
+				$scope.infoCheck();
 			});
 			
 			
