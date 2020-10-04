@@ -119,17 +119,26 @@
 		FROM car_sell_info A,car_info B
 		WHERE
 		A.m_name=B.m_name
-		<if test="car_group != 0">
+		<if test="car_group == 0 or car_group == 1">
 			AND B.car_group=#{car_group}
 		</if>
-		<if test="c_sort != 0">
-			AND B.c_sort=#{c_sort}
+		<if test="!c_sort_chk.empty">
+			AND B.c_sort IN 
+			<foreach collection="c_sort_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
 		</if>
-		<if test="company != 0">
-			AND B.company=#{company}
+		<if test="!company_chk.empty">
+			AND B.company IN 
+			<foreach collection="company_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
 		</if>
-		<if test="m_name != null">
-			AND B.m_name=#{m_name}
+		<if test="!m_name_chk.empty">
+			AND B.m_name IN 
+			<foreach collection="m_name_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
 		</if>
 		<choose>
 			<when test="min_price != 0 and max_price != 0">
@@ -144,14 +153,35 @@
 				#{max_price}
 			</when>
 		</choose>
-		<if test="automotive_fuel != null">
-			AND A.automotive_fuel=#{automotive_fuel}
+		<if test="!automotive_fuel_chk.empty">
+			AND A.automotive_fuel IN 
+			<foreach collection="automotive_fuel_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
 		</if>
-		<if test="seater != 0">
-			AND A.seater=#{seater}
+		<if test="!seater_chk.empty">
+			AND A.seater IN 
+			<foreach collection="seater_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
 		</if>
-		<if test="color != null">
-			AND A.color=#{color}
+		<if test="!color_chk.empty">
+			AND A.color IN 
+			<foreach collection="color_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
+		</if>
+		<if test="!car_option_chk.empty">
+			AND A.car_option IN 
+			<foreach collection="car_option_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
+		</if>
+		<if test="!vehical_gear_chk.empty">
+			AND A.vehical_gear IN 
+			<foreach collection="vehical_gear_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
 		</if>
 		<choose>
 			<when test="min_vehical_mile != 0 and max_vehical_mile != 0">
