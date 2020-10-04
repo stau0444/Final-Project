@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CarData">
+	<select id="getList" parameterType="carDataDto"
+		resultType="carDataDto">
+		SELECT *
+		FROM
+		(SELECT C.* ,ROWNUM as rnum
+		FROM
+		(SELECT B.c_sort as c_sort, B.company as company, B.m_name as m_name, A.title as title,
+		A.s_price as s_price, A.automotive_fuel as automotive_fuel, A.car_num as car_num,
+		A.seater as seater, A.vehical_mile as vehical_mile, A.car_option as car_option,
+		A.car_year as car_year, A.vehical_gear as vehical_gear
+		FROM car_sell_info A,car_info B
+		WHERE A.m_name=B.m_name
+		<if test="car_group == 0 or car_group == 1">
+			AND B.car_group=#{car_group}
+		</if>
+		<if test="!c_sort_chk.empty">
+			AND B.c_sort IN 
+			<foreach collection="c_sort_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
+		</if>
+		<if test="!company_chk.empty">
+			AND B.company IN 
+			<foreach collection="company_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
+		</if>
+		<if test="!m_name_chk.empty">
+			AND B.m_name IN 
+			<foreach collection="m_name_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
+		</if>
+		<choose>
+			<when test="min_price != 0 and max_price != 0">
+				AND A.s_price BETWEEN #{min_price} AND #{max_price}
+			</when>
+			<when test="min_price != 0">
+				AND A.s_price <![CDATA[>=]]>
+				#{min_price}
+			</when>
+			<when test="max_price != 0">
+				AND A.s_price <![CDATA[<=]]>
+				#{max_price}
+			</when>
+		</choose>
+		<if test="!automotive_fuel_chk.empty">
+			AND A.automotive_fuel IN 
+			<foreach collection="automotive_fuel_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
+		</if>
+		<if test="!seater_chk.empty">
+			AND A.seater IN 
+			<foreach collection="seater_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
+		</if>
+		<if test="!color_chk.empty">
+			AND A.color IN 
+			<foreach collection="color_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
+		</if>
+		<if test="!car_option_chk.empty">
+			AND A.car_option IN 
+			<foreach collection="car_option_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
+		</if>
+		<if test="!vehical_gear_chk.empty">
+			AND A.vehical_gear IN 
+			<foreach collection="vehical_gear_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
+		</if>
+		<choose>
+			<when test="min_vehical_mile != 0 and max_vehical_mile != 0">
+				AND A.vehical_mile BETWEEN #{min_vehical_mile} AND #{max_vehical_mile}
+			</when>
+			<when test="min_vehical_mile != 0">
+				AND A.vehical_mile <![CDATA[>=]]>
+				#{min_vehical_mile}
+			</when>
+			<when test="max_vehical_mile != 0">
+				AND A.vehical_mile <![CDATA[<=]]>
+				#{max_vehical_mile}
+			</when>
+		</choose>
+		<choose>
+			<when test="min_year != 0 and max_year != 0">
+				AND A.car_year BETWEEN #{min_year} AND #{max_year}
+			</when>
+			<when test="min_year != 0">
+				AND A.car_year <![CDATA[>=]]>
+				#{min_year}
+			</when>
+			<when test="max_year != 0">
+				And A.car_year <![CDATA[<=]]>
+				#{max_year}
+			</when>
+		</choose>
+		ORDER BY A.regdate ASC
+		) C)
+		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+
+	<select id="getData" parameterType="int" resultType="carDataDto">
+		SELECT *
+		FROM car_sell_info
+		WHERE car_num=#{car_num}
+	</select>
+
+	<select id="getCount">
+		SELECT NVL(MAX(ROWNUM), 0)
+		FROM car_sell_info A,car_info B
+		WHERE
+		A.m_name=B.m_name
+		<if test="car_group != 0">
+			AND B.car_group=#{car_group}
+		</if>
+		<if test="c_sort != 0">
+			AND B.c_sort=#{c_sort}
+		</if>
+		<if test="company != 0">
+			AND B.company=#{company}
+		</if>
+		<if test="m_name != null">
+			AND B.m_name=#{m_name}
+		</if>
+		<choose>
+			<when test="min_price != 0 and max_price != 0">
+				AND A.s_price BETWEEN #{min_price} AND #{max_price}
+			</when>
+			<when test="min_price != 0">
+				AND A.s_price <![CDATA[>=]]>
+				#{min_price}
+			</when>
+			<when test="max_price != 0">
+				AND A.s_price <![CDATA[<=]]>
+				#{max_price}
+			</when>
+		</choose>
+		<if test="automotive_fuel != null">
+			AND A.automotive_fuel=#{automotive_fuel}
+		</if>
+		<if test="seater != 0">
+			AND A.seater=#{seater}
+		</if>
+		<if test="color != null">
+			AND A.color=#{color}
+		</if>
+		<choose>
+			<when test="min_vehical_mile != 0 and max_vehical_mile != 0">
+				AND A.vehical_mile BETWEEN #{min_vehical_mile} AND #{max_vehical_mile}
+			</when>
+			<when test="min_vehical_mile != 0">
+				AND A.vehical_mile <![CDATA[>=]]>
+				#{min_vehical_mile}
+			</when>
+			<when test="max_vehical_mile != 0">
+				AND A.vehical_mile <![CDATA[<=]]>
+				#{max_vehical_mile}
+			</when>
+		</choose>
+		<choose>
+			<when test="min_year != 0 and max_year != 0">
+				AND A.car_year BETWEEN #{min_year} AND #{max_year}
+			</when>
+			<when test="min_year != 0">
+				AND A.car_year <![CDATA[>=]]>
+				#{min_year}
+			</when>
+			<when test="max_year != 0">
+				And A.car_year <![CDATA[<=]]>
+				#{max_year}
+			</when>
+		</choose>
+	</select>
+
+	<select id="getModel" parameterType="string"
+		resultType="carDataDto">
+		SELECT *
+		FROM car_info
+		WHERE m_name LIKE '%'||UPPER(#{m_name})||'%'
+	</select>
+	
+	<select id="checkModel" parameterType="carDataDto"
+		resultType="string">
+		SELECT m_name
+		FROM car_info
+		WHERE company IN
+		<foreach collection="company_chk" item="tmp" open="(" separator="," close=")">
+			#{tmp}
+		</foreach>
+		<if test="!c_sort_chk.empty">	
+			AND c_sort IN
+			<foreach collection="c_sort_chk" item="tmp" open="(" separator="," close=")">
+				#{tmp}
+			</foreach>
+		</if>
+	</select>
+	
+	<insert id="insert" parameterType="carDataDto">
+		INSERT INTO car_sell_info
+		VALUES (#{car_num}, #{m_name},#{seller_id} ,#{title} ,#{s_price} ,
+		#{automotive_fuel} ,#{seater} ,#{color} ,#{performance}
+		,#{expendables} ,
+		#{c_history} ,SYSDATE ,#{vehical_mile} ,#{car_option} ,#{car_year} ,
+		#{vehical_gear} ,1)
+	</insert>
+	
+	<insert id="file_upload">
+	
+	</insert>
+	
+	<update id="update">
+
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM car_sell_info
+		WHERE car_num=#{car_num}
+	</delete>
+</mapper>
