@@ -15,6 +15,9 @@
 		<!-- member 관련 Dto 별칭 등록 -->
 		<typeAlias type="com.car.myapp.member.dto.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.car.myapp.member.dto.verificationDto" alias="verificationDto"/>
+		
+		<!-- carData 관련 Dto -->
+		<typeAlias type="com.car.myapp.cardata.dto.CarDataDto" alias="carDataDto"/>
 	</typeAliases>
 	
 	<!-- Mapper 등록 -->
@@ -28,5 +31,8 @@
 		<mapper resource="com/car/myapp/mybatis/ReviewMapper.xml"/>
 		<mapper resource="com/car/myapp/mybatis/ReplyMapper.xml"/>
 		<mapper resource="com/car/myapp/mybatis/MemberMapper.xml"/>
+		
+		<!-- carData Mapping -->
+		<mapper resource="com/car/myapp/mybatis/CarMapper.xml" />
 	</mappers>
 </configuration>
