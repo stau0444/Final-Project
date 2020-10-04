@@ -27,13 +27,13 @@ public class CarDataController {
 	@Autowired
 	CarDataDao dao;
 
-	@RequestMapping("carList")
+	@RequestMapping("/car/carList")
 	public ModelAndView carList(ModelAndView mView) {
-		mView.setViewName("carList");
+		mView.setViewName("car/carList");
 		return mView;
 	}
 
-	@RequestMapping("carList_ajax")
+	@RequestMapping("/car/carList_ajax")
 	@ResponseBody
 	public List<CarDataDto> carList_ajax(CarDataDto dto) {
 
@@ -44,7 +44,7 @@ public class CarDataController {
 		return list;
 	}
 
-	@RequestMapping("m_name_ajax")
+	@RequestMapping("/car/m_name_ajax")
 	@ResponseBody
 	public List<String> m_name_ajax(CarDataDto dto) {
 		List<String> list = dao.checkModel(dto);
@@ -52,22 +52,22 @@ public class CarDataController {
 		return list;
 	}
 
-	@RequestMapping("insertform")
+	@RequestMapping("/car/insertform")
 	public String insertForm() {
-		return "insertform";
+		return "car/insertform";
 	}
 
-	@RequestMapping("insert")
+	@RequestMapping("/car/insert")
 	public String insert(CarDataDto dto) {
 
 		dto.setSeller_id("soo2n13");
 
 		dao.insertSellData(dto);
 
-		return "carList";
+		return "car/carList";
 	}
 
-	@RequestMapping(value = "file_upload", method = RequestMethod.POST)
+	@RequestMapping(value = "/car/file_upload", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Map<String, Object>> file_upload(HttpServletRequest request,@RequestParam("file") List<MultipartFile> files) {
 		
@@ -107,7 +107,7 @@ public class CarDataController {
 		return list;
 	}
 	
-	@RequestMapping(value = "file_delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/car/file_delete", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean file_delete(HttpServletRequest request,String saveFileName) {
 		System.out.println(saveFileName);
@@ -118,12 +118,12 @@ public class CarDataController {
 		return true;
 	}
 
-	@RequestMapping("search_car")
+	@RequestMapping("/car/search_car")
 	public String search_car() {
-		return "search_car";
+		return "car/search_car";
 	}
 
-	@RequestMapping("searchModel")
+	@RequestMapping("/car/searchModel")
 	@ResponseBody
 	public List<CarDataDto> searchModel(HttpServletRequest request) {
 
