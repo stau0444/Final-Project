@@ -57,6 +57,10 @@
 		<a href="manager/login.do">관리자 로그인</a>
 		<a href="manager/private/mypage.do">관리자 페이지</a>
 	</div>
+	<div id="LMH">
+		<a href="car/carList.do">차 판매 리스트 페이지</a>
+	</div>
+	
 	<!-- 이 밑으로는 태희씨가 작업하시면 될 것 같아요 -->
 	
 	<h2>인덱스페이지입니다</h2>
