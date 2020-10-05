@@ -263,6 +263,9 @@ CREATE TABLE car_image
 )
 /
 
+Alter table car_image add isMain char(1) not null
+/
+
 COMMENT ON TABLE car_image IS '차량 이미지 테이블'
 /
 
