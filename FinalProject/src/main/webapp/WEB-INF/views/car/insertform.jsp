@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html data-ng-app="myApp">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>차 판매등록 페이지</title>
@@ -123,7 +123,6 @@
 	</form>
 	
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.5.1.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/angular.min.js"></script>
 	<script>
 		$("#insertBtn").on("click",function() {
 			$("#insertForm").submit();
@@ -157,23 +156,23 @@
 						var tr=$("<tr/>").addClass(data[tmp].fileName);
 						var num_td=$("<td/>").text(tmp);
 						var name_td=$("<td/>").text(data[tmp].orgName);
-						var delBtn=$("<button/>").text("X").addClass("delBtn").attr("type","button");
+						var delBtn=$("<button/>").text("X").addClass("delBtn").attr("type","button");       
 						var del_td=$("<td/>").append(delBtn);
 						var encUrl=encodeURI(data[tmp].filePath+data[tmp].fileName);
 						
 						$(tr).append(num_td).append(name_td).append(del_td).appendTo("#file_input");
-						$("<input/>").attr("type","hidden").attr("name","image").val(encUrl).appendTo("#imageList");
+						$("<input/>").attr("type","hidden").attr("name","image").val(encUrl).addClass(data[tmp].fileName).appendTo("#imageList");
 						
 					}
 					
-					console.log($("input[name=image]").val());
 				}
 			});
 		});
 	
 		$(document).on("click",".delBtn",function() {
-			var column=$(this).parent("td").parent("tr");		
+			var column=$(this).parent("td").parent("tr");
 			var fileName=$(column).attr("class");
+			var imageList=$("#imageList").children("input[type='hidden']");
 			console.log(column);
 			
 			$.ajax({
@@ -183,7 +182,13 @@
 				success: function(data) {
 					console.log(data);
 					if(data) {
+						
 						$(column).remove();
+						for(index in imageList) {
+							if($(imageList[index]).attr("class") == fileName) {
+								$(imageList[index]).remove();
+							}
+						}
 					}
 				}
 			});
