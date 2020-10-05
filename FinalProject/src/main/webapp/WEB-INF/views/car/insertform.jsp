@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
 </head>
 <body>
-	<form action="insert.do" method="post">
+	<form action="insert.do" method="post" id="insertForm">
 		<label for="title">제목</label>
 		<input type="text" id="title" name="title" />
 		<br />
@@ -94,6 +94,10 @@
 		<label for="s_price">가격</label>
 		<input type="text" id="s_price" name="s_price" />(단위:만원)
 		<br />
+		<!-- 업로드한 이미지의 링크 모아둔 곳 -->
+		<div id="imageList">
+			
+		</div>
 		
 		<form action="upload.do" id="uploadForm" method="post" enctype="multipart/form-data">
 			<div class="form-group">
@@ -114,18 +118,17 @@
 			</table>
 		</form>
 		
-		<form data-ng-controller="MyCtrl" name="form">
-		    <!-- <div class="button" data-ng-model="file" name="file" data-ngf-select data-ngf-pattern="'image/*'" data-ngf-accept="'image/*'" data-ngf-max-size="20MB">파일선택</div> -->
-		    <input type="file" multiple="multiple" data-ng-model="file" name="file" accept="image/*" data-ng-pattern="image/*"/>
-		    <button type="submit" data-ng-click="submit()">업로드</button>
-		</form>
 		
-		<button type="submit">등록</button>
+		<button type="button" id="insertBtn">등록</button>
 	</form>
 	
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.5.1.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/angular.min.js"></script>
 	<script>
+		$("#insertBtn").on("click",function() {
+			$("#insertForm").submit();
+		});
+	
 		$("#searchBtn").on("click",function() {
 			var data=$("#car_search").val();
 			var url="search_car.do";
@@ -156,10 +159,14 @@
 						var name_td=$("<td/>").text(data[tmp].orgName);
 						var delBtn=$("<button/>").text("X").addClass("delBtn").attr("type","button");
 						var del_td=$("<td/>").append(delBtn);
+						var encUrl=encodeURI(data[tmp].filePath+data[tmp].fileName);
 						
 						$(tr).append(num_td).append(name_td).append(del_td).appendTo("#file_input");
+						$("<input/>").attr("type","hidden").attr("name","image").val(encUrl).appendTo("#imageList");
 						
 					}
+					
+					console.log($("input[name=image]").val());
 				}
 			});
 		});
@@ -180,29 +187,6 @@
 					}
 				}
 			});
-		});
-		
-		var app = angular.module('myApp', []);
-		 
-		app.controller('MyCtrl', function ($scope, $http) {
-		    $scope.submit = function() {
-		      console.log($scope.file);
-		      if ($scope.form.file.$valid && $scope.file) {
-		        $scope.upload($scope.file);
-		        console.log($scope.file);
-		      }
-		    };
-		    
-		    $scope.upload = function (file) {
-		    	$http({
-					url:"file_upload.do",
-					method:"post",
-					params:{file:file},
-					headers: {'Content-Type': 'application/json; charset=utf-8'}
-				}).success(function(data){
-					console.log(data);
-				});	
-		    };
 		});
 		
 	</script>
