@@ -89,6 +89,8 @@ CREATE TABLE car_sell_info
 )
 /
 
+ALTER TABLE car_sell_info MODIFY(car_year number);
+
 COMMENT ON TABLE car_sell_info IS '차량 판매 정보 테이블'
 /
 
