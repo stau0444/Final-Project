@@ -24,9 +24,17 @@ public class AdminController {
 	private AdminService adminService;
 	
 	@RequestMapping(value = "/manager/private/mypage")
-	public String ManagerPage(){
+	public String ManagerPage(HttpServletRequest req){
+		String id = (String)req.getSession().getAttribute("id");
+		String url ="";
+		if(id == null || !(id.equals("admin"))) {
+			url = "manager/private/fail";
+		}else {
+			url = "manager/private/mypage";
+		}
 		
-		return "manager/private/mypage";
+		return url;
+
 	}
 	
 	@RequestMapping(value = "/manager/private/news/news_list")

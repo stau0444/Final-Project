@@ -127,6 +127,7 @@ public class AdminServiceImpl implements AdminService{
 			ip = req.getRemoteAddr();
 		}
 		
+		System.out.println(ip);
 		String check_ip = adminDao.checkIp(ip);
 		Map<String, Object> map = new HashMap<String, Object>();
 		
