@@ -243,8 +243,9 @@
 		#{vehical_gear} ,1)
 	</insert>
 	
-	<insert id="file_upload">
-	
+	<insert id="image_upload">
+		INSERT INTO car_image
+		VALUES (#{car_num},#{seller_id},#{img},#{isMain})
 	</insert>
 	
 	<update id="update">
