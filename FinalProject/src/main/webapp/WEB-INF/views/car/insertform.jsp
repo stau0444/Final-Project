@@ -107,7 +107,7 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>no</th>
+						<th>메인</th>
 						<th>파일명</th>
 						<th>삭제</th>
 					</tr>
@@ -153,10 +153,12 @@
 				success: function(data) {
 					console.log(data);
 					for(tmp in data) {
+						
 						var tr=$("<tr/>").addClass(data[tmp].fileName);
-						var num_td=$("<td/>").text(tmp);
+						var radio=$("<input/>").attr("type","radio").attr("name","isMain").val(tmp);
+						var num_td=$("<td/>").append(radio);
 						var name_td=$("<td/>").text(data[tmp].orgName);
-						var delBtn=$("<button/>").text("X").addClass("delBtn").attr("type","button");       
+						var delBtn=$("<button/>").text("X").addClass("delBtn").attr("type","button").addClass("btn btn-danger");       
 						var del_td=$("<td/>").append(delBtn);
 						var encUrl=encodeURI(data[tmp].filePath+data[tmp].fileName);
 						
