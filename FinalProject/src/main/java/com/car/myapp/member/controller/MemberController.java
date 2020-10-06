@@ -84,6 +84,7 @@ public class MemberController {
 	@ResponseBody
 	public Map<String,Object> checkId(String user_id){
 		Map<String,Object> map=memberService.checkId(user_id);
+		System.out.println(user_id);
 		return map;
 	}
 	//회원가입 기능

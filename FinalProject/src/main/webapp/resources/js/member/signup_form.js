@@ -10,8 +10,27 @@ var searchPostCode=function(){
 	var carApp=angular.module("carApp",[]);
 	carApp.controller("loginCtrl",function($scope,$http){
 		$scope.isExist=true;
+		$scope.checkId=function(){	
+				$http({
+					url:'/mycar/member/verified/checkid.do',
+					method:'post',
+					params:{user_id:$scope.inputId},
+					headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
+				}).success(function(data){
+					if(data.isExist){
+						console.log(data);
+						alert("이미 존재하는 아이디입니다");
+					}else{
+						alert("사용가능한 아이디입니다");
+						$scope.isExist=false;
+					}
+				});
+			
+		};
 		$scope.addUser=function(){
-			if($scope.inputPwd!=$scope.checkpwd){
+			if($scope.isExist){
+				 alert("아이디 중복 확인을 해주세요")
+			}else if($scope.inputPwd!=$scope.checkpwd){
 				alert("입력한 비밀번호가 다릅니다 확인 후 다시 시도해주세요");
 			}else{
 				$scope.inputAddr=document.getElementById("addr").value;
@@ -34,19 +53,4 @@ var searchPostCode=function(){
 						});
 					};
 			};
-		$scope.checkId=function(){
-				$http({
-					url:'/mycar/member/verified/checkid.do',
-					method:'post',
-					params:{user_id:$scope.inputId}
-				}).success(function(data){
-					if(data.isExist){
-						console.log(data);
-						alert("이미 존재하는 아이디입니다");
-					}else{
-						alert("사용가능한 아이디입니다");
-						$scope.isExist=false;
-					}
-				});
-		};
 	});
