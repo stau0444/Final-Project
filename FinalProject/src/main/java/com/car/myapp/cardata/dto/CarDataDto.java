@@ -381,5 +381,4 @@ public class CarDataDto {
 	public void setEndRowNum(int endRowNum) {
 		this.endRowNum = endRowNum;
 	}
-
 }

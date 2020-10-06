@@ -243,10 +243,12 @@
 		#{vehical_gear} ,1)
 	</insert>
 	
-	<insert id="image_upload">
-		INSERT INTO car_image
-		VALUES (#{car_num},#{seller_id},#{img},#{isMain})
-	</insert>
+	<update id="image_upload" parameterType="java.util.Map">
+		<foreach collection="list" item="tmp" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO car_image
+			VALUES (#{tmp.car_num},#{tmp.seller_id},#{tmp.image},#{tmp.isMain})
+		</foreach>
+	</update>
 	
 	<update id="update">
 

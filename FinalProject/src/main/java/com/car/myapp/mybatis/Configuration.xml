@@ -18,6 +18,7 @@
 		
 		<!-- carData 관련 Dto -->
 		<typeAlias type="com.car.myapp.cardata.dto.CarDataDto" alias="carDataDto"/>
+		<typeAlias type="com.car.myapp.carimage.dto.CarImageDto" alias="carImageDto"/>
 	</typeAliases>
 	
 	<!-- Mapper 등록 -->

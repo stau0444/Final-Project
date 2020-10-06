@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.car.myapp.cardata.dao.CarDataDao;
 import com.car.myapp.cardata.dto.CarDataDto;
+import com.car.myapp.carimage.dto.CarImageDto;
 
 @Controller
 public class CarDataController {
@@ -58,12 +59,34 @@ public class CarDataController {
 	}
 
 	@RequestMapping("/car/insert")
-	public String insert(CarDataDto dto) {
-
+	public String insert(CarDataDto dto,@RequestParam("isMain") String index,@RequestParam("image") List<String> images) {
+		
 		dto.setSeller_id("soo2n13");
-
+		
+		List<CarImageDto> imageDto=new ArrayList<CarImageDto>();
+		
+		for(int i=0;i<images.size();i++) {
+			CarImageDto tmp=new CarImageDto();
+			
+			tmp.setCar_num(dto.getCar_num());
+			tmp.setSeller_id(dto.getSeller_id());
+			tmp.setImage(images.get(i));
+			
+			if(i == Integer.parseInt(index)) {
+				tmp.setIsMain(1);
+			}else {
+				tmp.setIsMain(0);
+			}
+			
+			imageDto.add(tmp);
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", imageDto);
+		
 		dao.insertSellData(dto);
-
+		dao.insertImages(map);
+		
 		return "car/carList";
 	}
 

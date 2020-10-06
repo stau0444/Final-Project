@@ -102,7 +102,7 @@
 		<form action="upload.do" id="uploadForm" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="myFile">첨부 파일</label>
-				<input multiple="multiple" class="form-control" type="file" name="file" id="file" accept="image/*"/>
+				<input multiple="multiple" class="form-control" type="file" id="file" accept="image/*"/>
 			</div>
 			<table class="table table-hover">
 				<thead>
