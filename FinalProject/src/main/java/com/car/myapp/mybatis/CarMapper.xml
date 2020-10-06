@@ -5,14 +5,16 @@
 		resultType="carDataDto">
 		SELECT *
 		FROM
-		(SELECT C.* ,ROWNUM as rnum
+		(SELECT D.* ,ROWNUM as rnum
 		FROM
 		(SELECT B.c_sort as c_sort, B.company as company, B.m_name as m_name, A.title as title,
 		A.s_price as s_price, A.automotive_fuel as automotive_fuel, A.car_num as car_num,
 		A.seater as seater, A.vehical_mile as vehical_mile, A.car_option as car_option,
-		A.car_year as car_year, A.vehical_gear as vehical_gear
-		FROM car_sell_info A,car_info B
+		A.car_year as car_year, A.vehical_gear as vehical_gear, C.img as image
+		FROM car_sell_info A,car_info B,car_image C
 		WHERE A.m_name=B.m_name
+		AND A.car_num=C.car_num
+		AND C.ismain=1
 		<if test="car_group == 0 or car_group == 1">
 			AND B.car_group=#{car_group}
 		</if>
@@ -104,7 +106,7 @@
 			</when>
 		</choose>
 		ORDER BY A.regdate ASC
-		) C)
+		) D)
 		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 

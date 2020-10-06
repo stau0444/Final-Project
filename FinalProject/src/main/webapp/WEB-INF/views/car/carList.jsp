@@ -16,6 +16,9 @@
 	label {
 		font-size: 12px;
 	}
+	.list_img {
+		height: 100px;
+	}
 	
 </style>
 </head>
@@ -443,15 +446,15 @@
 			</div>
 			<div class="col-8">
 				<div class="media border-top py-3 row" data-ng-class="{'border-bottom':$last}" data-ng-repeat="tmp in list">
-				  <img src="..." class="mr-3">
-				  <div class="media-body col">
+				  <img src="/upload/{{tmp.image}}" class="mr-3 list_img">
+				  <div class="media-body col-8">
 				  	<span class="badge badge-secondary" data-ng-bind="c_sort_list[tmp.c_sort-1]"></span>
 				  	<span class="badge badge-secondary" data-ng-bind="company_list[tmp.company-1]"></span>
 				  	<span class="badge badge-secondary" data-ng-bind="tmp.car_option"></span>
 				    <h5 class="mt-0" data-ng-bind="tmp.title"></h5>
 				    <small class="text-muted">{{tmp.m_name}}({{tmp.seater}}인승) | {{tmp.automotive_fuel}} | {{tmp.car_year}}년식 | {{tmp.vehical_mile}}km</small>
 				  </div>
-				  <div class="col text-danger text-right">
+				  <div class="col-4 text-danger text-right">
 				  	<h3 class="my-3">{{tmp.s_price}}만원</h3>
 				  </div>
 				</div>
@@ -536,6 +539,10 @@
 									  $scope.max_vehical_mile,$scope.min_price,$scope.max_price),
 					headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
 				}).success(function(data){
+					console.log(data);
+					for(tmp in data) {
+						data[tmp].image=decodeURI(data[tmp].image);
+					}
 					console.log(data);
 					$scope.list=data;
 				});		

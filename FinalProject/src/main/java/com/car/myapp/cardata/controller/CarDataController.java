@@ -123,7 +123,6 @@ public class CarDataController {
 			Map<String, Object> map=new HashMap<String, Object>();
 			map.put("fileName", saveFileName);
 			map.put("orgName",orgFileName);
-			map.put("filePath", filePath);
 			list.add(map);
 		}
 		
