@@ -156,16 +156,26 @@ public class CarDataController {
 	}
 	
 	@RequestMapping("/car/detail")
-	public ModelAndView detail(@RequestParam("car_num") String car_num,ModelAndView mView) {
-		System.out.println(car_num);
-		//CarDataDto data=dao.getData(car_num);
-		//List<CarImageDto> images=dao.getImages(car_num);
+	public ModelAndView detail(@RequestParam("num") String car_num,ModelAndView mView) {
 		
-		//mView.addObject("data", data);
-		//mView.addObject("images", images);
+		mView.addObject("car_num",car_num);
 		
-		mView.setViewName("car/detail");
-		
+		mView.setViewName("/car/detail");
 		return mView;
+	}
+	
+	@RequestMapping("/car/detail_ajax")
+	@ResponseBody
+	public Map<String, Object> detail_ajax(@RequestParam("num") String car_num) {
+		System.out.println(car_num);
+		
+		CarDataDto data=dao.getData(car_num);
+		List<String> images=dao.getImages(car_num);
+		Map<String, Object> map=new HashMap<String, Object>();
+		
+		map.put("data", data);
+		map.put("images", images);
+		
+		return map;
 	}
 }

@@ -450,7 +450,7 @@
 			<div class="col-8">
 				<div class="media border-top py-3 row" data-ng-class="{'border-bottom':$last}" data-ng-repeat="tmp in list">
 				  <input type="hidden" id="car_num" value="{{tmp.car_num}}" />
-				  <img src="/upload/{{tmp.image}}" class="mr-3 list_img">
+				  <img src="${pageContext.request.contextPath}/upload/{{tmp.image}}" class="mr-3 list_img">
 				  <div class="media-body col-8">
 				  	<span class="badge badge-secondary" data-ng-bind="c_sort_list[tmp.c_sort-1]"></span>
 				  	<span class="badge badge-secondary" data-ng-bind="company_list[tmp.company-1]"></span>
