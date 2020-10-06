@@ -19,6 +19,7 @@ public class CarDataDto {
 	private List<Integer> company_chk= new ArrayList<Integer>(); // 검색옵션: 체크된 제조사들
 	private String seller_id;  // 판매자 아이디
 	private String title;  // 글 제목
+	private String image;  // 차량 이미지(메인 이미지 1장)
 	private int s_price;  // 차량 가격
 	private int min_price; // 검색옵션: 최소 차량가격
 	private int max_price; // 검색옵션: 최대 차량가격
@@ -50,11 +51,12 @@ public class CarDataDto {
 
 	public CarDataDto(String car_num, String m_name, List<String> m_name_chk, int car_group, int c_sort,
 			List<Integer> c_sort_chk, int company, List<Integer> company_chk, String seller_id, String title,
-			int s_price, int min_price, int max_price, String automotive_fuel, List<String> automotive_fuel_chk,
-			int seater, List<Integer> seater_chk, String color, List<String> color_chk, int performance,
-			int expendables, String c_history, String regdate, int vehical_mile, int min_vehical_mile,
-			int max_vehical_mile, String car_option, List<String> car_option_chk, int car_year, int min_year,
-			int max_year, int vehical_gear, List<Integer> vehical_gear_chk, int state, int startRowNum, int endRowNum) {
+			String image, int s_price, int min_price, int max_price, String automotive_fuel,
+			List<String> automotive_fuel_chk, int seater, List<Integer> seater_chk, String color,
+			List<String> color_chk, int performance, int expendables, String c_history, String regdate,
+			int vehical_mile, int min_vehical_mile, int max_vehical_mile, String car_option,
+			List<String> car_option_chk, int car_year, int min_year, int max_year, int vehical_gear,
+			List<Integer> vehical_gear_chk, int state, int startRowNum, int endRowNum) {
 		super();
 		this.car_num = car_num;
 		this.m_name = m_name;
@@ -66,6 +68,7 @@ public class CarDataDto {
 		this.company_chk = company_chk;
 		this.seller_id = seller_id;
 		this.title = title;
+		this.image = image;
 		this.s_price = s_price;
 		this.min_price = min_price;
 		this.max_price = max_price;
@@ -172,6 +175,14 @@ public class CarDataDto {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public int getS_price() {

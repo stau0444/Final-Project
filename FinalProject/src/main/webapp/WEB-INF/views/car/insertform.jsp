@@ -102,7 +102,7 @@
 		<form action="upload.do" id="uploadForm" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="myFile">첨부 파일</label>
-				<input multiple="multiple" class="form-control" type="file" name="file" id="file" accept="image/*"/>
+				<input multiple="multiple" class="form-control" type="file" id="file" accept="image/*"/>
 			</div>
 			<table class="table table-hover">
 				<thead>
@@ -160,10 +160,10 @@
 						var name_td=$("<td/>").text(data[tmp].orgName);
 						var delBtn=$("<button/>").text("X").addClass("delBtn").attr("type","button").addClass("btn btn-danger");       
 						var del_td=$("<td/>").append(delBtn);
-						var encUrl=encodeURI(data[tmp].filePath+data[tmp].fileName);
+						var encUrl=encodeURI(data[tmp].fileName);
 						
 						$(tr).append(num_td).append(name_td).append(del_td).appendTo("#file_input");
-						$("<input/>").attr("type","hidden").attr("name","image").val(encUrl).addClass(data[tmp].fileName).appendTo("#imageList");
+						$("<input/>").attr("type","hidden").attr("name","image").val(encUrl).appendTo("#imageList");
 						
 					}
 					
@@ -173,7 +173,7 @@
 	
 		$(document).on("click",".delBtn",function() {
 			var column=$(this).parent("td").parent("tr");
-			var fileName=$(column).attr("class");
+			var fileName=$(column).val();
 			var imageList=$("#imageList").children("input[type='hidden']");
 			console.log(column);
 			

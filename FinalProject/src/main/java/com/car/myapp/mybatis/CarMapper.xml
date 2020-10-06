@@ -5,14 +5,16 @@
 		resultType="carDataDto">
 		SELECT *
 		FROM
-		(SELECT C.* ,ROWNUM as rnum
+		(SELECT D.* ,ROWNUM as rnum
 		FROM
 		(SELECT B.c_sort as c_sort, B.company as company, B.m_name as m_name, A.title as title,
 		A.s_price as s_price, A.automotive_fuel as automotive_fuel, A.car_num as car_num,
 		A.seater as seater, A.vehical_mile as vehical_mile, A.car_option as car_option,
-		A.car_year as car_year, A.vehical_gear as vehical_gear
-		FROM car_sell_info A,car_info B
+		A.car_year as car_year, A.vehical_gear as vehical_gear, C.img as image
+		FROM car_sell_info A,car_info B,car_image C
 		WHERE A.m_name=B.m_name
+		AND A.car_num=C.car_num
+		AND C.ismain=1
 		<if test="car_group == 0 or car_group == 1">
 			AND B.car_group=#{car_group}
 		</if>
@@ -104,13 +106,24 @@
 			</when>
 		</choose>
 		ORDER BY A.regdate ASC
-		) C)
+		) D)
 		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 
-	<select id="getData" parameterType="int" resultType="carDataDto">
-		SELECT *
-		FROM car_sell_info
+	<select id="getData" parameterType="string" resultType="carDataDto">
+		SELECT 
+			   A.car_num as car_num, A.m_name as m_name, A.seller_id as seller_id, A.title as title A.s_price as price, A.automotive_fuel as automotive_fuel,
+			   A.seater as seater, A.color as color, A.performance as performance, A.expendables as expendables, A.c_history as c_history, TO_CHAR(A.regdate,'yyyy-mm-dd') as regdate,
+			   A.vehical_mile as vehical_mile, A.car_option as car_option, A.car_year as car_year, A.vehical_gear as vehical_gear, A.state as state,
+			   B.c_sort as c_sort,B.company as company, B.car_group as car_group,
+		FROM car_sell_info A,car_info B
+		WHERE A.m_name=B.m_name
+		AND A.car_num=#{car_num}
+	</select>
+
+	<select id="getImages" parameterType="string" resultType="carImageDto">
+		SELECT img as image
+		FROM car_image
 		WHERE car_num=#{car_num}
 	</select>
 
@@ -243,10 +256,12 @@
 		#{vehical_gear} ,1)
 	</insert>
 	
-	<insert id="image_upload">
-		INSERT INTO car_image
-		VALUES (#{car_num},#{seller_id},#{img},#{isMain})
-	</insert>
+	<update id="image_upload" parameterType="java.util.Map">
+		<foreach collection="list" item="tmp" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO car_image
+			VALUES (#{tmp.car_num},#{tmp.seller_id},#{tmp.image},#{tmp.isMain})
+		</foreach>
+	</update>
 	
 	<update id="update">
 
