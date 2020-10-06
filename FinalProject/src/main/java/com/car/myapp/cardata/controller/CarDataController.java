@@ -154,4 +154,18 @@ public class CarDataController {
 
 		return list;
 	}
+	
+	@RequestMapping("/car/detail")
+	public ModelAndView detail(@RequestParam("car_num") String car_num,ModelAndView mView) {
+		System.out.println(car_num);
+		//CarDataDto data=dao.getData(car_num);
+		//List<CarImageDto> images=dao.getImages(car_num);
+		
+		//mView.addObject("data", data);
+		//mView.addObject("images", images);
+		
+		mView.setViewName("car/detail");
+		
+		return mView;
+	}
 }

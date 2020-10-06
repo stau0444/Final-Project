@@ -19,7 +19,10 @@
 	.list_img {
 		height: 100px;
 	}
-	
+	.media:hover {
+		box-shadow: 2px 2px 2px;
+		cursor: pointer;
+	}
 </style>
 </head>
 <body  data-ng-controller="btnController">
@@ -446,6 +449,7 @@
 			</div>
 			<div class="col-8">
 				<div class="media border-top py-3 row" data-ng-class="{'border-bottom':$last}" data-ng-repeat="tmp in list">
+				  <input type="hidden" id="car_num" value="{{tmp.car_num}}" />
 				  <img src="/upload/{{tmp.image}}" class="mr-3 list_img">
 				  <div class="media-body col-8">
 				  	<span class="badge badge-secondary" data-ng-bind="c_sort_list[tmp.c_sort-1]"></span>
@@ -682,11 +686,15 @@
 					return true;
 				} 
 		};
-
 		
 		var reset_selected=function() {
 			$("label").removeClass("active");
 		}
+		
+		$(document).on("click",".media",function() {
+			var num=$(this).children("#car_num").val();
+			location.href="detail.do?num="+num;
+		})
 		
 	</script>
 </body>

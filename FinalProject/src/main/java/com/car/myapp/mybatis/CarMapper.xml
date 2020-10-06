@@ -110,9 +110,20 @@
 		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 
-	<select id="getData" parameterType="int" resultType="carDataDto">
-		SELECT *
-		FROM car_sell_info
+	<select id="getData" parameterType="string" resultType="carDataDto">
+		SELECT 
+			   A.car_num as car_num, A.m_name as m_name, A.seller_id as seller_id, A.title as title A.s_price as price, A.automotive_fuel as automotive_fuel,
+			   A.seater as seater, A.color as color, A.performance as performance, A.expendables as expendables, A.c_history as c_history, TO_CHAR(A.regdate,'yyyy-mm-dd') as regdate,
+			   A.vehical_mile as vehical_mile, A.car_option as car_option, A.car_year as car_year, A.vehical_gear as vehical_gear, A.state as state,
+			   B.c_sort as c_sort,B.company as company, B.car_group as car_group,
+		FROM car_sell_info A,car_info B
+		WHERE A.m_name=B.m_name
+		AND A.car_num=#{car_num}
+	</select>
+
+	<select id="getImages" parameterType="string" resultType="carImageDto">
+		SELECT img as image
+		FROM car_image
 		WHERE car_num=#{car_num}
 	</select>
 

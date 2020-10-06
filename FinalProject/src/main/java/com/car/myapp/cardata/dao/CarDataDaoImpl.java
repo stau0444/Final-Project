@@ -45,6 +45,16 @@ public class CarDataDaoImpl implements CarDataDao {
 		session.update("CarData.image_upload", map);
 	}
 
+	@Override
+	public CarDataDto getData(String car_num) {
+		return session.selectOne("CarData.getData", car_num);
+	}
+
+	@Override
+	public List<CarImageDto> getImages(String car_num) {
+		return session.selectList("CarData.getImages", car_num);
+	}
+
 
 	
 
