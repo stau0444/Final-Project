@@ -124,6 +124,7 @@ public class CarDataController {
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
+			System.out.println(filePath);
 			Map<String, Object> map=new HashMap<String, Object>();
 			map.put("fileName", saveFileName);
 			map.put("orgName",orgFileName);
