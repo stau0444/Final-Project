@@ -18,11 +18,11 @@
 		</div>
 
 		<div class="card pt-5 pb-3">
-			<form action = "ask.do">
+			<form action = "ask.do" method="post">
 				<div class="form-group row  text-center">
 					<label for="id" class="col-sm-2 col-form-label">아이디</label>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" name="user_id" value=${id}>
+						<input type="text" class="form-control" name="user_id" value=${id} readonly>
 					</div>
 				</div>
 
@@ -44,20 +44,20 @@
 					<!-- Default inline 1-->
 					<div class="custom-control custom-radio custom-control-inline">
 						<input type="radio" class="custom-control-input"
-							id="site" name="iq_category"> <label
+							id="site" value="1" name="iq_category"> <label
 							class="custom-control-label" for="site">사이트 이용 문의</label>
 					</div>
 
 					<!-- Default inline 2-->
 					<div class="custom-control custom-radio custom-control-inline">
-						<input type="radio" class="custom-control-input"
+						<input type="radio" value="2" class="custom-control-input"
 							id="site-error" name="iq_category"> <label
 							class="custom-control-label" for="site-error">장애/오류 문의</label>
 					</div>
 
 					<!-- Default inline 3-->
 					<div class="custom-control custom-radio custom-control-inline">
-						<input type="radio" class="custom-control-input"
+						<input type="radio" value="3" class="custom-control-input"
 							id="etc" name="iq_category"> <label
 							class="custom-control-label" for="etc">기타 문의</label>
 					</div>
