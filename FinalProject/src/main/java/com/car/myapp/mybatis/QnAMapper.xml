@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="qna">
-
+	<select id="getList_iq" parameterType="pageDto" resultType="individualDto">
+		select *
+		from
+			(select 
+				result1.*, rownum as rnum
+			from
+				(select
+					*
+				from
+					individual_question)result1)
+		where
+			rnum between #{startRowNum} and #{endRowNum}
+	</select>
+	
+	<select id="getCount_iq" resultType="int">
+		select 
+			nvl(max(rownum), 0)
+		from
+			individual_question
+	</select>
+	<select id="getData_iq" parameterType="int" resultType="individualDto">
+		select
+			*
+		from
+			individual_question
+		where
+			iq_num=#{iq_num}
+	</select>
 </mapper>

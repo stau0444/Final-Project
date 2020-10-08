@@ -61,7 +61,7 @@ public class CarDataController {
 	@RequestMapping("/car/insert")
 	public String insert(CarDataDto dto,@RequestParam("isMain") String index,@RequestParam("image") List<String> images) {
 		
-		dto.setSeller_id("soo2n13");
+		dto.setSeller_id("qwert123");
 		
 		List<CarImageDto> imageDto=new ArrayList<CarImageDto>();
 		
