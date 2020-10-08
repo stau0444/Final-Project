@@ -25,7 +25,7 @@
 	}
 </style>
 </head>
-<body  data-ng-controller="btnController">
+<body  data-ng-controller="btnController" data-ng-init="load()">
 	<div class="container">
 		<div class="row">
 			<div class="col-4">
@@ -526,12 +526,6 @@
 				$scope.seater=checkIndex2($scope.seater_chk,$scope.seater_list);
 				$scope.color=checkIndex2($scope.color_chk,$scope.color_list);
 				
-				console.log("선택한 연료:"+$scope.automotive_fuel);
-				console.log("선택한 옵션:"+$scope.vehical_gear);
-				console.log("선택한 옵션:"+$scope.option);
-				console.log("선택한 인승:"+$scope.seater);
-				console.log("선택한 색상:"+$scope.color);
-				
 				$scope.checkModel();
 				
 				
@@ -543,7 +537,6 @@
 									  $scope.max_vehical_mile,$scope.min_price,$scope.max_price),
 					headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
 				}).success(function(data){
-					console.log(data);
 					for(tmp in data) {
 						data[tmp].image=decodeURI(data[tmp].image);
 					}
@@ -553,8 +546,6 @@
 			};
 			
 			$scope.checkModel=function() {
-				console.log("차종: "+$scope.c_sort);
-				console.log("회사: "+$scope.company);
 				
 				if($scope.company.length != 0) { 
 					$http({
@@ -563,7 +554,6 @@
 						params:makeParams($scope.car_group,$scope.c_sort,$scope.company,[],[],[],[],[],[],null,null,null,null,null,null),
 						headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
 					}).success(function(data){
-						console.log(data);
 						$scope.m_name_list=data;
 						for(tmp in data) {
 							$scope.m_name_chk.push(false);
@@ -577,33 +567,46 @@
 				}
 			};
 			
-			$scope.$watch('min_year',function() {
+			$scope.$watch('min_year',function(newVal,oldVal) {
+				if(isEmpty(newVal) && isEmpty(oldVal)) {
+					$scope.infoCheck();	
+				}
+			},true);
+			
+			$scope.$watch('max_year',function(newVal,oldVal) {
+				if(isEmpty(newVal) && isEmpty(oldVal)) {
+					$scope.infoCheck();	
+				}
+			},true);
+			
+			$scope.$watch('min_vehical_mile',function(newVal,oldVal) {
+				if(isEmpty(newVal) && isEmpty(oldVal)) {
+					$scope.infoCheck();	
+				}
+			},true);
+			
+			$scope.$watch('max_vehical_mile',function(newVal,oldVal) {
+				if(isEmpty(newVal) && isEmpty(oldVal)) {
+					$scope.infoCheck();	
+				}
+			},true);
+			
+			$scope.$watch('min_price',function(newVal,oldVal) {
+				if(isEmpty(newVal) && isEmpty(oldVal)) {
+					$scope.infoCheck();	
+				}
+			},true);
+			
+			$scope.$watch('max_price',function(newVal,oldVal) {
+				if(isEmpty(newVal) && isEmpty(oldVal)) {
+					$scope.infoCheck();	
+				}
+			},true);
+			
+			$scope.load=function() {
+				$scope.reset_chk();
 				$scope.infoCheck();
-			});
-			
-			$scope.$watch('max_year',function() {
-				$scope.infoCheck();
-			});
-			
-			$scope.$watch('min_vehical_mile',function() {
-				$scope.infoCheck();
-			});
-			
-			$scope.$watch('max_vehical_mile',function() {
-				$scope.infoCheck();
-			});
-			
-			$scope.$watch('min_price',function() {
-				$scope.infoCheck();
-			});
-			
-			$scope.$watch('max_price',function() {
-				$scope.infoCheck();
-			});
-			
-			
-			$scope.reset_chk();
-			$scope.infoCheck();
+			};
 		});
 		
 		var checkIndex=function(arr) {
