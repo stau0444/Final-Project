@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.car.myapp.cardata.dao.CarDataDao;
 import com.car.myapp.cardata.dto.CarDataDto;
+import com.car.myapp.cardata.service.CarDataService;
 import com.car.myapp.carimage.dto.CarImageDto;
 
 @Controller
@@ -27,6 +28,9 @@ public class CarDataController {
 
 	@Autowired
 	CarDataDao dao;
+	
+	@Autowired
+	CarDataService service;
 
 	@RequestMapping("/car/carList")
 	public ModelAndView carList(ModelAndView mView) {
