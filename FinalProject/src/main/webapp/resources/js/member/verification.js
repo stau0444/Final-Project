@@ -1,7 +1,37 @@
 var verificationApp = angular.module("verificationApp", [])
 	verificationApp.controller("verificationCtrl",function($scope, $http) {
-			
-			$scope.isSentVCode=false;	
+			$scope.isSentVCode=false;
+			$scope.isSentMail=false;
+			$scope.sendEmailCode=function(){
+				 $http({
+					url:'sendMail.do',
+					method:'post',
+					params:{user_mail:$scope.userEmail},
+					headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
+				}).success(function(data){
+					alert("인증번호를 보냈습니다");
+					$scope.isSentMail=true;
+				});
+			}	
+			$scope.checkEmailCode=function(){
+				$http({
+					url:'checkVCode.do',
+					method:'post',
+					params:{
+							userMail:$scope.userEmail,
+							verificationCode:$scope.EmailVCode
+							},
+					headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
+				}).success(function(data){
+					console.log(data);
+					if (data.isValid) {
+						alert("인증 되었습니다!")
+						location.replace("/mycar/member/verified/identification.do")
+					} else {
+						alert("인증에 실패했습니다. 다시시도 해주세요!")
+					}
+				});
+			}
 			$scope.sendCode = function() {
 				$http({
 					url:'checkPhone.do',

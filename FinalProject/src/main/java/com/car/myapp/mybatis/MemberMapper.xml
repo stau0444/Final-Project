@@ -10,15 +10,33 @@
 	<select id="checkid" parameterType="string" resultType="string">
 		SELECT user_id FROM user_all WHERE user_id=#{user_id}
 	</select>
-	<insert id="verification" parameterType="memberDto">
-		INSERT INTO verification(userPhone,verificationCode) 
-		VALUES(#{userPhone},#{verificationCode})
+	<insert id="verification" parameterType="verificationDto">
+		<choose>
+			<when test="userMail==null">
+				INSERT INTO verification(userPhone,verificationCode) 
+				VALUES(#{userPhone},#{verificationCode})		
+			</when>
+			<when test="userPhone==null">
+				INSERT INTO verification(userMail,verificationCode) 
+				VALUES(#{userMail},#{verificationCode})
+			</when>
+		</choose>
 	</insert>
-	<select id="checkVCode" parameterType="verificationDto" resultType="string">
-		SELECT * FROM verification WHERE userPhone=#{userPhone} AND  verificationCode=#{verificationCode}
+	<select id="checkVCode" parameterType="verificationDto" resultType="verificationDto">
+		<choose>
+			<when test="userMail==null">
+				SELECT * FROM verification WHERE userPhone=#{userPhone} AND  verificationCode=#{verificationCode}		
+			</when>
+			<when test="userPhone==null">
+				SELECT * FROM verification WHERE userMail=#{userMail} AND  verificationCode=#{verificationCode}
+			</when>
+		</choose>
 	</select>
 	<delete id="deleteVCode" parameterType="string">
 		DELETE FROM verification WHERE userPhone=#{userPhone}
+	</delete>
+	<delete id="deleteVCodeMail" parameterType="string">
+		DELETE FROM verification WHERE userMail=#{userMail}
 	</delete>
 	<select id="isExistId" parameterType="string" resultType="memberDto">
 		SELECT user_id , user_pwd FROM user_all WHERE user_id=#{user_id}

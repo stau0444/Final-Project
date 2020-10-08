@@ -71,8 +71,8 @@ public class NLoginController {
 	    	Object obj = parser.parse(apiResult);
 	    	JSONObject NuserInfo = (JSONObject) obj;
 	    	JSONObject info=(JSONObject)NuserInfo.get("response");
-	    	System.out.println(info.get("nickname"));
-	    	session.setAttribute("id", info.get("nickname"));
+	    	System.out.println(info.get("email"));
+	    	session.setAttribute("id", info.get("email"));
 	    	session.setAttribute("isNLogin", true);
 		} catch (Exception e) {
 			e.printStackTrace();

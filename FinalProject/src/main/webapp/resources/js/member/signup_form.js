@@ -5,7 +5,6 @@ var searchPostCode=function(){
 	        	document.getElementById("p_code").value =data.zonecode;
 	        }
 	    }).open();
-	
 	};
 	var carApp=angular.module("carApp",[]);
 	carApp.controller("loginCtrl",function($scope,$http){
@@ -25,17 +24,20 @@ var searchPostCode=function(){
 						$scope.isExist=false;
 					}
 				});
-			
 		};
 		$scope.addUser=function(){
-			if($scope.isExist){
-				 alert("아이디 중복 확인을 해주세요")
-			}else if($scope.inputPwd!=$scope.checkpwd){
-				alert("입력한 비밀번호가 다릅니다 확인 후 다시 시도해주세요");
-			}else{
-				$scope.inputAddr=document.getElementById("addr").value;
-				$scope.inputPCode=document.getElementById("p_code").value;
-				
+			$http({
+					url:'/mycar/member/checkPhone.do',
+					method:'post',
+					params:{user_phone:$scope.inputPhone},
+					headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
+				}).success(function(data){
+					if(data.isExist){
+						alert("해당 핸드폰번호로 등록된 아이디가 존재합니다.아이디 혹은 비밀번호를 찾아 로그인 해주세요");
+						location.replace("/mycar/member/login_form.do");
+					}else{
+						$scope.inputAddr=document.getElementById("addr").value;
+						$scope.inputPCode=document.getElementById("p_code").value;
 						$http({
 							url:'sign_up.do',
 							method:'post',
@@ -48,9 +50,9 @@ var searchPostCode=function(){
 									user_sort:$scope.inputSort},
 							headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
 						}).success(function(data){
-								location.replace("/mycar/member/verified/signup_success.do");								
-							
+							location.replace("/mycar/member/verified/signup_success.do");								
 						});
-					};
+					}
+				})	
 			};
 	});

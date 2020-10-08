@@ -47,7 +47,8 @@ public class MemberDaoImpl implements MemberDao {
 	//입력한 인증번호와 저장된 인증번호와 휴대전화번호를 비교하는 메소드
 	@Override
 	public boolean checkVCode(verificationDto dto,HttpSession sessionV) {
-		String isExist=session.selectOne("member.checkVCode", dto);
+		verificationDto isExist=session.selectOne("member.checkVCode", dto);
+		System.out.println("isExist:"+isExist);
 		if(isExist==null) {
 			return false;
 		}else {
@@ -64,6 +65,10 @@ public class MemberDaoImpl implements MemberDao {
 		}else {
 			return false;			
 		}
+	}
+	@Override
+	public void deleteVCodeMail(String userMail) {
+		session.delete("member.deleteVCodeMail",userMail);
 	}
 	//비밀번호 찾기시 아이디가 존재하는지 확인하고 존재한다면 회원아이디와,비밀번호를 가져오는 메서드 
 	@Override

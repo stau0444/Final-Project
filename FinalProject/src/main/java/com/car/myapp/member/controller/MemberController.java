@@ -65,6 +65,8 @@ public class MemberController {
 	@RequestMapping("member/checkVCode")
 	@ResponseBody
 	public Map<String,Object> checkVCode(verificationDto dto,HttpSession sessionV){
+		System.out.println(dto.getUserMail());
+		System.out.println(dto.getVerificationCode());
 		return memberService.checkVCode(dto,sessionV);
 	}
 	//인증후 회원가입 페이지로 넘겨주는 코드
@@ -192,6 +194,11 @@ public class MemberController {
 	@ResponseBody
 	public Map<String,Object> checkPhone(String user_phone){
 		return memberService.checkPhone(user_phone);
+	}
+	@RequestMapping("member/sendMail")
+	@ResponseBody
+	public Map<String,Object> sendMail(String user_mail){
+		return memberService.sendMail(user_mail);
 	}
 
 }

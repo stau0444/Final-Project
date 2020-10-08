@@ -11,6 +11,7 @@ public interface MemberDao {
 	public boolean verfication(verificationDto dto);
 	public boolean checkVCode(verificationDto dto,HttpSession sessionV);
 	public boolean deleteVCode(String userPhone);
+	public void deleteVCodeMail(String userMail);
 	public MemberDto isExistId(String user_id);
 	public String getUserId(String user_phone);
 	public MemberDto getUserInfo(String user_id);
