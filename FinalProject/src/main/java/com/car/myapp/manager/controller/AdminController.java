@@ -89,7 +89,7 @@ public class AdminController {
 		return adminService.deleteIp(ip_num);
 	}
 	
-	@RequestMapping(value = "manager/private/getlist", method = RequestMethod.GET)
+	@RequestMapping(value = "manager/private/getlist_ip", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> getList(HttpServletRequest req){
 		return adminService.getList(req);
@@ -98,9 +98,14 @@ public class AdminController {
 	@RequestMapping(value = "/manager/login")
 	public ModelAndView ManagerLogin(ModelAndView mView, HttpServletRequest req) {
 		
+		String id = (String)req.getSession().getAttribute("id");
+		if(id == null) {
+			adminService.login(mView, req);
+			mView.setViewName("manager/login");
+		}else {
+			mView.setViewName("manager/private/fail");
+		}
 		
-		adminService.login(mView, req);
-		mView.setViewName("manager/login");
 		return mView;
 	}
 }

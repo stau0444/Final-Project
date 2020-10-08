@@ -1,5 +1,12 @@
 package com.car.myapp.manager.dao;
 
-public interface IndividualDao {
+import java.util.List;
 
+import com.car.myapp.manager.dto.IndividualDto;
+import com.car.myapp.manager.dto.PageDto;
+
+public interface IndividualDao {
+	public List<IndividualDto> getList_iq(PageDto dto);
+	public int getCount();
+	public IndividualDto getData(int iq_num);
 }

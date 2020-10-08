@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="customer">
+	<insert id="insert" parameterType="individualDto">
+		insert into
+			individual_question(
+				iq_num,
+				user_id,
+				iq_content,
+				iq_regdate,
+				iq_email,
+				iq_category,
+				iq_title)
+		values(
+			individual_question_seq.nextval,
+			#{user_id},
+			#{iq_content},
+			sysdate,
+			#{iq_email},
+			#{iq_category},
+			#{iq_title}
+		)
+	</insert>
+</mapper>

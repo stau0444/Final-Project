@@ -53,7 +53,7 @@
 		<li><a href="review/list.do">리뷰 페이지 가기</a></li>
 	</div>
 	<div id="홍덕환">
-		<a href="">ip등록</a>
+		<a href="service/private/individual_form.do">1:1문의하기</a>
 		<a href="manager/login.do">관리자 로그인</a>
 		<a href="manager/private/mypage.do">관리자 페이지</a>
 	</div>

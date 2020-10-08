@@ -22,8 +22,42 @@
 <script>
 	var managerApp = angular.module("managerApp", ["ngRoute", "ngAnimate"]);
 
-	managerApp.controller("managerCtrl", function($scope, $http){
+	managerApp.controller("dataCtrl", function($scope, $http, $routeParams, $location){
+		var iq_num = $routeParams.iq_num;
+		$http({
+			url:"/mycar/manager/private/qna/getdata_iq.do",
+			method:"GET",
+			params:{iq_num:iq_num}
+		}).success(function(data){
+			console.log(data);
+			$scope.data = data.dto;
+		});
+	});
+	managerApp.controller("iqCtrl", function($scope, $http, $location){
+		$http({
+			url : "/mycar/manager/private/getlist_iq.do",
+			method : "get",
+			headers : {"Content-Type":"application/x-www-form-urlencoded;"}
+		}).success(function(data){
+			console.log(data);
+			$scope.list = data.list;
+			$scope.pagelist = data.pageList;
+			$location.url("/QnA_individual");
+		});
 		
+		$scope.getList = function(pageNum){
+			$http({
+				url : "/mycar/manager/private/getlist_iq.do",
+				method : "get",
+				params : {pageNum : pageNum},
+				headers : {"Content-Type":"application/x-www-form-urlencoded;"}
+			}).success(function(data){
+				console.log(data);
+				$scope.list = data.list;
+				$scope.pagelist = data.pageList;
+				$location.url("/QnA_individual");
+			});
+		}
 	});
 	
 	managerApp.controller("ipCtrl", function($scope, $http, $location){
@@ -46,7 +80,7 @@
 		}
 		
 		$http({
-			url : "/mycar/manager/private/getlist.do",
+			url : "/mycar/manager/private/getlist_ip.do",
 			method : "get",
 			headers : {"Content-Type":"application/x-www-form-urlencoded;"}
 		}).success(function(data){
@@ -58,7 +92,7 @@
 		
 		$scope.getList = function(pageNum){
 			$http({
-				url : "/mycar/manager/private/getlist.do",
+				url : "/mycar/manager/private/getlist_ip.do",
 				method : "get",
 				params : {pageNum : pageNum},
 				headers : {"Content-Type":"application/x-www-form-urlencoded;"}
@@ -101,10 +135,11 @@
 			title : "ip관리 페이지",
 			templateUrl : "registration.do"
 		})
-		.when("/answer-form", {
+		.when("/answer-form/:iq_num", {
 			page : "answer-form",
 			title : "답변 페이지",
-			templateUrl : "qna/answer_form.do"
+			templateUrl : "qna/answer_form.do",
+			controller : "dataCtrl"
 		})
 		.otherwise({redirectTo:"/QnA_individual"});
 			
@@ -123,25 +158,5 @@
 			</ul>
 	</div>
 	<div data-ng-view class="page-change-animation"></div>
-	<script>
-		var reg_ip =/^[1-255].{1,3}.[1-255].{1,3}.[1-255].{1,3}.[1-255].{1,3}$/
-		var isIpValid = false;
-		$("#ipForm").on("submit",function(){
-			if(!isIpValid){
-				alert("양식에 맞지 않습니다.");
-				return false;
-			}
-		});
-		$("#ip").on("input",function(){
-			var inputIp = $("#ip").val();
-			var result = reg_ip.test(inputIp);
-			if(result){
-				isIpValid = true;
-			}else{
-				isIpValid = false;
-			}
-		});
-		
-	</script>
 </body>
 </html>
