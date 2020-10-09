@@ -463,7 +463,7 @@
 				  </div>
 				</div>
 				
-				<a href="insertform.do">판매 등록</a>
+				<a href="insertform.do" data-ng-show="isLogin">판매 등록</a>
 			</div>
 		</div>
 	</div>
@@ -537,11 +537,12 @@
 									  $scope.max_vehical_mile,$scope.min_price,$scope.max_price),
 					headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
 				}).success(function(data){
-					for(tmp in data) {
-						data[tmp].image=decodeURI(data[tmp].image);
+					for(tmp in data.list) {
+						data.list[tmp].image=decodeURI(data.list[tmp].image);
 					}
 					console.log(data);
-					$scope.list=data;
+					$scope.list=data.list;
+					$scope.isLogin=data.isLogin;
 				});		
 			};
 			
