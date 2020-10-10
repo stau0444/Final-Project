@@ -7,12 +7,12 @@ public class MemberDto {
 	private String user_phone;
 	private String user_addr;
 	private String user_p_code;
-	private boolean user_sort;
+	private int user_sort;
 	
 	public MemberDto() {}
 
 	public MemberDto(String user_id, String user_pwd, String user_name, String user_phone, String user_addr,
-			String user_p_code, boolean user_sort) {
+			String user_p_code, int user_sort) {
 		super();
 		this.user_id = user_id;
 		this.user_pwd = user_pwd;
@@ -71,11 +71,11 @@ public class MemberDto {
 		this.user_p_code = user_p_code;
 	}
 
-	public boolean isUser_sort() {
+	public int isUser_sort() {
 		return user_sort;
 	}
 
-	public void setUser_sort(boolean user_sort) {
+	public void setUser_sort(int user_sort) {
 		this.user_sort = user_sort;
 	};
 }

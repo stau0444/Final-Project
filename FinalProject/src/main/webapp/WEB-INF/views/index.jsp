@@ -25,13 +25,25 @@
 		<c:choose>
 			<c:when test="${isNLogin ne null}">
 				<span class="LoginInfo">
-					<span><strong>${id}</strong>님이 네이버로 로그인 되었습니다</span>
+					<span>
+						<strong>${id}</strong>님이 네이버로 로그인 되었습니다
+					</span>
 					<a href="member/logout.do">로그아웃</a>
 				</span>
 			</c:when>
 			<c:otherwise>
 				<span class="LoginInfo">
-					<span><strong>${id}</strong>님 로그인 되었습니다</span>
+					<span>
+						<strong>${id}</strong>님 로그인 되었습니다
+						<c:choose>
+							<c:when test="${user_sort eq 1}">
+								<span class="text-primary">판매회원</span><a href="member/private/mypage_dealer.do">마이페이지(판매자)</a>
+							</c:when>
+							<c:otherwise>
+								<span class="text-primary">일반회원</span><a href="member/private/mypage_general.do">마이페이지(구매자)</a>
+							</c:otherwise>
+						</c:choose>
+					</span>
 					<a href="member/logout.do">로그아웃</a>
 				</span>
 			</c:otherwise>

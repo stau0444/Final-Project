@@ -179,10 +179,14 @@ public class MemberServiceImpl implements MemberService {
 		Map<String,Object> map = new HashMap<String, Object>();
 		//동일하다면
 		if(isValid) {
+			//회원 구분을 불러와 세션을 담아준다.
+			MemberDto user_info=memberDao.getUserInfo(inputId);
+			//여러개 쿼리로 각각의 필요한 정보만 빼오는게 나을지 한번에 받아와서 쓰는게 좋을지 결론은 떄에떄라 다를거같다. 
 			//아이디와 동일여부를 담아주고 세션영역에 아이디를 담는다 
 			map.put("isValid",true);
 			map.put("id",inputId);
 			session.setAttribute("id", inputId);
+			session.setAttribute("user_sort", user_info.isUser_sort());
 		//동일하지 않을때
 		}else {
 			map.put("isValid",false);

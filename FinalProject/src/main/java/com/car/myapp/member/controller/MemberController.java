@@ -28,7 +28,7 @@ import net.nurigo.java_sdk.Coolsms;
 
 @Controller
 public class MemberController {
-	//member Service 주입(DI)
+	
 	@Autowired
 	private MemberService memberService;
 	
@@ -190,15 +190,32 @@ public class MemberController {
 	public Map<String,Object> changepwd(MemberDto dto){
 		return memberService.changePwd(dto);
 	}
+	//전화번호 중복확인
 	@RequestMapping("member/checkPhone")
 	@ResponseBody
 	public Map<String,Object> checkPhone(String user_phone){
 		return memberService.checkPhone(user_phone);
 	}
+	//메일전송
 	@RequestMapping("member/sendMail")
 	@ResponseBody
 	public Map<String,Object> sendMail(String user_mail){
 		return memberService.sendMail(user_mail);
+	}
+	//------------------------------마이페이지관련--------------------------------------
+	//일반회원 마이페이지
+	@RequestMapping("member/private/mypage_general")
+	public ModelAndView  mypage_general(HttpSession session,ModelAndView mView) {
+		System.out.println("들어옴");
+		mView.setViewName("/member/mypage_general");
+		return mView;
+	}
+	//판매회원 마이페이지
+	@RequestMapping("member/private/mypage_dealer")
+	public ModelAndView  mypage_dealer(HttpSession session,ModelAndView mView) {
+		
+		mView.setViewName("/member/mypage_dealer");
+		return mView;
 	}
 
 }
