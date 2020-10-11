@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.car.myapp.MailAuth;
 import com.car.myapp.member.dao.MemberDao;
+import com.car.myapp.member.dto.BookMarkDto;
 import com.car.myapp.member.dto.MemberDto;
 import com.car.myapp.member.dto.verificationDto;
 
@@ -186,7 +187,7 @@ public class MemberServiceImpl implements MemberService {
 			map.put("isValid",true);
 			map.put("id",inputId);
 			session.setAttribute("id", inputId);
-			session.setAttribute("user_sort", user_info.isUser_sort());
+			session.setAttribute("user_sort", user_info.getUser_sort());
 		//동일하지 않을때
 		}else {
 			map.put("isValid",false);
@@ -215,6 +216,14 @@ public class MemberServiceImpl implements MemberService {
 		}else {
 			map.put("isExsist",false);
 		}
+		return map;
+	}
+	//마이페이지 유저정보가져오기
+	@Override
+	public Map<String,Object> getInfo(String user_id) {
+		Map<String,Object> map=new HashMap<String, Object>();
+		MemberDto dto=memberDao.getUserInfo(user_id);
+		map.put("userinfo",dto);
 		return map;
 	}
 	//비밀번호 변경 서비스
@@ -292,4 +301,15 @@ public class MemberServiceImpl implements MemberService {
 	        Map<String, Object> map=new HashMap<String, Object>();
 			return map;
 		}
+	//북마크 추가 
+	@Override
+	public void addBookmark(HttpSession session) {
+		//판매글번호
+		String car_num="1233";
+		String user_id=(String)session.getAttribute("id");
+		BookMarkDto dto=new BookMarkDto();
+		dto.setCar_num(car_num);
+		dto.setUser_id(user_id);
+		
+	}
 }

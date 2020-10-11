@@ -71,11 +71,11 @@ public class MemberDto {
 		this.user_p_code = user_p_code;
 	}
 
-	public int isUser_sort() {
+	public int getUser_sort() {
 		return user_sort;
 	}
 
 	public void setUser_sort(int user_sort) {
 		this.user_sort = user_sort;
-	};
+	}
 }

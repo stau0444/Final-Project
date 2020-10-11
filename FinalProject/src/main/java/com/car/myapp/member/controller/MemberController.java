@@ -20,6 +20,7 @@ import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
 import com.car.myapp.sendSMS;
+import com.car.myapp.member.dto.BookMarkDto;
 import com.car.myapp.member.dto.MemberDto;
 import com.car.myapp.member.dto.verificationDto;
 import com.car.myapp.member.service.MemberService;
@@ -217,5 +218,20 @@ public class MemberController {
 		mView.setViewName("/member/mypage_dealer");
 		return mView;
 	}
-
+	//북마크처리
+	@RequestMapping("add_bookmark")
+	public void  add_bookmark(HttpSession session) {
+		//판매글 번호 	
+		
+		memberService.addBookmark(session);
+		
+	}
+	//마이페이지 회원정보가져오기
+	@RequestMapping("member/private/getUserInfo")
+	@ResponseBody
+	public Map<String, Object> getUserInfo(HttpSession session){
+		String user_id=(String)session.getAttribute("id");
+		return memberService.getInfo(user_id);
+	}
+	
 }

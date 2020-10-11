@@ -21,5 +21,7 @@ public interface MemberService {
 	public Map<String,Object> getUserInfo(String user_id);
 	public Map<String,Object> changePwd(MemberDto dto);
 	public Map<String,Object> checkPhone(String user_phone);
-	public Map<String, Object> sendMail(String user_mail);
+	public Map<String,Object> sendMail(String user_mail);
+	public void addBookmark(HttpSession session);
+	public Map<String,Object> getInfo(String user_id);
 }

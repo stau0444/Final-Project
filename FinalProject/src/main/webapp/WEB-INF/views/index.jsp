@@ -19,7 +19,7 @@
 </style>
 </head>
 <body>
-	<!--로그인 표시 -->
+	<!--로그인 상태 표시 -->
 	<c:choose>
 		<c:when test="${id ne null}">
 		<c:choose>
@@ -56,6 +56,7 @@
 			</span>
 		</c:otherwise>
 	</c:choose>
+	<a href="add_bookmark.do">북마크 테스트 링크</a>
 	<div style="margin-top:30px;"></div>
 	<!-- 로그인표시끝 -->
 	<!-- 각자 맡으실 페이지의 링크를  아래의 div에 적어두면 
