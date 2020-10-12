@@ -85,6 +85,7 @@
 	</div>
 	<hr class="my-2"/>
 	<div class="row my-4" >
+		<h4 class="text-info"> 회원정보수정</h4>
 		<!-- 회원정보 링크-->
 		<div class="col-6">
 			<div class="jumbotron text-center">
