@@ -7,7 +7,7 @@
 <title>차 판매등록 페이지</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
 </head>
-<body>
+<body onbeforeunload="reset();">
 	<form action="insert.do" method="post" id="insertForm">
 		<label for="title">제목</label>
 		<input type="text" id="title" name="title" />
@@ -104,7 +104,8 @@
 				<label for="myFile">첨부 파일</label>
 				<input multiple="multiple" class="form-control" type="file" id="file" accept="image/*"/>
 			</div>
-			<table class="table table-hover">
+		</form>
+		<table class="table table-hover">
 				<thead>
 					<tr>
 						<th>메인</th>
@@ -115,9 +116,7 @@
 				<tbody id="file_input">
 					
 				</tbody>
-			</table>
-		</form>
-		
+		</table>
 		
 		<button type="button" id="insertBtn">등록</button>
 		<button type="button" id="cancelBtn">취소</button>
@@ -126,16 +125,14 @@
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.5.1.js"></script>
 	<script>
 		var checkUnload = true;
-		$(document).ready(function() {
-			reset();
-		});
-		
+
 		$("#insertBtn").on("click",function() {
 			checkUnload = false;
 			$("#insertForm").submit();
 		});
 		
 		$("#cancelBtn").on("click",function() {
+			reset();
 			location.replace("carList.do");
 		});
 	
@@ -188,49 +185,48 @@
 			var imageList=$("#imageList").children("input[type='hidden']");
 			console.log(column);
 			
+			var result=del_file(fileName);
+			
+			if(result) {
+				$(column).remove();
+				for(index in imageList) {
+					if($(imageList[index]).attr("class") == fileName) {
+						$(imageList[index]).remove();
+					}
+				}
+			}
+		});
+		
+
+		var reset=function() {
+			
+				
+		
+			$("#insertForm")[0].reset();
+				
+			var imgList=$("#imageList").children("input[type='hidden']");
+
+			for(var i=0;i<imgList.length;i++) {
+				
+				console.log($(imgList[i]).val());
+				del_file($(imgList[i]).val());
+			}
+				
+			$("#imageList").html("");
+			$("#file_input").html("");
+			
+		};
+		
+		
+		var del_file=function(fileName) {
 			$.ajax({
 				url:"file_delete.do",
 				method:"post",
 				data:{saveFileName:fileName},
 				success: function(data) {
-					console.log(data);
-					if(data) {
-						
-						$(column).remove();
-						for(index in imageList) {
-							if($(imageList[index]).attr("class") == fileName) {
-								$(imageList[index]).remove();
-							}
-						}
-					}
+					return data;
 				}
 			});
-		});
-		
-		window.onpageshow = function(event) {
-			if ( event.persisted || (window.performance && (window.performance.navigation.type == 1 || window.performance.navigation.type == 2))) {
-			// Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우	
-				reset();
-			}
-		};
-		
-		
-	    $(window).on("beforeunload", function(e){
-
-	    	//var isUnload=confirm("작업 중인 데이터가 사라집니다.이동하시겠습니까?");
-	        if(checkUnload) {
-	   			
-	   			/*
-	   			if(isUnload) {
-	   				reset();
-	   			}else {
-	   			}*/
-	        }
-	    });
-
-		var reset=function() {
-			$("#insertForm")[0].reset();
-			$("#file_input").html("");
 		};
 		
 	</script>
