@@ -17,6 +17,7 @@
 		font-size: 12px;
 	}
 	.list_img {
+		width: 150px;
 		height: 100px;
 	}
 	.media:hover {
