@@ -18,7 +18,7 @@
 		</div>
 
 		<div class="card pt-5 pb-3">
-			<form action = "ask.do" method="post">
+			<form action = "ask.do" method="post">	
 				<div class="form-group row  text-center">
 					<label for="id" class="col-sm-2 col-form-label">아이디</label>
 					<div class="col-sm-8">

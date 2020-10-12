@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.car.myapp.manager.dto.IndividualDto;
 import com.car.myapp.manager.service.IndividualService;
 import com.car.myapp.manager.service.QnAService;
 
@@ -37,5 +39,14 @@ public class QnAController {
 	public Map<String, Object> getDataIq(@RequestParam int iq_num){
 		
 		return individualService.getData_iq(iq_num);
+	}
+	
+	//1:1문의 답장
+	@RequestMapping(value = "/manager/private/answer")
+	public ModelAndView answer(ModelAndView mView, IndividualDto dto, HttpServletRequest req) {
+		
+		individualService.answer(dto, req);
+		mView.setViewName("manager/private/mypage");
+		return mView;
 	}
 }

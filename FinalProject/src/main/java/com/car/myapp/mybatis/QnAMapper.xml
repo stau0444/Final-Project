@@ -29,4 +29,10 @@
 		where
 			iq_num=#{iq_num}
 	</select>
+	<delete id="delete">
+		delete from
+			individual_question
+		where
+			iq_num=#{iq_num}
+	</delete>
 </mapper>
