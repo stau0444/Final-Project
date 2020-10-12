@@ -69,7 +69,7 @@ public class CarDataController {
 		
 		service.addData(session, request, dto, images);
 		
-		return "car/carList";
+		return "redirect:carList.do";
 	}
 
 	@RequestMapping(value = "/car/file_upload", method = RequestMethod.POST)
