@@ -120,12 +120,23 @@
 		
 		
 		<button type="button" id="insertBtn">등록</button>
+		<button type="button" id="cancelBtn">취소</button>
 	</form>
 	
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.5.1.js"></script>
 	<script>
+		var checkUnload = true;
+		$(document).ready(function() {
+			reset();
+		});
+		
 		$("#insertBtn").on("click",function() {
+			checkUnload = false;
 			$("#insertForm").submit();
+		});
+		
+		$("#cancelBtn").on("click",function() {
+			location.replace("carList.do");
 		});
 	
 		$("#searchBtn").on("click",function() {
@@ -195,20 +206,32 @@
 				}
 			});
 		});
-		/*
+		
 		window.onpageshow = function(event) {
-			if ( event.persisted || (window.performance && window.performance.navigation.type == 255)) {
-			// Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
-			alert("히스토리백!!!!");
+			if ( event.persisted || (window.performance && (window.performance.navigation.type == 1 || window.performance.navigation.type == 2))) {
+			// Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우	
+				reset();
 			}
 		};
-		*/
-		var checkUnload = true;
-	    $(window).on("beforeunload", function(){
-	        if(checkUnload) return "이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다.";
+		
+		
+	    $(window).on("beforeunload", function(e){
+
+	    	//var isUnload=confirm("작업 중인 데이터가 사라집니다.이동하시겠습니까?");
+	        if(checkUnload) {
+	   			
+	   			/*
+	   			if(isUnload) {
+	   				reset();
+	   			}else {
+	   			}*/
+	        }
 	    });
 
-
+		var reset=function() {
+			$("#insertForm")[0].reset();
+			$("#file_input").html("");
+		};
 		
 	</script>
 	
