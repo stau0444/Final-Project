@@ -74,6 +74,14 @@
 	</div>
 	<hr class="my-3"/>
 	<!-- 관심차량리스트 -->
+	<table class="w-100 my-4 border">
+		<tr >
+			<td><a href="">관심차량리스트</a></td>
+			<td><a href="">최근본차량 리스트</a></td>
+			<td><a href="">회원정보수정</a></td>
+			<td><a href="">회원탈퇴</a></td>
+		</tr>
+	</table>
 	<div class="row my-4">
 		<h4 class="text-info">관심차량</h4>
 		<div class="w-100 border" style="height:200px;">
@@ -90,6 +98,7 @@
 		<hr class="my-2"/>
 	</div>
 	<hr class="my-2"/>
+	<h4 class="text-info"> 회원정보수정</h4>
 	<div class="row my-4" >
 		<!-- 회원정보 링크-->
 		<div class="col-6">
