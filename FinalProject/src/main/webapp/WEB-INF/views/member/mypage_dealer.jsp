@@ -12,6 +12,13 @@
 	var myPageApp=angular.module("myPageApp",[]);
 	myPageApp.controller("myPageCtrl",function($scope,$http){
 		$http({
+			url:'getFavoritList.do',
+			method:'post',
+			headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
+		}).success(function(data){
+			console.log(data);
+		})
+		$http({
 			url:'getUserInfo.do',
 			method:'post',
 			headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}

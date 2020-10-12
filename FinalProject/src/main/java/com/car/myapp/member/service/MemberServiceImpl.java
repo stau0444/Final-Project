@@ -1,8 +1,10 @@
 package com.car.myapp.member.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
@@ -303,13 +305,57 @@ public class MemberServiceImpl implements MemberService {
 		}
 	//북마크 추가 
 	@Override
-	public void addBookmark(HttpSession session) {
-		//판매글번호
-		String car_num="1233";
+	public Map<String, Object> addBookmark(String car_num,HttpSession session) {
+		//판매차량번호와 유저아이디를 불러와서 dto에 넣어준다
 		String user_id=(String)session.getAttribute("id");
 		BookMarkDto dto=new BookMarkDto();
 		dto.setCar_num(car_num);
 		dto.setUser_id(user_id);
+		//북마크 정보를 저장하고 성패여부를 boolean으로 담는다
+		boolean isAdded=memberDao.addBookmark(dto);
+		//
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("bookmarkinfo", dto);
+		map.put("isAdded",isAdded);
 		
+		return map;
+		
+	}
+	@Override
+	public Map<String, Object> deleteBookmark(String car_num, HttpSession session) {
+		String user_id=(String)session.getAttribute("id");
+		BookMarkDto dto=new BookMarkDto();
+		dto.setCar_num(car_num);
+		dto.setUser_id(user_id);
+		//북마크 정보를 저장하고 성패여부를 boolean으로 담는다
+		boolean isDeleted=memberDao.deleteBookmark(dto);
+		//
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("bookmarkinfo", dto);
+		map.put("isDeleted",isDeleted);
+		
+		return map;
+	}
+	@Override
+	public Map<String, Object> checkBookmark(String car_num, HttpSession session) {
+		String user_id=(String)session.getAttribute("id");
+		BookMarkDto dto=new BookMarkDto();
+		dto.setCar_num(car_num);
+		dto.setUser_id(user_id);
+		//북마크 정보를 저장하고 성패여부를 boolean으로 담는다
+		boolean isChecked=memberDao.checkBookmark(dto);
+		//
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("isChecked",isChecked);
+		
+		return map;
+	}
+	@Override
+	public Map<String, Object> getFavoritList(HttpSession session) {
+		String user_id=(String)session.getAttribute("id");
+		List<String> list=memberDao.getFavoritList(user_id);
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("favoritList",list);
+		return map;
 	}
 }

@@ -14,6 +14,7 @@
 		<!-- member 관련 Dto 별칭 등록 -->
 		<typeAlias type="com.car.myapp.member.dto.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.car.myapp.member.dto.verificationDto" alias="verificationDto"/>
+		<typeAlias type="com.car.myapp.member.dto.BookMarkDto" alias="bookmarkDto"/>
 		
 		<!-- carData 관련 Dto -->
 		<typeAlias type="com.car.myapp.cardata.dto.CarDataDto" alias="carDataDto"/>

@@ -23,6 +23,9 @@
 </style>
 </head>
 <body data-ng-controller="viewController">
+	<!-- 북마크링크 -->
+		<button data-ng-click="addbookmark()">북마크</button>{{Clicked}}
+	<!-- 북마크링크 끝-->
 	<div class="container">
 		<div id="imageCarousel" class="carousel slide" data-ride="carousel">
 		  <div class="carousel-inner position-relative">
@@ -144,8 +147,50 @@
 <script src="${pageContext.request.contextPath}/resources/js/angular.min.js"></script>
 <script>
 	var myApp=angular.module("myApp",[]);
-	
+	function searchParam(key) {
+		  return new URLSearchParams(location.search).get(key);
+	};
 	myApp.controller("viewController",function($scope,$http) {
+		//북마크 추가 링크 data={"isAdded":boolean,"bookmarkinfo":BookMarkDto} 
+		$scope.Clicked=0;
+		$scope.num=searchParam('num');
+		$http({
+			url:'/mycar/member/private/check_bookmark.do',
+			method:'post',
+			params:{car_num:$scope.num},
+			headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
+		}).success(function(data){
+			console.log(data);
+			if(data.isChecked){
+				$scope.Clicked=1;			
+			}
+		});
+		$scope.addbookmark=function(){
+			if($scope.Clicked==0){
+				$http({
+					url:'/mycar/member/private/add_bookmark.do',
+					method:'post',
+					params:{car_num:$scope.car_num},
+					headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
+				}).success(function(data){
+					console.log(data);
+					alert("관심차량으로 등록되었습니다");
+					$scope.Clicked=1;
+				})
+			}else{
+				$http({
+					url:'/mycar/member/private/delete_bookmark.do',
+					method:'post',
+					params:{car_num:$scope.car_num},
+					headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8"}
+				}).success(function(data){
+					console.log(data);
+					alert("관심차량에서 삭제되었습니다.");
+					$scope.Clicked=0;
+				});
+			};
+		};
+		
 		
 		$scope.load=function() {
 			$scope.car_num="${car_num}";
@@ -166,6 +211,8 @@
 		
 		$scope.load();
 	});
+	
+	
 	
 	var btnSizeAble=function() {
 		$(".carousel-control-next").css("height",$(".active").first().height());

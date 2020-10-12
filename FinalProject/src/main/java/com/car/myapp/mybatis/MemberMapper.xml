@@ -53,4 +53,14 @@
 	<select id="checkPhone" parameterType="string" resultType="string">
 		SELECT user_phone FROM user_all WHERE user_phone=#{user_phone}
 	</select>
+	<insert id="addBookmark" parameterType="bookmarkDto">
+		INSERT INTO favorit(car_num,user_id) VALUES(#{car_num},#{user_id})
+	</insert>
+	<delete id="deleteBookmark" parameterType="bookmarkDto">
+		DELETE FROM favorit where user_id=#{user_id} AND car_num=#{car_num}
+	</delete>
+	<select id="checkBookmark" parameterType="bookmarkDto" resultType="bookmarkDto">
+		select * FROM favorit where user_id=#{user_id} AND car_num=#{car_num}
+	</select>
+	
 </mapper>
