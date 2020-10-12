@@ -31,7 +31,7 @@ public class CarDataServiceImpl implements CarDataService {
 		String id=(String)session.getAttribute("id");
 		
 		map.put("list", list);
-		if(id.isEmpty()) {
+		if(id == null) {
 			map.put("isLogin", false);
 		}else {
 			map.put("isLogin", true);
