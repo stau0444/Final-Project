@@ -11,6 +11,27 @@
 	#menubar>td>a{
 		width:200px;
 		height:40px;
+		
+	}
+	li{
+		box-shadow: 0px;
+		border-radius: 10px;
+	}
+	li:hover {
+		box-shadow: 4px 4px 5px 0px rgba(97, 198, 147, 0.78);
+	    transition: box-shadow 0.4s;
+	}
+	li:hover:after {
+	    animation: spinAround 9s linear infinite;
+	}
+	
+	@keyframes spinAround {
+	    from {
+	        transform: rotate(0deg)
+	    }
+	    to {
+	        transform: rotate(360deg);
+	    }
 	}
 </style>
 <script src="../../resources/js/angular.min.js"></script>
