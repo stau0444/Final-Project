@@ -23,11 +23,11 @@
 		<label for="color">색상</label>
 		<select id="color" name="color">
 			<option value="" selected>선택</option>
-			<option value="blue">파랑색</option>
+			<option value="blue">청색</option>
 			<option value="red">적색</option>
-			<option value="white">흰섹</option>
+			<option value="white">흰색</option>
 			<option value="gray">회색</option>
-			<option value="black">검은색</option>
+			<option value="black">흑색</option>
 			<option value="green">녹색</option>
 			<option value="etc">기타</option>
 		</select>
@@ -104,8 +104,7 @@
 				<label for="myFile">첨부 파일</label>
 				<input multiple="multiple" class="form-control" type="file" id="file" accept="image/*"/>
 			</div>
-		</form>
-		<table class="table table-hover">
+			<table class="table table-hover">
 				<thead>
 					<tr>
 						<th>메인</th>
@@ -116,7 +115,8 @@
 				<tbody id="file_input">
 					
 				</tbody>
-		</table>
+			</table>
+		</form>
 		
 		<button type="button" id="insertBtn">등록</button>
 		<button type="button" id="cancelBtn">취소</button>

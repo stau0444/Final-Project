@@ -67,7 +67,8 @@ public class CarDataController {
 	@RequestMapping("/car/insert")
 	public String insert(HttpSession session, HttpServletRequest request, CarDataDto dto, @RequestParam("image") List<String> images) {
 		
-		service.addData(session, request, dto, images);
+		System.out.println(request.getParameter("isMain"));
+		//service.addData(session, request, dto, images);
 		
 		return "redirect:carList.do";
 	}
