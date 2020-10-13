@@ -121,6 +121,7 @@ public class MemberDaoImpl implements MemberDao {
 			return false;			
 		}
 	}
+	//북마크 삭제 메서드
 	@Override
 	public boolean deleteBookmark(BookMarkDto dto) {
 		int isDeleted=session.delete("member.deleteBookmark",dto);
@@ -130,6 +131,7 @@ public class MemberDaoImpl implements MemberDao {
 			return false;			
 		}
 	}
+	//북마크를 확인하는 메서드
 	@Override
 	public boolean checkBookmark(BookMarkDto dto) {
 		BookMarkDto isChecked=session.selectOne("member.checkBookmark",dto);
@@ -139,9 +141,16 @@ public class MemberDaoImpl implements MemberDao {
 			return false;
 		}
 	}
+	//북마크한 차량 불러오는 메서드
 	@Override
 	public List<String> getFavoritList(String user_id) {
 		List<String> list=session.selectList("member.getFavoritList",user_id);
+		return list;
+	}
+	//판매차량리스트을 불러오는 메서드
+	@Override
+	public List<String> getSalesList(String user_id) {
+		List<String> list=session.selectList("member.getSalesList",user_id);
 		return list;
 	}
 }

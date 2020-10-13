@@ -27,4 +27,5 @@ public interface MemberService {
 	public Map<String,Object> getInfo(String user_id);
 	public Map<String,Object> checkBookmark(String car_num,HttpSession session);
 	public Map<String,Object> getFavoritList(HttpSession session);
+	public Map<String,Object> getSalesList(HttpSession session);	
 }

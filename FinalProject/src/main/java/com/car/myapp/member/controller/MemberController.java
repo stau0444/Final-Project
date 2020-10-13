@@ -250,5 +250,11 @@ public class MemberController {
 	public Map<String, Object> getFavoritList(HttpSession session){
 		return memberService.getFavoritList(session);
 	}
+	//판매차량 리스트 불러오기
+	@RequestMapping("member/private/getSalesList")
+	@ResponseBody
+	public Map<String, Object> getSalesList(HttpSession session){
+		return memberService.getSalesList(session);
+	}
 	
 }

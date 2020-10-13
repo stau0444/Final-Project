@@ -90,6 +90,9 @@ public class CarDataServiceImpl implements CarDataService {
 			//저장할 파일의 상세 경로
 			String filePath=realPath+File.separator;
 			//디렉토리를 만들 파일 객체 생성
+			
+			System.out.println("f:"+filePath);
+			System.out.println("r:"+realPath);
 			File upload=new File(filePath);
 			if(!upload.exists()) {//만일 디렉토리가 존재하지 않으면 
 				upload.mkdir(); //만들어 준다.

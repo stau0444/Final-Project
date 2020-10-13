@@ -358,4 +358,12 @@ public class MemberServiceImpl implements MemberService {
 		map.put("favoritList",list);
 		return map;
 	}
+	@Override
+	public Map<String, Object> getSalesList(HttpSession session) {
+		String user_id=(String)session.getAttribute("id");
+		List<String> list=memberDao.getSalesList(user_id);
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("salesList",list);
+		return map;
+	}
 }

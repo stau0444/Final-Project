@@ -4,7 +4,7 @@
 	<!-- type  별칭 등록 -->
 	<typeAliases>
 		<!-- 관리자 관련 Dto 별칭 등록 -->
-		 <!-- <typeAlias type="com.car.myapp.manager.dto.QnADto" alias="qnaDto"/>  -->
+		<typeAlias type="com.car.myapp.manager.dto.QnADto" alias="qnaDto"/>
 		<typeAlias type="com.car.myapp.manager.dto.IndividualDto" alias="individualDto"/>
 		<typeAlias type="com.car.myapp.manager.dto.PageDto" alias="pageDto"/>
 

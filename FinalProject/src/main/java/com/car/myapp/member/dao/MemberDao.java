@@ -24,4 +24,5 @@ public interface MemberDao {
 	public boolean deleteBookmark(BookMarkDto dto);
 	public boolean checkBookmark(BookMarkDto dto);
 	public List<String> getFavoritList(String user_id);
+	public List<String> getSalesList(String user_id);
 }
