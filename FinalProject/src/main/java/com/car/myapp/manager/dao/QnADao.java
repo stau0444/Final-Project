@@ -10,4 +10,5 @@ public interface QnADao {
 	public List<QnADto> getList_f(PageDto dto);
 	public int getCount();
 	public void delete(int qna_num);
+	public void insert_f(QnADto dto);
 }

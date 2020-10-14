@@ -33,4 +33,8 @@ public class QnADaoImpl implements QnADao{
 		// TODO Auto-generated method stub
 		session.delete("qna.delete_f", qna_num);
 	}
+	@Override
+	public void insert_f(QnADto dto) {
+		session.insert("qna.insert_f", dto);
+	}
 }

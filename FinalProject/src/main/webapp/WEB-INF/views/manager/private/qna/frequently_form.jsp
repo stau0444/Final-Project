@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<div class="container" data-ng-controller="dataCtrl">
+<div class="container" data-ng-controller="frequentlyCtrl">
 
 	<form id="frequently_form">
 	
@@ -23,6 +23,6 @@
 			<input type="text" data-ng-model="answer" id="answer"/>
 		</div>
 		
-		<button ng-click="QnaInsert()"></button>
+		<button ng-click="qnaInsert()">추가하기</button>
 	</form>
 </div>

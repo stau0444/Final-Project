@@ -76,4 +76,12 @@ public class QnAServiceImpl implements QnAService{
 		map.put("isSuccess", true);
 		return map;
 	}
+
+	@Override
+	public Map<String, Object> insert_f(QnADto dto) {
+		qnaDao.insert_f(dto);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("isSuccess", true);
+		return map;
+	}
 }
