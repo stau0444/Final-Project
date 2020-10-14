@@ -25,7 +25,7 @@
 	<mappers>
 		<!-- 관리자 관련 Mapper 등록 -->
 		<mapper resource="com/car/myapp/mybatis/AdminMapper.xml"/>
-		<!-- <mapper resource="com/car/myapp/mybatis/QnAMapper.xml"/>-->
+		<mapper resource="com/car/myapp/mybatis/QnAMapper.xml"/>
 		
 		<!-- 사용자 관련 기능 -->
 		<mapper resource="com/car/myapp/mybatis/CustomerMapper.xml"/>
