@@ -1,8 +1,10 @@
 package com.car.myapp.member.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
@@ -26,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.car.myapp.MailAuth;
 import com.car.myapp.member.dao.MemberDao;
+import com.car.myapp.member.dto.BookMarkDto;
 import com.car.myapp.member.dto.MemberDto;
 import com.car.myapp.member.dto.verificationDto;
 
@@ -179,10 +182,14 @@ public class MemberServiceImpl implements MemberService {
 		Map<String,Object> map = new HashMap<String, Object>();
 		//동일하다면
 		if(isValid) {
+			//회원 구분을 불러와 세션을 담아준다.
+			MemberDto user_info=memberDao.getUserInfo(inputId);
+			//여러개 쿼리로 각각의 필요한 정보만 빼오는게 나을지 한번에 받아와서 쓰는게 좋을지 결론은 떄에떄라 다를거같다. 
 			//아이디와 동일여부를 담아주고 세션영역에 아이디를 담는다 
 			map.put("isValid",true);
 			map.put("id",inputId);
 			session.setAttribute("id", inputId);
+			session.setAttribute("user_sort", user_info.getUser_sort());
 		//동일하지 않을때
 		}else {
 			map.put("isValid",false);
@@ -211,6 +218,14 @@ public class MemberServiceImpl implements MemberService {
 		}else {
 			map.put("isExsist",false);
 		}
+		return map;
+	}
+	//마이페이지 유저정보가져오기
+	@Override
+	public Map<String,Object> getInfo(String user_id) {
+		Map<String,Object> map=new HashMap<String, Object>();
+		MemberDto dto=memberDao.getUserInfo(user_id);
+		map.put("userinfo",dto);
 		return map;
 	}
 	//비밀번호 변경 서비스
@@ -288,4 +303,67 @@ public class MemberServiceImpl implements MemberService {
 	        Map<String, Object> map=new HashMap<String, Object>();
 			return map;
 		}
+	//북마크 추가 
+	@Override
+	public Map<String, Object> addBookmark(String car_num,HttpSession session) {
+		//판매차량번호와 유저아이디를 불러와서 dto에 넣어준다
+		String user_id=(String)session.getAttribute("id");
+		BookMarkDto dto=new BookMarkDto();
+		dto.setCar_num(car_num);
+		dto.setUser_id(user_id);
+		//북마크 정보를 저장하고 성패여부를 boolean으로 담는다
+		boolean isAdded=memberDao.addBookmark(dto);
+		//
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("bookmarkinfo", dto);
+		map.put("isAdded",isAdded);
+		
+		return map;
+		
+	}
+	@Override
+	public Map<String, Object> deleteBookmark(String car_num, HttpSession session) {
+		String user_id=(String)session.getAttribute("id");
+		BookMarkDto dto=new BookMarkDto();
+		dto.setCar_num(car_num);
+		dto.setUser_id(user_id);
+		//북마크 정보를 저장하고 성패여부를 boolean으로 담는다
+		boolean isDeleted=memberDao.deleteBookmark(dto);
+		//
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("bookmarkinfo", dto);
+		map.put("isDeleted",isDeleted);
+		
+		return map;
+	}
+	@Override
+	public Map<String, Object> checkBookmark(String car_num, HttpSession session) {
+		String user_id=(String)session.getAttribute("id");
+		BookMarkDto dto=new BookMarkDto();
+		dto.setCar_num(car_num);
+		dto.setUser_id(user_id);
+		//북마크 정보를 저장하고 성패여부를 boolean으로 담는다
+		boolean isChecked=memberDao.checkBookmark(dto);
+		//
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("isChecked",isChecked);
+		
+		return map;
+	}
+	@Override
+	public Map<String, Object> getFavoritList(HttpSession session) {
+		String user_id=(String)session.getAttribute("id");
+		List<String> list=memberDao.getFavoritList(user_id);
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("favoritList",list);
+		return map;
+	}
+	@Override
+	public Map<String, Object> getSalesList(HttpSession session) {
+		String user_id=(String)session.getAttribute("id");
+		List<String> list=memberDao.getSalesList(user_id);
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("salesList",list);
+		return map;
+	}
 }

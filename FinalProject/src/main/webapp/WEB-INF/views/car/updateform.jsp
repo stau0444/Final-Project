@@ -7,13 +7,13 @@
 <title>차 판매등록 페이지</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
 </head>
-<body onbeforeunload="reset();">
+<body>
 	<form action="insert.do" method="post" id="insertForm">
 		<label for="title">제목</label>
-		<input type="text" id="title" name="title" />
+		<input type="text" id="title" name="title" value=${data.title} />
 		<br />
 		<label for="car_num">차량번호</label>
-		<input type="text" id="car_num" name="car_num" />
+		<input type="text" id="car_num" name="car_num" value=${data.car_num}/>
 		<br />
 		<label for="m_name">차량</label>
 		<input type="text" id="m_name_view" disabled/>
@@ -23,11 +23,11 @@
 		<label for="color">색상</label>
 		<select id="color" name="color">
 			<option value="" selected>선택</option>
-			<option value="blue">청색</option>
+			<option value="blue">파랑색</option>
 			<option value="red">적색</option>
-			<option value="white">흰색</option>
+			<option value="white">흰섹</option>
 			<option value="gray">회색</option>
-			<option value="black">흑색</option>
+			<option value="black">검은색</option>
 			<option value="green">녹색</option>
 			<option value="etc">기타</option>
 		</select>
@@ -118,22 +118,14 @@
 			</table>
 		</form>
 		
+		
 		<button type="button" id="insertBtn">등록</button>
-		<button type="button" id="cancelBtn">취소</button>
 	</form>
 	
 	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.5.1.js"></script>
 	<script>
-		var checkUnload = true;
-
 		$("#insertBtn").on("click",function() {
-			checkUnload = false;
 			$("#insertForm").submit();
-		});
-		
-		$("#cancelBtn").on("click",function() {
-			reset();
-			location.replace("carList.do");
 		});
 	
 		$("#searchBtn").on("click",function() {
@@ -185,49 +177,24 @@
 			var imageList=$("#imageList").children("input[type='hidden']");
 			console.log(column);
 			
-			var result=del_file(fileName);
-			
-			if(result) {
-				$(column).remove();
-				for(index in imageList) {
-					if($(imageList[index]).attr("class") == fileName) {
-						$(imageList[index]).remove();
-					}
-				}
-			}
-		});
-		
-
-		var reset=function() {
-			
-				
-		
-			$("#insertForm")[0].reset();
-				
-			var imgList=$("#imageList").children("input[type='hidden']");
-
-			for(var i=0;i<imgList.length;i++) {
-				
-				console.log($(imgList[i]).val());
-				del_file($(imgList[i]).val());
-			}
-				
-			$("#imageList").html("");
-			$("#file_input").html("");
-			
-		};
-		
-		
-		var del_file=function(fileName) {
 			$.ajax({
 				url:"file_delete.do",
 				method:"post",
 				data:{saveFileName:fileName},
 				success: function(data) {
-					return data;
+					console.log(data);
+					if(data) {
+						
+						$(column).remove();
+						for(index in imageList) {
+							if($(imageList[index]).attr("class") == fileName) {
+								$(imageList[index]).remove();
+							}
+						}
+					}
 				}
 			});
-		};
+		});
 		
 	</script>
 	

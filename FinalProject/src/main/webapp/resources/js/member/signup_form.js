@@ -38,6 +38,11 @@ var searchPostCode=function(){
 					}else{
 						$scope.inputAddr=document.getElementById("addr").value;
 						$scope.inputPCode=document.getElementById("p_code").value;
+						if($scope.inputSort){
+							$scope.inputSort=1;
+						}else{
+							$scope.inputSort=0;
+						}
 						$http({
 							url:'sign_up.do',
 							method:'post',

@@ -4,7 +4,6 @@
 	<!-- type  별칭 등록 -->
 	<typeAliases>
 		<!-- 관리자 관련 Dto 별칭 등록 -->
-		<typeAlias type="com.car.myapp.manager.dto.NewsDto" alias="newsDto"/>
 		<typeAlias type="com.car.myapp.manager.dto.QnADto" alias="qnaDto"/>
 		<typeAlias type="com.car.myapp.manager.dto.IndividualDto" alias="individualDto"/>
 		<typeAlias type="com.car.myapp.manager.dto.PageDto" alias="pageDto"/>
@@ -15,6 +14,7 @@
 		<!-- member 관련 Dto 별칭 등록 -->
 		<typeAlias type="com.car.myapp.member.dto.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.car.myapp.member.dto.verificationDto" alias="verificationDto"/>
+		<typeAlias type="com.car.myapp.member.dto.BookMarkDto" alias="bookmarkDto"/>
 		
 		<!-- carData 관련 Dto -->
 		<typeAlias type="com.car.myapp.cardata.dto.CarDataDto" alias="carDataDto"/>
@@ -25,8 +25,8 @@
 	<mappers>
 		<!-- 관리자 관련 Mapper 등록 -->
 		<mapper resource="com/car/myapp/mybatis/AdminMapper.xml"/>
-		<mapper resource="com/car/myapp/mybatis/QnAMapper.xml"/>
-		<mapper resource="com/car/myapp/mybatis/NewsMapper.xml"/>
+		<!-- <mapper resource="com/car/myapp/mybatis/QnAMapper.xml"/>-->
+		
 		<!-- 사용자 관련 기능 -->
 		<mapper resource="com/car/myapp/mybatis/CustomerMapper.xml"/>
 

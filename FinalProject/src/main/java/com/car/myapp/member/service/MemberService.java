@@ -21,5 +21,11 @@ public interface MemberService {
 	public Map<String,Object> getUserInfo(String user_id);
 	public Map<String,Object> changePwd(MemberDto dto);
 	public Map<String,Object> checkPhone(String user_phone);
-	public Map<String, Object> sendMail(String user_mail);
+	public Map<String,Object> sendMail(String user_mail);
+	public Map<String,Object> addBookmark(String car_num,HttpSession session);
+	public Map<String,Object> deleteBookmark(String car_num,HttpSession session);
+	public Map<String,Object> getInfo(String user_id);
+	public Map<String,Object> checkBookmark(String car_num,HttpSession session);
+	public Map<String,Object> getFavoritList(HttpSession session);
+	public Map<String,Object> getSalesList(HttpSession session);	
 }

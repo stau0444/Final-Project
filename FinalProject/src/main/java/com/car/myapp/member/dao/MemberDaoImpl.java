@@ -1,11 +1,14 @@
 package com.car.myapp.member.dao;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.car.myapp.member.dto.BookMarkDto;
 import com.car.myapp.member.dto.MemberDto;
 import com.car.myapp.member.dto.verificationDto;
 
@@ -107,5 +110,47 @@ public class MemberDaoImpl implements MemberDao {
 		}else {
 			return false;			
 		}
+	}
+	//북마크 저장하는 메서드
+	@Override
+	public boolean addBookmark(BookMarkDto dto) {
+		int isAdded=session.insert("member.addBookmark",dto);
+		if(isAdded>0) {
+			return true;
+		}else {
+			return false;			
+		}
+	}
+	//북마크 삭제 메서드
+	@Override
+	public boolean deleteBookmark(BookMarkDto dto) {
+		int isDeleted=session.delete("member.deleteBookmark",dto);
+		if(isDeleted>0) {
+			return true;
+		}else {
+			return false;			
+		}
+	}
+	//북마크를 확인하는 메서드
+	@Override
+	public boolean checkBookmark(BookMarkDto dto) {
+		BookMarkDto isChecked=session.selectOne("member.checkBookmark",dto);
+		if(isChecked!=null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	//북마크한 차량 불러오는 메서드
+	@Override
+	public List<String> getFavoritList(String user_id) {
+		List<String> list=session.selectList("member.getFavoritList",user_id);
+		return list;
+	}
+	//판매차량리스트을 불러오는 메서드
+	@Override
+	public List<String> getSalesList(String user_id) {
+		List<String> list=session.selectList("member.getSalesList",user_id);
+		return list;
 	}
 }

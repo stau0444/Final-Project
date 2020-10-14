@@ -19,19 +19,31 @@
 </style>
 </head>
 <body>
-	<!--로그인 표시 -->
+	<!--로그인 상태 표시 -->
 	<c:choose>
 		<c:when test="${id ne null}">
 		<c:choose>
 			<c:when test="${isNLogin ne null}">
 				<span class="LoginInfo">
-					<span><strong>${id}</strong>님이 네이버로 로그인 되었습니다</span>
+					<span>
+						<strong>${id}</strong>님이 네이버로 로그인 되었습니다
+					</span>
 					<a href="member/logout.do">로그아웃</a>
 				</span>
 			</c:when>
 			<c:otherwise>
 				<span class="LoginInfo">
-					<span><strong>${id}</strong>님 로그인 되었습니다</span>
+					<span>
+						<strong>${id}</strong>님 로그인 되었습니다
+						<c:choose>
+							<c:when test="${user_sort eq 1}">
+								<span class="text-primary">판매회원</span><a href="member/private/mypage_dealer.do">마이페이지(판매자)</a>
+							</c:when>
+							<c:otherwise>
+								<span class="text-primary">일반회원</span><a href="member/private/mypage_general.do">마이페이지(구매자)</a>
+							</c:otherwise>
+						</c:choose>
+					</span>
 					<a href="member/logout.do">로그아웃</a>
 				</span>
 			</c:otherwise>
@@ -44,6 +56,7 @@
 			</span>
 		</c:otherwise>
 	</c:choose>
+	<a href="add_bookmark.do">북마크 테스트 링크</a>
 	<div style="margin-top:30px;"></div>
 	<!-- 로그인표시끝 -->
 	<!-- 각자 맡으실 페이지의 링크를  아래의 div에 적어두면 

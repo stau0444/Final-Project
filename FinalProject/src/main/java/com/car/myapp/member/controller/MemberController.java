@@ -1,34 +1,31 @@
 package com.car.myapp.member.controller;
 
 
-import java.util.HashMap;
+
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import net.nurigo.java_sdk.api.Message;
-import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
-import com.car.myapp.sendSMS;
+
+
 import com.car.myapp.member.dto.MemberDto;
 import com.car.myapp.member.dto.verificationDto;
 import com.car.myapp.member.service.MemberService;
 
-import net.nurigo.java_sdk.Coolsms;
 
 @Controller
 public class MemberController {
-	//member Service 주입(DI)
+	
 	@Autowired
 	private MemberService memberService;
 	
@@ -190,15 +187,74 @@ public class MemberController {
 	public Map<String,Object> changepwd(MemberDto dto){
 		return memberService.changePwd(dto);
 	}
+	//전화번호 중복확인
 	@RequestMapping("member/checkPhone")
 	@ResponseBody
 	public Map<String,Object> checkPhone(String user_phone){
 		return memberService.checkPhone(user_phone);
 	}
+	//메일전송
 	@RequestMapping("member/sendMail")
 	@ResponseBody
 	public Map<String,Object> sendMail(String user_mail){
 		return memberService.sendMail(user_mail);
 	}
-
+	
+	//------------------------------마이페이지관련--------------------------------------
+	//일반회원 마이페이지
+	@RequestMapping("member/private/mypage_general")
+	public ModelAndView  mypage_general(HttpSession session,ModelAndView mView) {
+		System.out.println("들어옴");
+		mView.setViewName("/member/mypage_general");
+		return mView;
+	}
+	//판매회원 마이페이지
+	@RequestMapping("member/private/mypage_dealer")
+	public ModelAndView  mypage_dealer(HttpSession session,ModelAndView mView) {
+		
+		mView.setViewName("/member/mypage_dealer");
+		return mView;
+	}
+	//북마크 추가
+	@RequestMapping("member/private/add_bookmark")
+	@ResponseBody
+	public Map<String,Object> add_bookmark(String car_num,HttpSession session) {
+		//판매글 번호 	
+		return memberService.addBookmark(car_num,session);	
+	}
+	//북마크 삭제
+	@RequestMapping("member/private/delete_bookmark")
+	@ResponseBody
+	public Map<String,Object> delete_bookmark(String car_num,HttpSession session) {
+		//판매글 번호 	
+		return memberService.deleteBookmark(car_num,session);
+	}
+	//북마크 체크확인
+	@RequestMapping("member/private/check_bookmark")
+	@ResponseBody
+	public Map<String,Object> check_bookmark(String car_num,HttpSession session) {
+		System.out.println("차번호:"+car_num);
+		//판매글 번호 	
+		return memberService.checkBookmark(car_num,session);		
+	}
+	//마이페이지 회원정보가져오기
+	@RequestMapping("member/private/getUserInfo")
+	@ResponseBody
+	public Map<String, Object> getUserInfo(HttpSession session){
+		String user_id=(String)session.getAttribute("id");
+		return memberService.getInfo(user_id);
+	}
+	//관심차량 리스트 불러오기
+	@RequestMapping("member/private/getFavoritList")
+	@ResponseBody
+	public Map<String, Object> getFavoritList(HttpSession session){
+		return memberService.getFavoritList(session);
+	}
+	//판매차량 리스트 불러오기
+	@RequestMapping("member/private/getSalesList")
+	@ResponseBody
+	public Map<String, Object> getSalesList(HttpSession session){
+		return memberService.getSalesList(session);
+	}
+	
 }
