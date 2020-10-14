@@ -32,4 +32,10 @@ public class IndividualDaoImpl implements IndividualDao{
 		// TODO Auto-generated method stub
 		return session.selectOne("qna.getData_iq", iq_num);
 	}
+
+	@Override
+	public void delete(int iq_num) {
+		// TODO Auto-generated method stub
+		session.delete("qna.delete", iq_num);
+	}
 }

@@ -29,4 +29,38 @@
 		where
 			iq_num=#{iq_num}
 	</select>
+	<delete id="delete">
+		delete from
+			individual_question
+		where
+			iq_num=#{iq_num}
+	</delete>
+	
+	<!-- 자주묻는질문 관련 쿼리 -->
+	<select id="getList_f" parameterType="pageDto" resultType="qnaDto">
+		select *
+		from
+			(select 
+				result1.*, rownum as rnum
+			from
+				(select
+					*
+				from
+					qna)result1)
+		where
+			rnum between #{startRowNum} and #{endRowNum}
+	</select>
+	
+	<select id="getCount_f" resultType="int">
+		select 
+			nvl(max(rownum), 0)
+		from
+			qna
+	</select>
+	<delete id="delete_f">
+		delete from
+			qna
+		where
+			qna_num=#{qna_num}
+	</delete>
 </mapper>

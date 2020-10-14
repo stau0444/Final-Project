@@ -9,4 +9,5 @@ public interface IndividualDao {
 	public List<IndividualDto> getList_iq(PageDto dto);
 	public int getCount();
 	public IndividualDto getData(int iq_num);
+	public void delete(int iq_num);
 }

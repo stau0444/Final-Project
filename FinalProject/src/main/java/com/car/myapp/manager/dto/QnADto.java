@@ -1,7 +1,7 @@
 package com.car.myapp.manager.dto;
 
 public class QnADto {
-	private int num;
+	private int qna_num;
 	private String question;
 	private String answer;
 	private int category;
@@ -10,20 +10,20 @@ public class QnADto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public QnADto(int num, String question, String answer, int category) {
+	public QnADto(int qna_num, String question, String answer, int category) {
 		super();
-		this.num = num;
+		this.qna_num = qna_num;
 		this.question = question;
 		this.answer = answer;
 		this.category = category;
 	}
 
-	public int getNum() {
-		return num;
+	public int getQna_num() {
+		return qna_num;
 	}
 
-	public void setNum(int num) {
-		this.num = num;
+	public void setQna_num(int qna_num) {
+		this.qna_num = qna_num;
 	}
 
 	public String getQuestion() {
@@ -50,5 +50,4 @@ public class QnADto {
 		this.category = category;
 	}
 
-		
 }

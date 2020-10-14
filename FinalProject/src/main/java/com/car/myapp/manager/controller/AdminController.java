@@ -52,9 +52,9 @@ public class AdminController {
 		return "manager/private/qna/individual";
 	}
 	
-	@RequestMapping(value = "/manager/private/qna/frequently_ask")
+	@RequestMapping(value = "/manager/private/qna/frequently_list")
 	public String frequentlyAskList() {
-		return "manager/private/qna/frequently_ask";
+		return "manager/private/qna/frequently_list";
 	}
 	
 	@RequestMapping(value = "/manager/private/registration")
@@ -65,6 +65,11 @@ public class AdminController {
 	@RequestMapping(value = "/manager/private/qna/answer_form")
 	public String answerForm() {
 		return "manager/private/qna/answer_form";
+	}
+	
+	@RequestMapping(value = "/manager/private/qna/frequently_form")
+	public String frequentlyForm() {
+		return "manager/private/qna/frequently_form";
 	}
 	
 	@RequestMapping(value = "/manager/private/join", method = RequestMethod.POST)
