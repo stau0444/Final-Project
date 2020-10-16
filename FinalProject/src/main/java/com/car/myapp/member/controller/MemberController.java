@@ -256,5 +256,9 @@ public class MemberController {
 	public Map<String, Object> getSalesList(HttpSession session){
 		return memberService.getSalesList(session);
 	}
+	@RequestMapping("member/privatae/user_info")
+	public String user_info() {
+		return "member/user_info";
+	}
 	
 }

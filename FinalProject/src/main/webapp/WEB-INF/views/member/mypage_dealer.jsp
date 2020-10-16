@@ -8,10 +8,13 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <style>
-	#menubar>td>a{
+	#menubar>a{
 		width:200px;
 		height:40px;
 		
+	}
+	ul{
+		padding-left:0px;
 	}
 	li{
 		box-shadow: 0px;
@@ -35,8 +38,17 @@
 	}
 </style>
 <script src="../../resources/js/angular.min.js"></script>
+<script src="../../resources/js/angular-route.min.js"></script>
+
 <script>
-	var myPageApp=angular.module("myPageApp",[]);
+	var myPageApp=angular.module("myPageApp",["ngRoute"]);
+	myPageApp.config(function($routeProvider){
+		$routeProvider.when("/user_info", {
+			page : "user_info",
+			title : "MYCAR 회원정보",
+			templateUrl : "user_info.do",
+			controller : "myPageCtrl"
+	});
 	myPageApp.controller("myPageCtrl",function($scope,$http){
 		
 		$scope.c_sort_list=["소형차","중형차","대형차","스포츠카","SUV","화물차"];
@@ -75,78 +87,53 @@
 			$scope.user_id=userinfo.user_id;
 			$scope.user_phone=userinfo.user_phone;
 			$scope.user_addr=userinfo.user_addr;
-			
 			if(userinfo.user_sort=="1"){
 				$scope.user_sort="판매자";				
 			}else{
 				$scope.user_sort="일반회원";
 			}
 		})
-	});
+		
+	})
 </script>
 </head>
 <body data-ng-controller="myPageCtrl">
 <div class="container">
-	<div class="row my-4">
-	<!-- 회원 정보 테이블-->
-		<h4 class="text-info">회원정보</h4>
-		<hr />
-		<br />
-			<table class="table border-bottom">
-					<tbody >
-						<tr>
-							<th>이름</th>
-							<td>{{user_name}}</td>
-						</tr>
-						<tr>	
-							<th>아이디</th>
-							<td>{{user_id}}</td>
-						</tr>
-						<tr>						
-							<th>전화번호</th>
-							<td>{{user_phone}}</td>
-						</tr>
-						<tr>
-							<th>주소</th>
-							<td>{{user_addr}}</td>
-						</tr>
-						<tr>	
-							<th>계정 구분</th>
-							<td>{{user_sort}}</td>
-						</tr>
-					</tbody>
-			</table>
-	</div>
 	<hr class="my-5"/>
 	<!-- 관심차량리스트 -->
-	<table class="w-100 my-4 text-center">
-		<tr id="menubar">
-			<td><a href="" class="btn btn-outline-success">관심차량리스트</a></td>
-			<td><a href="" class="btn btn-outline-success">최근본차량 리스트</a></td>
-			<td><a href="" class="btn btn-outline-success">회원정보수정</a></td>
-			<td><a href="" class="btn btn-outline-success">회원탈퇴</a></td>
-		</tr>
-	</table>
+	<div id="menubar" class="row d-flex justify-content-center">
+			<a href="#user_info" class="btn btn-outline-success mx-2 my-1">회원정보</a>
+			<a href="" class="btn btn-outline-success mx-2 my-1">관심차량리스트</a>
+			<a href="" class="btn btn-outline-success mx-2 my-1">최근본차량 리스트</a>
+			<a href="" class="btn btn-outline-success mx-2 my-1">회원정보수정</a>
+			<a href="" class="btn btn-outline-success mx-2 my-1">회원탈퇴</a>
+	</div>
+	<hr class="my-5"/>
+	
 	<div class="row my-5">
-		<h4 class="text-info">관심차량</h4>
+		<h3 class="text-info">관심차량</h3>
 		<div class="w-100" >
 			<!-- 슬라이드 -->
 			<ul >
 				<li data-ng-repeat="tmp in favoritList" class="row  my-3 border" style="margin-top:15px;" >
-					<img src="/mycar/upload/{{tmp.image}}" class="col-2 border" width="200" height="200" />
-					<p class="col-10">
-						제목:{{tmp.title}} |
-						차량번호:{{tmp.car_num}} |
-						연료:{{tmp.automotive_fuel}} |  
-						주행거리:{{tmp.vehical_mile}}Km |
-						가격:{{tmp.s_price}}원 |
-						제조사:{{company_list[tmp.company]}} |
-						옵션:{{tmp.car_option}} |
-						색상:{{color_list[tmp.color]}} |
-						연식:{{tmp.car_year}} |
-						차종:{{c_sort_list[tmp.c_sort]}} |
-						모델명:{{tmp.m_name}} |
-					</p> 
+					<img src="/mycar/upload/{{tmp.image}}" class="col-2 " width="180" height="180" />
+					<span class="col-7  mt-3">
+						<span class="badge badge-secondary">{{tmp.automotive_fuel}}</span>   
+						<span class="badge badge-secondary">{{company_list[tmp.company]}}</span>
+						<span class="badge badge-secondary">{{tmp.car_option}}</span>
+						<span class="badge badge-secondary">{{c_sort_list[tmp.c_sort]}} </span>
+						<h2  class="my-4">{{tmp.title}}</h2>
+						<span>
+							차량번호:{{tmp.car_num}} |
+							주행거리:{{tmp.vehical_mile}}Km |
+							색상:{{color_list[tmp.color]}} |
+							연식:{{tmp.car_year}} |
+							모델명:{{tmp.m_name}}
+						</span>
+					</span>
+					<span class="col-3">
+						<h2 class="text-danger mt-5">{{tmp.s_price}}원 </h2>
+					</span>
 				</li>
 			</ul>
 		</div>	
@@ -154,25 +141,28 @@
 	<hr class="my-3"/>
 	<!-- 최근본차량 리스트 -->
 	<div class="row my-4">
-		<h4 class="text-info">판매 중인 차량</h4>
+		<h3 class="text-info">판매 중인 차량</h3>
 		<div class="w-100" style="height:auto;">
 			<ul >
 				<li data-ng-repeat="tmp in salesList" class="row  my-3 border" style="margin-top:15px;" >
-					<img src="/mycar/upload/{{tmp.image}}" class="col-2 border" width="200" height="200" />
-					<p class="col-10">
-						제목:{{tmp.title}} |
-						차량번호:{{tmp.car_num}} |
-						연료:{{tmp.automotive_fuel}} |  
-						주행거리:{{tmp.vehical_mile}}Km |
-						 가격:{{tmp.s_price}}원 |
-						제조사:{{company_list[tmp.company]}} |
-						옵션:{{tmp.car_option}} |
-						색상:{{color_list[tmp.color]}} |
-						연식:{{tmp.car_year}} |
-						모델명:{{tmp.m_name}} |
-						차종:{{c_sort_list[tmp.c_sort]}} |
-						
-					</p> 
+					<img src="/mycar/upload/{{tmp.image}}" class="col-2 " width="180" height="180" />
+					<span class="col-7  mt-3">
+						<span class="badge badge-secondary">{{tmp.automotive_fuel}}</span>   
+						<span class="badge badge-secondary">{{company_list[tmp.company]}}</span>
+						<span class="badge badge-secondary">{{tmp.car_option}}</span>
+						<span class="badge badge-secondary">{{c_sort_list[tmp.c_sort]}} </span>
+						<h2  class="my-4">{{tmp.title}}</h2>
+						<span>
+							차량번호:{{tmp.car_num}} |
+							주행거리:{{tmp.vehical_mile}}Km |
+							색상:{{color_list[tmp.color]}} |
+							연식:{{tmp.car_year}} |
+							모델명:{{tmp.m_name}}
+						</span>
+					</span>
+					<span class="col-3">
+						<h2 class="text-danger mt-5">{{tmp.s_price}}원 </h2>
+					</span>
 				</li>
 			</ul>
 		</div>
@@ -180,6 +170,7 @@
 	</div>
 	<hr class="my-2"/>
 	<h4 class="text-info"> 회원정보수정</h4>
+	<div data-ng-view class="page-change-animation"></div>
 	<div class="row my-4" >
 		<!-- 회원정보 링크-->
 		<div class="col-6">
