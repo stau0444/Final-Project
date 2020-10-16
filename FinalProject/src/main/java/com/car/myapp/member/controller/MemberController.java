@@ -204,7 +204,6 @@ public class MemberController {
 	//일반회원 마이페이지
 	@RequestMapping("member/private/mypage_general")
 	public ModelAndView  mypage_general(HttpSession session,ModelAndView mView) {
-		System.out.println("들어옴");
 		mView.setViewName("/member/mypage_general");
 		return mView;
 	}
@@ -256,9 +255,29 @@ public class MemberController {
 	public Map<String, Object> getSalesList(HttpSession session){
 		return memberService.getSalesList(session);
 	}
-	@RequestMapping("member/privatae/user_info")
+//	@RequestMapping("member/privatae/user_info")
+//	public String user_info() {
+//		return "member/user_info";
+//	}
+	//마이페이지 SPA기반 링크
+	@RequestMapping("member/private/user_info")
 	public String user_info() {
-		return "member/user_info";
+		System.out.println("들어옴");
+		return "member/mypage/user_info";
 	}
-	
+	@RequestMapping("member/private/favorit_list")
+	public String favorit_list() {
+		System.out.println("들어옴");
+		return "member/mypage/favorit_list";
+	}
+	@RequestMapping("member/private/sales_list")
+	public String sales_list() {
+		System.out.println("들어옴");
+		return "member/mypage/sales_list";
+	}
+	@RequestMapping("member/private/update_userinfo")
+	public String update_userinfo() {
+		System.out.println("들어옴");
+		return "member/mypage/update_userinfo";
+	}
 }
