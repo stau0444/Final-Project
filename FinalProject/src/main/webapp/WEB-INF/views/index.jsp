@@ -56,7 +56,8 @@
 			</span>
 		</c:otherwise>
 	</c:choose>
-	<a href="add_bookmark.do">북마크 테스트 링크</a>
+	<!-- SPA테스트 (황경욱) -->
+	<a href="member/user_info.do">SPA 테스트 황경욱</a>
 	<div style="margin-top:30px;"></div>
 	<!-- 로그인표시끝 -->
 	<!-- 각자 맡으실 페이지의 링크를  아래의 div에 적어두면 

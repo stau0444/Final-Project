@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.car.myapp.member.dto.BookMarkDto;
 import com.car.myapp.member.dto.MemberDto;
+import com.car.myapp.member.dto.PaginationDto;
 import com.car.myapp.member.dto.verificationDto;
 
 public interface MemberDao {
@@ -23,6 +24,8 @@ public interface MemberDao {
 	public boolean addBookmark(BookMarkDto dto);
 	public boolean deleteBookmark(BookMarkDto dto);
 	public boolean checkBookmark(BookMarkDto dto);
-	public List<String> getFavoritList(String user_id);
-	public List<String> getSalesList(String user_id);
+	public List<String> getFavoritList(PaginationDto dto);
+	public List<String> getSalesList(PaginationDto dto);
+	public int getCountF(String user_id);
+	public int getCountS(String user_id);
 }

@@ -1,6 +1,7 @@
 package com.car.myapp.member.service;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,9 +28,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.car.myapp.MailAuth;
+import com.car.myapp.cardata.dto.CarDataDto;
 import com.car.myapp.member.dao.MemberDao;
 import com.car.myapp.member.dto.BookMarkDto;
 import com.car.myapp.member.dto.MemberDto;
+import com.car.myapp.member.dto.PaginationDto;
 import com.car.myapp.member.dto.verificationDto;
 
 import net.nurigo.java_sdk.api.Message;
@@ -351,19 +354,130 @@ public class MemberServiceImpl implements MemberService {
 		return map;
 	}
 	@Override
-	public Map<String, Object> getFavoritList(HttpSession session) {
+	public Map<String, Object> getFavoritList(HttpSession session,HttpServletRequest request) {
+		
+		//한 페이지에 나타낼 row 의 갯수
+		final int PAGE_ROW_COUNT=5;
+		//하단 디스플레이 페이지 갯수
+		final int PAGE_DISPLAY_COUNT=5;
+		//유저아이디
 		String user_id=(String)session.getAttribute("id");
-		List<String> list=memberDao.getFavoritList(user_id);
+		//첫 페이지 번호를 설정
+		int pageNum=1;
+		
+		//리퀘스트 영역에서 pageNum을 가져온다
+		String strPageNum=request.getParameter("pageNum");
+		//pageNum이 넘어온다면 해당 번호를 pageNum으로 한다.
+		if(strPageNum!=null) {
+			pageNum=Integer.parseInt(strPageNum);
+		}
+		//보여줄 데이터의 첫번째 row 번호
+		int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
+		//보여줄 페이지 데이터의 끝  row 번호
+		int endRowNum=pageNum*PAGE_ROW_COUNT;
+		
+		//페이징 처리 정보를 담을 Dto 생성하여 값을 넣어준다.
+		PaginationDto dto= new PaginationDto();
+		dto.setStartRowNum(startRowNum);
+		dto.setEndRowNum(endRowNum);
+		dto.setUser_id(user_id);
+		
+		System.out.println("아이디:"+user_id);
+		System.out.println("end:"+endRowNum);
+		System.out.println("start:"+startRowNum);
+		
+		//처리된 목록 얻어오기
+		List<String> list=memberDao.getFavoritList(dto);
+		System.out.println(list);
+		//전체 row의 갯수 얻어오기(전체 row의 갯수가있어야 총 페이지수를 구할 수 있다);
+		int totalRow=memberDao.getCountF(user_id);
+		
+		//총 페이지수 구하기  한쪽이 더블이여야 더블 값을 얻을 수 있고
+		//더블 값으로 페이지를 나눈뒤  row수가 남으면 올림하여 표시해준다. 
+		int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+		//화면상에 표시 될 시작 페이지 번호
+		int startPageNum=1+((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
+		//화면상에 표시 될 끝 페이지 번호
+		int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
+		
+		if(totalPageCount < endPageNum){
+			endPageNum=totalPageCount; //보정해준다. 
+		}
+		//맵에 list와 페이징 처리 값을 담아준다.
 		Map<String,Object> map=new HashMap<String, Object>();
-		map.put("favoritList",list);
+		map.put("list", list);
+		//다른 map에 페이징 정보를 담아 준다.
+		Map<String,Integer> pagingData=new HashMap<String, Integer>();
+		pagingData.put("startPageNum", startPageNum);
+		pagingData.put("endPageNum",endPageNum);
+		pagingData.put("pageNum",pageNum);
+		pagingData.put("totalPageCount",totalPageCount);
+		
+		map.put("pagingData",pagingData);
+		
 		return map;
 	}
 	@Override
-	public Map<String, Object> getSalesList(HttpSession session) {
-		String user_id=(String)session.getAttribute("id");
-		List<String> list=memberDao.getSalesList(user_id);
-		Map<String,Object> map=new HashMap<String, Object>();
-		map.put("salesList",list);
-		return map;
+	public Map<String, Object> getSalesList(HttpSession session,HttpServletRequest request) {
+		//한 페이지에 나타낼 row 의 갯수
+				final int PAGE_ROW_COUNT=5;
+				//하단 디스플레이 페이지 갯수
+				final int PAGE_DISPLAY_COUNT=5;
+				//유저아이디
+				String user_id=(String)session.getAttribute("id");
+				//첫 페이지 번호를 설정
+				int pageNum=1;
+				
+				//리퀘스트 영역에서 pageNum을 가져온다
+				String strPageNum=request.getParameter("pageNum");
+				//pageNum이 넘어온다면 해당 번호를 pageNum으로 한다.
+				if(strPageNum!=null) {
+					pageNum=Integer.parseInt(strPageNum);
+				}
+				//보여줄 데이터의 첫번째 row 번호
+				int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
+				//보여줄 페이지 데이터의 끝  row 번호
+				int endRowNum=pageNum*PAGE_ROW_COUNT;
+				
+				//페이징 처리 정보를 담을 Dto 생성하여 값을 넣어준다.
+				PaginationDto dto= new PaginationDto();
+				dto.setStartRowNum(startRowNum);
+				dto.setEndRowNum(endRowNum);
+				dto.setUser_id(user_id);
+				
+				System.out.println("아이디:"+user_id);
+				System.out.println("end:"+endRowNum);
+				System.out.println("start:"+startRowNum);
+				
+				//처리된 목록 얻어오기
+				List<String> list=memberDao.getSalesList(dto);
+				System.out.println(list);
+				//전체 row의 갯수 얻어오기(전체 row의 갯수가있어야 총 페이지수를 구할 수 있다);
+				int totalRow=memberDao.getCountS(user_id);
+				
+				//총 페이지수 구하기  한쪽이 더블이여야 더블 값을 얻을 수 있고
+				//더블 값으로 페이지를 나눈뒤  row수가 남으면 올림하여 표시해준다. 
+				int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
+				//화면상에 표시 될 시작 페이지 번호
+				int startPageNum=1+((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
+				//화면상에 표시 될 끝 페이지 번호
+				int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
+				
+				if(totalPageCount < endPageNum){
+					endPageNum=totalPageCount; //보정해준다. 
+				}
+				//맵에 list와 페이징 처리 값을 담아준다.
+				Map<String,Object> map=new HashMap<String, Object>();
+				map.put("list", list);
+				//다른 map에 페이징 정보를 담아 준다.
+				Map<String,Integer> pagingData=new HashMap<String, Integer>();
+				pagingData.put("startPageNum", startPageNum);
+				pagingData.put("endPageNum",endPageNum);
+				pagingData.put("pageNum",pageNum);
+				pagingData.put("totalPageCount",totalPageCount);
+				
+				map.put("pagingData",pagingData);
+				
+				return map;
 	}
 }

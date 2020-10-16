@@ -62,8 +62,12 @@
 	<select id="checkBookmark" parameterType="bookmarkDto" resultType="bookmarkDto">
 		select * FROM favorit where user_id=#{user_id} AND car_num=#{car_num}
 	</select>
-	<select id="getFavoritList" parameterType="string" resultType="carDataDto">
-		SELECT B.c_sort as c_sort, B.company as company, B.m_name as m_name, A.title as title,
+	<select id="getFavoritList" parameterType="paginationDto" resultType="carDataDto">
+		SELECT * 
+		FROM(
+		SELECT result1.*,ROWNUM as rnum 
+		FROM
+		(SELECT B.c_sort as c_sort, B.company as company, B.m_name as m_name, A.title as title,
 		A.s_price as s_price, A.automotive_fuel as automotive_fuel, A.car_num as car_num,
 		A.seater as seater, A.vehical_mile as vehical_mile, A.car_option as car_option,
 		A.car_year as car_year, A.vehical_gear as vehical_gear, C.img as image
@@ -72,9 +76,41 @@
 		AND A.car_num=C.car_num
 		AND C.car_num=D.car_num
 		AND C.ismain=1
-		AND D.user_id=#{user_id}
+		AND D.user_id=#{user_id}) result1)
+		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
-	<select id="getSalesList" parameterType="string" resultType="carDataDto">
+	<select id="getSalesList" parameterType="paginationDto" resultType="carDataDto">
+		SELECT * 
+		FROM(
+		SELECT result1.*,ROWNUM as rnum 
+		FROM
+		(SELECT B.c_sort as c_sort, B.company as company, B.m_name as m_name, A.title as title,
+		A.s_price as s_price, A.automotive_fuel as automotive_fuel, A.car_num as car_num,
+		A.seater as seater, A.vehical_mile as vehical_mile, A.car_option as car_option,
+		A.car_year as car_year, A.vehical_gear as vehical_gear, C.img as image
+		FROM car_sell_info A,car_info B,car_image C
+		WHERE A.m_name=B.m_name
+		AND A.car_num=C.car_num
+		AND C.ismain=1
+		AND A.seller_id=#{user_id}) result1)
+		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	<select id="getMaxCountF" parameterType="string" resultType="int">
+		SELECT  NVL(MAX(rownum),'0') from(
+			SELECT B.c_sort as c_sort, B.company as company, B.m_name as m_name, A.title as title,
+			A.s_price as s_price, A.automotive_fuel as automotive_fuel, A.car_num as car_num,
+			A.seater as seater, A.vehical_mile as vehical_mile, A.car_option as car_option,
+			A.car_year as car_year, A.vehical_gear as vehical_gear, C.img as image
+			FROM car_sell_info A,car_info B,car_image C, favorit D
+			WHERE A.m_name=B.m_name
+			AND A.car_num=C.car_num
+			AND C.car_num=D.car_num
+			AND C.ismain=1
+			AND D.user_id=#{user_id}
+			)
+	</select>
+	<select id="getMaxCountS" parameterType="string" resultType="int">
+	SELECT  NVL(MAX(rownum),'0') from(
 		SELECT B.c_sort as c_sort, B.company as company, B.m_name as m_name, A.title as title,
 		A.s_price as s_price, A.automotive_fuel as automotive_fuel, A.car_num as car_num,
 		A.seater as seater, A.vehical_mile as vehical_mile, A.car_option as car_option,
@@ -84,6 +120,7 @@
 		AND A.car_num=C.car_num
 		AND C.ismain=1
 		AND A.seller_id=#{user_id}
+		)
 	</select>
 	
 </mapper>
