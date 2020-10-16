@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.car.myapp.manager.dto.IndividualDto;
+import com.car.myapp.manager.dto.QnADto;
 import com.car.myapp.manager.service.IndividualService;
 import com.car.myapp.manager.service.QnAService;
 
@@ -76,5 +77,12 @@ public class QnAController {
 		System.out.println(qna_num);
 		
 		return qnaService.delete(qna_num);
+	}
+	
+	@RequestMapping(value = "/manager/private/qna-insert", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> qnaInsert(QnADto dto){
+		
+		return qnaService.insert_f(dto);
 	}
 }

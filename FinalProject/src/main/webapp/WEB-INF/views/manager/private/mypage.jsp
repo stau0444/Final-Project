@@ -41,6 +41,29 @@
 			$scope.data = data.dto;
 		});
 	});
+	
+	managerApp.controller("frequentlyCtrl", function($scope, $http, $location){
+		$scope.qnaInsert = function(){
+			$http({
+				url : "/mycar/manager/private/qna-insert.do",
+				method : "post",
+				params : {
+					question : $scope.question,
+					answer : $scope.answer,
+					category : $scope.category
+				},
+				headers : {
+					"Content-Type" : "application/x-www-form-urlencoded;"
+				}
+			}).success(function(data) {
+				if (data.isSuccess) {
+					alert("qna 등록에 성공했습니다.");
+					console.log(data.isSuccess);
+				}
+			});
+			location.href="/mycar/manager/private/mypage.do#/QnA";
+		}
+	});
 
 	managerApp.controller("qnaCtrl", function($scope, $http, $location) {
 
@@ -93,6 +116,9 @@
 				$location.url("/QnA");
 			});
 		}
+		
+		
+		
 	});
 
 	managerApp.controller("iqCtrl", function($scope, $http, $location) {
@@ -218,7 +244,7 @@
 			page : "frequently-form",
 			title : "자주 묻는 질문 추가",
 			templateUrl : "qna/frequently_form.do",
-			controller : "qnaCtrl"
+			controller : "frequentlyCtrl"
 		}).when("/frequently-update/:num", {
 			page : "frequently-update",
 			title : "자주 묻는 질문 수정",

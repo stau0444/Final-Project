@@ -63,4 +63,13 @@
 		where
 			qna_num=#{qna_num}
 	</delete>
+	<insert id="insert_f" parameterType="qnaDto">
+		insert into 
+			qna 
+		values
+			(qna_seq.nextval, 
+			#{question}, 
+			#{answer}, 
+			#{category})
+	</insert>
 </mapper>
