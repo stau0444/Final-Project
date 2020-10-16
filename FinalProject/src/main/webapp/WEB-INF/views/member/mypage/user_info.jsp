@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="row ">
-		<h3 class="text-info my-4">회원정보</h3>
-		<hr />
-		<br />
+<hr />
+<h3 class="text-info my-4 text-center">회원정보</h3>
+<hr />
+<div class="row ">		
 		<table class="table border-bottom" >
 			<tbody>
 				<tr>

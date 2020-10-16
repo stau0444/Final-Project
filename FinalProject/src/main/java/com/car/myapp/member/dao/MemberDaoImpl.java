@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.car.myapp.member.dto.BookMarkDto;
 import com.car.myapp.member.dto.MemberDto;
+import com.car.myapp.member.dto.PaginationDto;
 import com.car.myapp.member.dto.verificationDto;
 
 @Repository
@@ -143,14 +144,27 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	//북마크한 차량 불러오는 메서드
 	@Override
-	public List<String> getFavoritList(String user_id) {
-		List<String> list=session.selectList("member.getFavoritList",user_id);
+	public List<String> getFavoritList(PaginationDto dto) {
+		List<String> list=session.selectList("member.getFavoritList",dto);
 		return list;
 	}
 	//판매차량리스트을 불러오는 메서드
 	@Override
-	public List<String> getSalesList(String user_id) {
-		List<String> list=session.selectList("member.getSalesList",user_id);
+	public List<String> getSalesList(PaginationDto dto) {
+		List<String> list=session.selectList("member.getSalesList",dto);
 		return list;
 	}
+	@Override
+	public int getCountF(String user_id) {
+		int MaxNum=session.selectOne("member.getMaxCountF",user_id);
+		System.out.println("글 갯수:"+MaxNum);
+		return MaxNum;
+	}
+	@Override
+	public int getCountS(String user_id) {
+		int MaxNum=session.selectOne("member.getMaxCountS",user_id);
+		System.out.println("글 갯수:"+MaxNum);
+		return MaxNum;
+	}
+	
 }

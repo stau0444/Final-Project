@@ -246,19 +246,15 @@ public class MemberController {
 	//관심차량 리스트 불러오기
 	@RequestMapping("member/private/getFavoritList")
 	@ResponseBody
-	public Map<String, Object> getFavoritList(HttpSession session){
-		return memberService.getFavoritList(session);
+	public Map<String, Object> getFavoritList(HttpSession session,HttpServletRequest request){
+		return memberService.getFavoritList(session,request);
 	}
 	//판매차량 리스트 불러오기
 	@RequestMapping("member/private/getSalesList")
 	@ResponseBody
-	public Map<String, Object> getSalesList(HttpSession session){
-		return memberService.getSalesList(session);
+	public Map<String, Object> getSalesList(HttpSession session,HttpServletRequest request){
+		return memberService.getSalesList(session,request);
 	}
-//	@RequestMapping("member/privatae/user_info")
-//	public String user_info() {
-//		return "member/user_info";
-//	}
 	//마이페이지 SPA기반 링크
 	@RequestMapping("member/private/user_info")
 	public String user_info() {
