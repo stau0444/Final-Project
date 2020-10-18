@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.car.myapp.MailAuth;
+import com.car.myapp.cardata.dao.CarDataDao;
 import com.car.myapp.cardata.dto.CarDataDto;
 import com.car.myapp.member.dao.MemberDao;
 import com.car.myapp.member.dto.BookMarkDto;
@@ -479,5 +480,25 @@ public class MemberServiceImpl implements MemberService {
 				map.put("pagingData",pagingData);
 				
 				return map;
+	}
+	//판매회원탈퇴 프로세스
+	@Override
+	public Map<String, Object> deleteId(HttpSession session) {
+		//세션에서 아이디를 불러온다
+		String user_id=(String)session.getAttribute("id");
+		//해당아이디로 저장된 정보를  모두 지운다
+		//관심차량 삭제
+		memberDao.deleteBookmark(user_id);
+		//아이디삭제
+		memberDao.deleteAll(user_id);
+		//저장된 이미지삭제
+		memberDao.deleteImage(user_id);
+		//맵에 성공여부를 담는다
+		Map<String,Object> map=new HashMap<String, Object>();
+		boolean isDeleted=memberDao.deleteId(user_id);
+		map.put("isDeleted",isDeleted);
+		//세션영역을 초기화시킨다
+		session.invalidate();
+		return map;
 	}
 }

@@ -255,7 +255,7 @@ public class MemberController {
 	public Map<String, Object> getSalesList(HttpSession session,HttpServletRequest request){
 		return memberService.getSalesList(session,request);
 	}
-	//마이페이지 SPA기반 링크
+	//마이페이지 SPA기반 링크-----------------------------------
 	@RequestMapping("member/private/user_info")
 	public String user_info() {
 		System.out.println("들어옴");
@@ -275,5 +275,25 @@ public class MemberController {
 	public String update_userinfo() {
 		System.out.println("들어옴");
 		return "member/mypage/update_userinfo";
+	}
+	@RequestMapping("member/private/update_form")
+	public String update_form() {
+		return "member/mypage/update_form";
+	}
+	@RequestMapping("member/private/deleteId")
+	public String deleteId() {
+		return "member/mypage/deleteId";
+	}
+	@RequestMapping("member/private/delete_confirm")
+	public String delete_confirm() {
+		return "member/mypage/delete_confirm";
+	}
+	//-------------------------------------------------------
+	//아이디 삭제
+	@RequestMapping("member/private/deleteIdLast")
+	@ResponseBody
+	public Map<String,Object> deleteIdLast(HttpSession session) {
+		
+		return memberService.deleteId(session);
 	}
 }

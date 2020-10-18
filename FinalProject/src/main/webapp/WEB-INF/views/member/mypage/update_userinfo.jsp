@@ -11,7 +11,7 @@
 			  <p class="lead">회원 정보 수정을 원하십니까?</p>
 			  <hr class="my-4">
 			  <p class="lead">
-			    <a class="btn btn-primary btn-lg" href="#" role="button">수정</a>
+			    <a class="btn btn-primary btn-lg" href="#/update_form" role="button">수정</a>
 			  </p>
 			</div>
 		</div>
@@ -21,7 +21,7 @@
 			  <p class="lead">회원 탈퇴를  원하십니까?</p>
 			  <hr class="my-4">
 			  <p class="lead">
-			    <a class="btn btn-primary btn-lg" href="#" role="button">탈퇴</a>
+			    <a class="btn btn-primary btn-lg" data-ng-click="deleteIdPopUp()" role="button">탈퇴</a>
 			  </p>
 			</div>
 		</div>

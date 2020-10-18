@@ -44,10 +44,17 @@
 		.when("/update_userinfo",{
 				templateUrl:"update_userinfo.do"
 				})
+		.when("/update_form",{
+				templateUrl:"update_form.do"
+				})	
 		.otherwise({redirectTo:"/user_info"});
 	});
 	
-	myPageApp.controller("myPageCtrl",function($scope,$http){
+	myPageApp.controller("myPageCtrl",function($scope,$http,$window){
+		$scope.deleteIdPopUp = function () {
+             var $popup = $window.open("deleteId.do", "popup", "width=450,height=600,left=200,top=100");           
+        };
+        
 		
 		$scope.c_sort_list=["소형차","중형차","대형차","스포츠카","SUV","화물차"];
 		$scope.company_list=["현대","기아","제네시스","쉐보레","르노삼성","쌍용","벤츠","BMW","아우디","폭스바겐","도요타"];
@@ -134,12 +141,14 @@
 			var userinfo=data.userinfo;
 			console.log(userinfo)
 			console.log(data);
+			$scope.user_info=userinfo;
 			$scope.user_name=userinfo.user_name;
 			$scope.user_id=userinfo.user_id;
 			$scope.user_phone=userinfo.user_phone;
 			$scope.user_addr=userinfo.user_addr;
 			if(userinfo.user_sort=="1"){
-				$scope.user_sort="판매자";				
+				$scope.user_sort="판매자";
+				$scope.isDealer=true;
 			}else{
 				$scope.user_sort="일반회원";
 			}
@@ -165,8 +174,6 @@
 	<!-- 회원 정보 테이블-->	
 	<!-- 관심 차량 리스트 -->
 	<!-- 판매중인 차량 리스트 -->
-	<hr class="my-3"/>
-	<hr class="my-2"/>
 </div>
 </body>
 </html>

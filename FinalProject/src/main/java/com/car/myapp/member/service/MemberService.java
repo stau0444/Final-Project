@@ -28,4 +28,5 @@ public interface MemberService {
 	public Map<String,Object> checkBookmark(String car_num,HttpSession session);
 	public Map<String,Object> getFavoritList(HttpSession session,HttpServletRequest request);
 	public Map<String,Object> getSalesList(HttpSession session,HttpServletRequest request);	
+	public Map<String,Object> deleteId(HttpSession session);
 }

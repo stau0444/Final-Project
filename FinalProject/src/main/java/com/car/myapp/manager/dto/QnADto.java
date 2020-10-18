@@ -6,9 +6,7 @@ public class QnADto {
 	private String answer;
 	private int category;
 	
-	public QnADto() {
-		// TODO Auto-generated constructor stub
-	}
+	public QnADto() {}
 
 	public QnADto(int qna_num, String question, String answer, int category) {
 		super();

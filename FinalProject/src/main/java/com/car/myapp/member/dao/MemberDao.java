@@ -23,9 +23,13 @@ public interface MemberDao {
 	public boolean checkPhone(String user_phone);
 	public boolean addBookmark(BookMarkDto dto);
 	public boolean deleteBookmark(BookMarkDto dto);
+	public boolean deleteBookmark(String user_id);
 	public boolean checkBookmark(BookMarkDto dto);
 	public List<String> getFavoritList(PaginationDto dto);
 	public List<String> getSalesList(PaginationDto dto);
 	public int getCountF(String user_id);
 	public int getCountS(String user_id);
+	public boolean deleteId(String user_id);
+	public void deleteAll(String user_id);
+	public void deleteImage(String user_id);
 }

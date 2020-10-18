@@ -122,5 +122,18 @@
 		AND A.seller_id=#{user_id}
 		)
 	</select>
-	
+	<delete id="deleteId" parameterType="string">
+		delete from user_all where user_id=#{user_id}
+	</delete>
+	<delete id="deleteBookMarkA" parameterType="string">
+		delete from favorit where user_id=#{user_id}
+	</delete>
+	<delete id="deleteAll" parameterType="string">
+		DELETE FROM car_sell_info
+		WHERE seller_id=#{user_id}
+	</delete>
+	<delete id="deleteImage" parameterType="string">
+		DELETE FROM car_image
+		WHERE seller_id=#{user_id}
+	</delete>
 </mapper>

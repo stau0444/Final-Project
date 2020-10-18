@@ -55,10 +55,4 @@ public class CarDataDaoImpl implements CarDataDao {
 		//System.out.println(session.getConfiguration().getMappedStatement("CarData.getImages").getBoundSql(car_num).getSql()); //mybatis에서 나오는 쿼리 확인
 		return session.selectList("CarData.getImages", car_num);
 	}
-
-
-	
-
-	
-
 }

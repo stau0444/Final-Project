@@ -166,5 +166,32 @@ public class MemberDaoImpl implements MemberDao {
 		System.out.println("글 갯수:"+MaxNum);
 		return MaxNum;
 	}
+	@Override
+	public boolean deleteId(String user_id) {
+		int isDeleted=session.delete("member.deleteId",user_id);
+		if(isDeleted>0) {
+			return true;
+		}else {			
+			return false;
+		}
+	}
+	@Override
+	public boolean deleteBookmark(String user_id) {
+		int isDeleted=session.delete("member.deleteBookMarkA",user_id);
+		if(isDeleted>0) {
+			return true;
+		}else {			
+			return false;
+		}
+	}
+	@Override
+	public void deleteAll(String user_id) {
+		session.delete("member.deleteAll",user_id);
+		
+	}
+	@Override
+	public void deleteImage(String user_id) {
+		session.delete("member.deleteImage",user_id);
+	}
 	
 }
